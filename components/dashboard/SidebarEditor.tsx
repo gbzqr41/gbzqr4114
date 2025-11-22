@@ -149,19 +149,34 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   };
 
   return (
-    <div className="h-full p-6 overflow-y-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-black">Kategoriler</h2>
-        <button
-          onClick={addCategory}
-          className="bg-transparent border-2 border-gray-300 rounded-lg text-black px-4 py-2 hover:bg-gray-50 transition-colors"
-        >
-          +
-        </button>
-      </div>
+    <div className="h-full p-[10px] overflow-y-auto">
+      <div className="bg-[#ffffff] rounded-[20px] p-[10px] h-full">
+        {categories.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <button
+              onClick={addCategory}
+              className="bg-transparent border-2 border-gray-300 rounded-[10px] text-black font-bold px-[22px] py-[14px] hover:bg-[#f7f7f7] transition-colors"
+            >
+              Kategori Ekle (+)
+            </button>
+            <p className="text-[14px] text-[#888] text-center mt-4">
+              Menünü oluşturmaya başlamak için bir kategori ekleyin.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-black">Kategoriler</h2>
+              <button
+                onClick={addCategory}
+                className="bg-transparent border-2 border-gray-300 rounded-lg text-black px-4 py-2 hover:bg-gray-50 transition-colors"
+              >
+                +
+              </button>
+            </div>
 
-      <div className="space-y-5">
-        {categories.map((category) => (
+            <div className="space-y-5">
+              {categories.map((category) => (
           <div key={category.id} className="bg-white rounded-[18px] p-5 shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               {editingCategoryId === category.id ? (
@@ -408,7 +423,10 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
               </div>
             </div>
           </div>
-        ))}
+            ))}
+          </div>
+        </>
+      )}
       </div>
     </div>
   );

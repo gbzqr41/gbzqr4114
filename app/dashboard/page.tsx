@@ -27,7 +27,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="flex-1 w-full flex overflow-hidden">
-          <div className="w-[40%] border-r border-gray-200">
+          <div className="w-[40%] border-r border-gray-200 bg-gray-100">
             <SidebarEditor categories={categories} onCategoriesChange={setCategories} />
           </div>
           <div className="w-[60%]">
