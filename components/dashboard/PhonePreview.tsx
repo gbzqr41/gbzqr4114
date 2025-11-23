@@ -3,6 +3,11 @@
 import { useRouter } from "next/navigation";
 import { Category } from "./SidebarEditor";
 
+const MAX_CATEGORY_TITLE = 30;
+const getDisplayName = (name: string) => {
+  return name.length > MAX_CATEGORY_TITLE ? name.slice(0, MAX_CATEGORY_TITLE) + "..." : name;
+};
+
 type PhonePreviewProps = {
   categories: Category[];
   businessName?: string;
@@ -28,7 +33,7 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
                 {categories.length > 0 && (
                   categories.map((category) => (
                     <div key={category.id} className="space-y-4">
-                      <h2 className="text-xl font-semibold text-black">{category.name}</h2>
+                      <h2 className="text-xl font-semibold text-black">{getDisplayName(category.name)}</h2>
                       {category.items.length === 0 ? (
                         <p className="text-sm text-gray-400">No items in this category</p>
                       ) : (

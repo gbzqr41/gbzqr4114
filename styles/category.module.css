@@ -38,6 +38,23 @@
   margin-bottom: 16px;
 }
 
+.catCardContent {
+  overflow: visible;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  max-height: 2000px;
+  opacity: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.catCardContent.catCardContentClosed {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .catCardTitleWrapper {
   display: flex;
   align-items: center;
@@ -48,19 +65,57 @@
   font-weight: bold;
   color: black;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.catCardInputWrapper {
+  flex: 1;
+  position: relative;
 }
 
 .catCardInput {
-  flex: 1;
-  padding: 8px;
+  width: 100%;
+  padding: 8px 40px 8px 12px;
   border: 1px solid #d1d5db;
-  border-radius: 4px;
+  border-radius: 9999px;
   outline: none;
 }
 
 .catCardInput:focus {
   ring: 2px;
   ring-color: black;
+}
+
+.catCardInputClear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.catCardInputClear:hover {
+  background-color: #d1d5db;
+}
+
+.catCardInputClear svg {
+  width: 12px;
+  height: 12px;
 }
 
 .catActions {

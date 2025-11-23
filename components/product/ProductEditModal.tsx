@@ -52,7 +52,9 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
 
   const handleSave = () => {
     onSave(formData);
-    onClose();
+    setTimeout(() => {
+      onClose();
+    }, 0);
   };
 
   const handleAddAllergen = () => {

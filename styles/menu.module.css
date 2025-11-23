@@ -1,58 +1,99 @@
 /* Menu Component Styles - Fully Isolated */
 
 .menuItemCard {
-  background-color: rgb(246, 247, 249);
-  border-radius: 8px;
-  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  border: 1px solid rgba(240, 240, 240, 0.18);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.menuItemCardAnimate {
+  animation: menuItemEntrance 120ms ease-out;
+}
+
+@keyframes menuItemEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.menuItemCardExit {
+  animation: menuItemExit 120ms ease-out;
+}
+
+@keyframes menuItemExit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
 }
 
 .menuItemContent {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: stretch;
+  min-height: 80px;
 }
 
 .menuItemLeft {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
   flex: 1;
-}
-
-.menuItemImage {
-  width: 60px;
-  height: 60px;
-  background-color: rgb(238, 238, 238);
-  border-radius: 9999px;
-  flex-shrink: 0;
-  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
 }
 
 .menuItemInfo {
-  flex: 1;
-}
-
-.menuItemNameWrapper {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .menuItemName {
   font-weight: 600;
   color: black;
+  margin: 0;
+  align-self: flex-start;
 }
 
 .menuItemPrice {
   font-size: 14px;
   font-weight: 400;
   color: black;
-  margin-top: 4px;
+  margin: 0;
+  margin-top: auto;
+  align-self: flex-start;
 }
 
-.menuItemActions {
+.menuItemRight {
+  position: relative;
+  width: 140px;
+  overflow: hidden;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.menuItemImage {
+  width: 100px;
+  height: 100px;
+  background: none;
+  border-radius: 9999px;
+  object-fit: cover;
+  margin-right: -30px;
+  flex-shrink: 0;
 }
 
 .menuIconBtn {

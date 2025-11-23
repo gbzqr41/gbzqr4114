@@ -14,6 +14,7 @@ type MenuItemCardProps = {
   onDeleteItem: (categoryId: string, itemId: string) => void;
   onToggleAvailability: (categoryId: string, itemId: string) => void;
   onStartEdit: (itemId: string) => void;
+  onView?: () => void;
 };
 
 export default function MenuItemCard({
@@ -25,6 +26,7 @@ export default function MenuItemCard({
   onDeleteItem,
   onToggleAvailability,
   onStartEdit,
+  onView,
 }: MenuItemCardProps) {
   const isEditing = editingItemId === item.id;
 
@@ -87,31 +89,33 @@ export default function MenuItemCard({
     );
   }
 
+  const shouldAnimate = (item as any).animate === true;
+  const isDeleting = (item as any).deleting === true;
+
   return (
-    <div className={styles.menuItemCard}>
+    <div 
+      className={`${styles.menuItemCard} ${shouldAnimate ? styles.menuItemCardAnimate : ''} ${isDeleting ? styles.menuItemCardExit : ''}`}
+      onClick={() => {
+        if (onView) {
+          onView();
+        }
+      }}
+      style={{ cursor: onView ? 'pointer' : 'default' }}
+    >
       <div className={styles.menuItemContent}>
         <div className={styles.menuItemLeft}>
-          {item.image ? (
-            <img src={item.image} alt={item.name} className={styles.menuItemImage} />
-          ) : (
-            <div className={styles.menuItemImage}></div>
-          )}
           <div className={styles.menuItemInfo}>
-            <div className={styles.menuItemNameWrapper}>
-              <h4 className={styles.menuItemName}>{item.name}</h4>
-            </div>
+            <h4 className={styles.menuItemName}>{item.name}</h4>
             <p className={styles.menuItemPrice}>
               {new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(item.price)} TL
             </p>
           </div>
         </div>
-        <MenuItemActions
-          itemId={item.id}
-          categoryId={categoryId}
-          onEdit={() => onStartEdit(item.id)}
-          onToggleAvailability={() => onToggleAvailability(categoryId, item.id)}
-          onDelete={() => onDeleteItem(categoryId, item.id)}
-        />
+        <div className={styles.menuItemRight}>
+          {item.image && (
+            <img src={item.image} alt={item.name} className={styles.menuItemImage} />
+          )}
+        </div>
       </div>
     </div>
   );

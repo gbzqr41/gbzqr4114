@@ -5,6 +5,7 @@ import CategoryAddButton from "../category/CategoryAddButton";
 import CategoryCard from "../category/CategoryCard";
 import MenuItemCard from "../menu/MenuItemCard";
 import ProductEditModal from "../product/ProductEditModal";
+import MenuItemViewModal from "../menu/MenuItemViewModal";
 
 export type MenuItem = {
   id: string;
@@ -40,6 +41,8 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   const [showItemFields, setShowItemFields] = useState<{ [key: string]: boolean }>({});
   const [modalItemId, setModalItemId] = useState<string | null>(null);
   const [modalCategoryId, setModalCategoryId] = useState<string | null>(null);
+  const [viewModalItemId, setViewModalItemId] = useState<string | null>(null);
+  const [viewModalCategoryId, setViewModalCategoryId] = useState<string | null>(null);
 
   const addCategory = () => {
     const newCategory: Category = {
@@ -96,7 +99,8 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
         description: newItem.description || "",
         price: newItem.price,
         isAvailable: newItem.isAvailable ?? true,
-      };
+        animate: true,
+      } as MenuItem;
       onCategoriesChange(
         categories.map((cat) =>
           cat.id === categoryId
@@ -104,6 +108,15 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
             : cat
         )
       );
+      setTimeout(() => {
+        onCategoriesChange(
+          categories.map((cat) =>
+            cat.id === categoryId
+              ? { ...cat, items: cat.items.map((it) => it.id === item.id ? { ...it, animate: false } as MenuItem : it) }
+              : cat
+          )
+        );
+      }, 120);
       setNewItems((prev) => ({
         ...prev,
         [categoryId]: { name: "", description: "", price: 0, isAvailable: true },
@@ -118,14 +131,26 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
       description: "Açıklama...",
       price: 100,
       isAvailable: true,
-    };
-    onCategoriesChange(
-      categories.map((cat) =>
-        cat.id === categoryId
-          ? { ...cat, items: [...cat.items, item] }
-          : cat
-      )
+      animate: true,
+    } as MenuItem;
+    
+    const updatedCategories = categories.map((cat) =>
+      cat.id === categoryId
+        ? { ...cat, items: [...cat.items, item] }
+        : cat
     );
+    onCategoriesChange(updatedCategories);
+    
+    const itemId = item.id;
+    setTimeout(() => {
+      const finalCategories = updatedCategories.map((cat) =>
+        cat.id === categoryId
+          ? { ...cat, items: cat.items.map((it) => it.id === itemId ? { ...it, animate: false } as MenuItem : it) }
+          : cat
+      );
+      onCategoriesChange(finalCategories);
+    }, 120);
+    
     setOpenSearchPopup(null);
   };
 
@@ -162,10 +187,19 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
     onCategoriesChange(
       categories.map((cat) =>
         cat.id === categoryId
-          ? { ...cat, items: cat.items.filter((item) => item.id !== itemId) }
+          ? { ...cat, items: cat.items.map((item) => item.id === itemId ? { ...item, deleting: true } as MenuItem : item) }
           : cat
       )
     );
+    setTimeout(() => {
+      onCategoriesChange(
+        categories.map((cat) =>
+          cat.id === categoryId
+            ? { ...cat, items: cat.items.filter((item) => item.id !== itemId) }
+            : cat
+        )
+      );
+    }, 120);
   };
 
   const toggleItemAvailability = (categoryId: string, itemId: string) => {
@@ -210,16 +244,16 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                     setEditingCategoryName({ ...editingCategoryName, [categoryId]: name });
                   }}
                 >
-                  {(categoryOpenStates[category.id] ?? true) && (
-                    <div className="mb-4 relative">
-                      <div className="flex items-center gap-2 w-full px-3 py-2 border border-gray-200 rounded-full focus-within:ring-2 focus-within:ring-black">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                    <div className="mb-4 relative" style={{ zIndex: 10, pointerEvents: 'auto' }}>
+                      <div className="flex items-center gap-2 w-full px-3 py-2 border border-gray-200 rounded-full focus-within:ring-2 focus-within:ring-black" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0" style={{ pointerEvents: 'none' }}>
                           <path d="M20 20L15.8033 15.8033M15.8033 15.8033C17.1605 14.4461 18 12.5711 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18C12.5711 18 14.4461 17.1605 15.8033 15.8033Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <input
                           type="text"
                           placeholder="Menü arayın…"
                           className="flex-1 bg-transparent focus:outline-none text-sm"
+                          style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}
                           onFocus={() => setOpenSearchPopup(category.id)}
                           onBlur={(e) => {
                             const target = e.currentTarget;
@@ -230,6 +264,17 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                             }, 200);
                           }}
                         />
+                        <button
+                          onClick={() => {
+                            setModalItemId("new");
+                            setModalCategoryId(category.id);
+                          }}
+                          className="w-[32px] h-[32px] rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center flex-shrink-0"
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 7V17M7 12H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
                       </div>
                       {openSearchPopup === category.id && (
                         <div 
@@ -240,6 +285,7 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                           {dummyProducts.map((product, index) => (
                             <div
                               key={index}
+                              onMouseDown={(e) => e.preventDefault()}
                               onClick={() => {
                                 addItemFromPopup(category.id, product);
                               }}
@@ -256,10 +302,8 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                         </div>
                       )}
                     </div>
-                  )}
 
-                  {(categoryOpenStates[category.id] ?? true) && (
-                    <div className="space-y-3 mb-4">
+                    <div className="grid grid-cols-2 gap-[10px] mb-4">
                       {category.items.map((item) => (
                         <MenuItemCard
                           key={item.id}
@@ -294,27 +338,95 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                               });
                             }
                           }}
+                          onView={() => {
+                            setViewModalItemId(item.id);
+                            setViewModalCategoryId(category.id);
+                          }}
                         />
                       ))}
                     </div>
-                  )}
                 </CategoryCard>
               ))}
+            </div>
+            <div className="flex justify-center mt-5">
               <button
                 onClick={addCategory}
-                className="absolute bottom-[20px] right-[20px] w-[50px] h-[50px] rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow z-50"
+                className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow z-50"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 7V17M7 12H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-          </div>
-        </>
-      )}
+            </div>
+          </>
+        )}
       </div>
 
       {modalItemId && modalCategoryId && (() => {
         const category = categories.find((cat) => cat.id === modalCategoryId);
+        
+        if (modalItemId === "new") {
+          return (
+            <ProductEditModal
+              product={{
+                id: "new",
+                name: "",
+                description: "",
+                price: 0,
+                isAvailable: true,
+              }}
+              isOpen={!!modalItemId}
+              onClose={() => {
+                setModalItemId(null);
+                setModalCategoryId(null);
+              }}
+              onSave={(updatedData) => {
+                if (!updatedData || !modalCategoryId) return;
+                
+                let priceValue = 0;
+                if (typeof updatedData.price === 'number') {
+                  priceValue = updatedData.price;
+                } else if (typeof updatedData.price === 'string') {
+                  priceValue = parseFloat(updatedData.price) || 0;
+                }
+                
+                const newItem: MenuItem = {
+                  id: Date.now().toString(),
+                  name: updatedData.name || "",
+                  description: updatedData.description || "",
+                  price: priceValue,
+                  isAvailable: updatedData.isAvailable ?? true,
+                  image: updatedData.image || "",
+                  animate: true,
+                } as MenuItem;
+                
+                const updatedCategories = categories.map((cat) =>
+                  cat.id === modalCategoryId
+                    ? { ...cat, items: [...cat.items, newItem] }
+                    : cat
+                );
+                onCategoriesChange(updatedCategories);
+                
+                const itemId = newItem.id;
+                const categoryId = modalCategoryId;
+                
+                setTimeout(() => {
+                  const currentCategories = updatedCategories;
+                  const finalCategories = currentCategories.map((cat) =>
+                    cat.id === categoryId
+                      ? { ...cat, items: cat.items.map((it) => it.id === itemId ? { ...it, animate: false } as MenuItem : it) }
+                      : cat
+                  );
+                  onCategoriesChange(finalCategories);
+                }, 120);
+                
+                setModalItemId(null);
+                setModalCategoryId(null);
+              }}
+            />
+          );
+        }
+        
         const item = category?.items.find((item) => item.id === modalItemId);
         if (!item) return null;
         
@@ -326,6 +438,7 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
               description: item.description,
               price: item.price,
               isAvailable: item.isAvailable,
+              image: item.image,
             }}
             isOpen={!!modalItemId}
             onClose={() => {
@@ -336,6 +449,40 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
               updateItem(modalCategoryId, modalItemId, updatedData);
               setModalItemId(null);
               setModalCategoryId(null);
+            }}
+          />
+        );
+      })()}
+
+      {viewModalItemId && viewModalCategoryId && (() => {
+        const category = categories.find((cat) => cat.id === viewModalCategoryId);
+        const item = category?.items.find((item) => item.id === viewModalItemId);
+        if (!item) return null;
+        
+        return (
+          <MenuItemViewModal
+            item={item}
+            categoryId={viewModalCategoryId}
+            isOpen={!!viewModalItemId}
+            onClose={() => {
+              setViewModalItemId(null);
+              setViewModalCategoryId(null);
+            }}
+            onEdit={() => {
+              setViewModalItemId(null);
+              setViewModalCategoryId(null);
+              setModalItemId(item.id);
+              setModalCategoryId(viewModalCategoryId);
+            }}
+            onDelete={() => {
+              deleteItem(viewModalCategoryId, item.id);
+              setViewModalItemId(null);
+              setViewModalCategoryId(null);
+            }}
+            onToggleAvailability={() => {
+              toggleItemAvailability(viewModalCategoryId, item.id);
+              setViewModalItemId(null);
+              setViewModalCategoryId(null);
             }}
           />
         );

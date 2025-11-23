@@ -20,10 +20,10 @@ export default function DashboardPage() {
         </div>
         <div className="flex-1 w-full flex overflow-hidden">
           <div className="w-full flex bg-[#F6F7F9] rounded-[20px] p-[10px]">
-            <div className="w-[40%] border-r border-gray-200">
+            <div className="w-[46%] border-r border-gray-200">
               <SidebarEditor categories={categories} onCategoriesChange={setCategories} />
             </div>
-            <div className="w-[60%]">
+            <div className="w-[54%]">
               <PhonePreview categories={categories} />
             </div>
           </div>

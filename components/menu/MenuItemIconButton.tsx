@@ -3,7 +3,7 @@
 import styles from "../../styles/menu.module.css";
 
 type MenuItemIconButtonProps = {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
   icon: React.ReactNode;
   type?: 'edit' | 'view' | 'delete';
 };
