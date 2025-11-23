@@ -18,7 +18,7 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-100 pointer-events-none">
+    <div className="h-full flex flex-col pointer-events-none">
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="relative pointer-events-auto cursor-pointer" onClick={handleClick}>
           <div className="w-[375px] h-[812px] bg-black rounded-[3rem] p-2 shadow-2xl">
