@@ -25,8 +25,8 @@
   position: relative;
   background: white;
   border-radius: 24px;
-  width: 90%;
-  max-width: 480px;
+  width: 76.5%;
+  max-width: 408px;
   max-height: 90vh;
   overflow-y: auto;
   animation: slideUp 0.2s ease-out;
@@ -49,17 +49,18 @@
   top: 20px;
   left: 20px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
 }
 
 .modalTopButton {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  -moz-backdrop-filter: blur(12px);
   border: none;
   display: flex;
   align-items: center;
@@ -68,6 +69,7 @@
   color: #000;
   transition: opacity 0.2s;
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modalTopButton:hover {
@@ -86,7 +88,7 @@
   height: 280px;
   position: relative;
   overflow: hidden;
-  border-radius: 0 0 32px 32px;
+  border-radius: 24px 24px 32px 32px;
 }
 
 .modalImage {
@@ -123,6 +125,31 @@
   color: #888;
   margin: 0;
   line-height: 1.5;
+}
+
+.modalInfoRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.modalInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modalInfoIcon {
+  font-size: 14px;
+}
+
+.modalInfoText {
+  font-size: 12.5px;
+  color: #7a7a7a;
 }
 
 .modalDetails {

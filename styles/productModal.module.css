@@ -272,7 +272,7 @@
 
 .addButton {
   padding: 10px 20px;
-  background-color: #000;
+  background: linear-gradient(135deg, #c041ff59, #ff898973);
   color: white;
   border: none;
   border-radius: 8px;
@@ -284,7 +284,7 @@
 }
 
 .addButton:hover {
-  background-color: #333;
+  background: linear-gradient(135deg, #c041ff59, #ff898973);
 }
 
 /* Variations */

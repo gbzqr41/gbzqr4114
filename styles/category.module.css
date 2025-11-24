@@ -172,7 +172,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(40, 0, 60, 0.35), rgba(0, 0, 0, 0.45));
+  background: linear-gradient(135deg, #c041ff59, #ff898973);
   border: none;
   cursor: pointer;
 }
@@ -181,8 +181,8 @@
   width: 40px;
   height: 40px;
   border-radius: 9999px;
-  background: transparent;
-  border: 2px solid #d1d5db;
+  background: linear-gradient(135deg, #c041ff59, #ff898973);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,6 +191,6 @@
 }
 
 .catAddBtnHeader:hover {
-  background-color: #f9fafb;
+  background: linear-gradient(135deg, #c041ff59, #ff898973);
 }
 
