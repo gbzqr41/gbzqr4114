@@ -29,12 +29,11 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
     portion: product.portion || "",
     description: product.description || "",
     image: product.image || "",
-    allergens: product.allergens || [],
     variations: product.variations || [],
   });
 
-  const [newAllergen, setNewAllergen] = useState("");
   const [newVariation, setNewVariation] = useState({ name: "", extraPrice: 0 });
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -44,7 +43,6 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
         portion: product.portion || "",
         description: product.description || "",
         image: product.image || "",
-        allergens: product.allergens || [],
         variations: product.variations || [],
       });
     }
@@ -57,22 +55,6 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
     }, 0);
   };
 
-  const handleAddAllergen = () => {
-    if (newAllergen.trim()) {
-      setFormData({
-        ...formData,
-        allergens: [...formData.allergens, newAllergen.trim()],
-      });
-      setNewAllergen("");
-    }
-  };
-
-  const handleRemoveAllergen = (index: number) => {
-    setFormData({
-      ...formData,
-      allergens: formData.allergens.filter((_, i) => i !== index),
-    });
-  };
 
   const handleAddVariation = () => {
     if (newVariation.name.trim()) {
@@ -94,9 +76,11 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setIsUploading(true);
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData({ ...formData, image: reader.result as string });
+        setIsUploading(false);
       };
       reader.readAsDataURL(file);
     }
@@ -120,26 +104,15 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
           <div className={styles.modalBody}>
             {/* Product Image */}
             <div className={styles.formSection}>
-              <label className={styles.label}>Ürün Görseli</label>
               <div className={styles.imageSection}>
-                <div className={styles.imagePreview}>
-                  {formData.image ? (
+                <label className={`${styles.imagePreview} ${isUploading ? 'loading' : ''}`}>
+                  {formData.image && !isUploading ? (
                     <img src={formData.image} alt="Product" className={styles.image} />
                   ) : (
-                    <div className={styles.imagePlaceholder}>120×120</div>
+                    <div className={styles.imagePlaceholder}></div>
                   )}
-                </div>
-                <div className={styles.imageActions}>
-                  <label className={styles.uploadButton}>
-                    <input type="file" accept="image/*" onChange={handleImageUpload} className={styles.fileInput} />
-                    Yükle
-                  </label>
-                  {formData.image && (
-                    <button className={styles.replaceButton} onClick={() => setFormData({ ...formData, image: "" })}>
-                      Değiştir
-                    </button>
-                  )}
-                </div>
+                  <input type="file" accept="image/*,video/*" onChange={handleImageUpload} className={styles.fileInput} />
+                </label>
               </div>
             </div>
 
@@ -185,37 +158,6 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
               </div>
             </div>
 
-            {/* Allergens */}
-            <div className={styles.formSection}>
-              <label className={styles.label}>Alerjenler</label>
-              <div className={styles.allergenTags}>
-                {formData.allergens.map((allergen, index) => (
-                  <div key={index} className={styles.tag}>
-                    <span>{allergen}</span>
-                    <button
-                      className={styles.tagRemove}
-                      onClick={() => handleRemoveAllergen(index)}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className={styles.addAllergenWrapper}>
-                <input
-                  type="text"
-                  value={newAllergen}
-                  onChange={(e) => setNewAllergen(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && handleAddAllergen()}
-                  className={styles.textInput}
-                  placeholder="Yeni alerjen ekle"
-                />
-                <button className={styles.addButton} onClick={handleAddAllergen}>
-                  Ekle
-                </button>
-              </div>
-            </div>
-
             {/* Variations */}
             <div className={styles.formSection}>
               <label className={styles.label}>Varyasyonlar</label>
@@ -250,8 +192,8 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
                   className={styles.numberInput}
                   placeholder="Ek fiyat"
                 />
-                <button className={styles.addButton} onClick={handleAddVariation}>
-                  Ekle
+                <button className={styles.addVariationButton} onClick={handleAddVariation}>
+                  Varyasyon ekle
                 </button>
               </div>
             </div>
@@ -283,4 +225,3 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
     </div>
   );
 }
-

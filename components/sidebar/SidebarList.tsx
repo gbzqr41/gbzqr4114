@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import SidebarItem from "./SidebarItem";
 import styles from "../../styles/sidebar.module.css";
 
@@ -9,6 +10,49 @@ type SidebarListProps = {
 };
 
 export default function SidebarList({ activeItem = "QR Menü", onItemClick }: SidebarListProps) {
+  const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+  const profilePopupRef = useRef<HTMLDivElement>(null);
+  const profileSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profilePopupRef.current &&
+        profileSectionRef.current &&
+        !profilePopupRef.current.contains(event.target as Node) &&
+        !profileSectionRef.current.contains(event.target as Node)
+      ) {
+        setIsProfilePopupOpen(false);
+      }
+    };
+
+    if (isProfilePopupOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfilePopupOpen]);
+
+  const getIcon = (label: string, defaultIcon: React.ReactNode) => {
+    const isActive = activeItem === label;
+    const strokeWidth = isActive ? "2" : "1.5";
+    
+    if (!React.isValidElement(defaultIcon)) return defaultIcon;
+    
+    return React.cloneElement(defaultIcon as React.ReactElement<any>, {
+      children: React.Children.map((defaultIcon as React.ReactElement<any>).props.children, (child: any) => {
+        if (React.isValidElement(child) && child.type === 'path') {
+          return React.cloneElement(child, {
+            strokeWidth: strokeWidth
+          });
+        }
+        return child;
+      })
+    });
+  };
+
   const mainItems = [
     { label: "Pano", icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,9 +84,24 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
         <path d="M16 11V17M12 7L12 17M8 14L8 17M4 4H20V20H4V4Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     )},
+    { label: "Rezervasyon", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11M20 11V7C20 5.89543 19.1046 5 18 5H15M20 11H4M15 3V5M15 7V5M9 3V5M9 7V5M4 11V7C4 5.89543 4.89543 5 6 5H9M15 5H9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )},
+    { label: "Müşteriler", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 18.7083C18 17.0886 16.8283 15 15 15H9C7.17172 15 6 17.0886 6 18.7083M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )},
   ];
 
   const bottomItems = [
+    { label: "Geri Bildirim", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 17L6 20L7.5 14L3 9L9.5 8.5L12 3L14.5 8.5L21 9L16.5 14L18 20L12 17Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )},
     { label: "Ayarlar", icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 17V16.9929M9.13733 9C9.51961 7.84083 10.6567 7 12 7C13.6568 7 15 8.27919 15 9.85714C15 12.106 12.5726 11.7539 12.0848 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -62,7 +121,7 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
           <SidebarItem
             key={item.label}
             label={item.label}
-            icon={item.icon}
+            icon={getIcon(item.label, item.icon)}
             isActive={activeItem === item.label}
             onClick={() => onItemClick?.(item.label)}
           />
@@ -70,14 +129,66 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
       </div>
       <div className={styles.sideListBottom}>
         {bottomItems.map((item) => (
-          <SidebarItem
-            key={item.label}
-            label={item.label}
-            icon={item.icon}
-            isActive={activeItem === item.label}
-            onClick={() => onItemClick?.(item.label)}
-          />
+          <div key={item.label} className={item.label === "Geri Bildirim" ? styles.sideItemFeedback : ""}>
+            <SidebarItem
+              label={item.label}
+              icon={getIcon(item.label, item.icon)}
+              isActive={activeItem === item.label}
+              onClick={() => onItemClick?.(item.label)}
+              badge={item.label === "Geri Bildirim" ? 1 : undefined}
+            />
+          </div>
         ))}
+        <div className={styles.sideUser}>
+          <div
+            ref={profileSectionRef}
+            onClick={() => setIsProfilePopupOpen(!isProfilePopupOpen)}
+            className={styles.sideUserSection}
+          >
+            <div className={styles.sideUserAvatar}></div>
+            <div className={styles.sideUserInfo}>
+              <div className={styles.sideUserName}>Ahmet Özcan</div>
+              <div className={styles.sideUserTitle}>Yönetici</div>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: 'auto', flexShrink: 0 }}>
+              <path d="M7 10L12 15L17 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          {isProfilePopupOpen && (
+            <div ref={profilePopupRef} className={styles.sideUserPopup}>
+              <div className={styles.sideUserPopupTop}>
+                <div className={styles.sideUserPopupAvatar}></div>
+                <div className={styles.sideUserPopupInfo}>
+                  <div className={styles.sideUserPopupName}>Ahmet Özcan</div>
+                  <div className={styles.sideUserPopupTitle}>Yönetici</div>
+                </div>
+              </div>
+              <div className={styles.sideUserPopupUpgrade}>
+                <div className={styles.sideUserPopupUpgradeText}>7 gün ücretsiz deneme</div>
+              </div>
+              <div className={styles.sideUserPopupMenu}>
+                <div className={styles.sideUserPopupItem}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '8px' }}>
+                    <path d="M18 18.7083C18 17.0886 16.8283 15 15 15H9C7.17172 15 6 17.0886 6 18.7083M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Profil
+                </div>
+                <div className={styles.sideUserPopupItem}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '8px' }}>
+                    <path d="M3 17C10.952 18.6176 16.6829 8.75775 11 3C16.0007 3.13144 20 7.11149 20 12C20 16.9715 16.1188 21 11 21C7.77111 21 4.65938 19.4319 3 17Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Karanlık Mod
+                </div>
+                <div className={styles.sideUserPopupItem}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '8px' }}>
+                    <path d="M4 12L20 12M4 12L10 6M4 12L10 18" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Çıkış Yap
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

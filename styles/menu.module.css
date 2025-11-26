@@ -7,6 +7,7 @@
   padding: 0;
   overflow: hidden;
   position: relative;
+  height: 100px;
 }
 
 .menuItemCardAnimate {
@@ -42,7 +43,7 @@
 .menuItemContent {
   display: flex;
   align-items: stretch;
-  min-height: 80px;
+  height: 100px;
 }
 
 .menuItemLeft {
@@ -78,21 +79,21 @@
 
 .menuItemRight {
   position: relative;
-  width: 140px;
+  width: 82px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
+  padding-right: 10px;
 }
 
 .menuItemImage {
-  width: 100px;
-  height: 100px;
+  width: 72px;
+  height: 72px;
   background: none;
   border-radius: 9999px;
   object-fit: cover;
-  margin-right: -30px;
   flex-shrink: 0;
 }
 

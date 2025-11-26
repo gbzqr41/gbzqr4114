@@ -73,7 +73,7 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
                     <div key={category.id} className="space-y-4">
                       <h2 className="text-xl font-semibold text-black">{getDisplayName(category.name)}</h2>
                       {category.items.length === 0 ? (
-                        <p className="text-sm text-gray-400">No items in this category</p>
+                        <p className="text-sm text-gray-400">Ürün yok</p>
                       ) : (
                         <div className="space-y-3">
                           {category.items.map((item) => (

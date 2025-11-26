@@ -43,17 +43,20 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   const [modalCategoryId, setModalCategoryId] = useState<string | null>(null);
   const [viewModalItemId, setViewModalItemId] = useState<string | null>(null);
   const [viewModalCategoryId, setViewModalCategoryId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'menu' | 'design'>('menu');
+  const [isQRPopupOpen, setIsQRPopupOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const addCategory = () => {
     const newCategory: Category = {
       id: Date.now().toString(),
-      name: "Yeni Kategori",
+      name: "",
       items: [],
       animate: true,
     };
     onCategoriesChange([...categories, newCategory]);
     setEditingCategoryId(newCategory.id);
-    setEditingCategoryName({ ...editingCategoryName, [newCategory.id]: "Yeni Kategori" });
+    setEditingCategoryName({ ...editingCategoryName, [newCategory.id]: "" });
     
     setTimeout(() => {
       onCategoriesChange(
@@ -65,9 +68,10 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   };
 
   const updateCategoryName = (categoryId: string, newName: string) => {
+    const finalName = newName.trim() || "Yeni Kategori";
     onCategoriesChange(
       categories.map((cat) =>
-        cat.id === categoryId ? { ...cat, name: newName } : cat
+        cat.id === categoryId ? { ...cat, name: finalName } : cat
       )
     );
     setEditingCategoryId(null);
@@ -155,11 +159,7 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   };
 
   const dummyProducts = [
-    "Tarhana Çorbası",
-    "Mercimek Çorbası",
-    "Ezogelin Çorbası",
-    "Yayla Çorbası",
-    "Domates Çorbası",
+    "Dürüm",
   ];
 
   const updateItem = (categoryId: string, itemId: string, updates: Partial<MenuItem>) => {
@@ -212,6 +212,181 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
 
   return (
     <div className="h-full p-[10px] overflow-y-auto">
+      <div style={{ position: 'fixed', bottom: '80px', left: '50%', transform: 'translateX(-50%)', zIndex: 10000, display: 'flex', alignItems: 'center', gap: '5px' }}>
+        <div style={{ display: 'flex', backgroundColor: 'white', borderRadius: '9999px', padding: '10px', boxShadow: '0 5px 50px #0000000a' }}>
+          <div 
+            onClick={() => setActiveTab('menu')}
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px', 
+              cursor: 'pointer', 
+              color: activeTab === 'menu' ? 'black' : '#888',
+              fontWeight: '500',
+              fontSize: '14px',
+              transition: 'none',
+              minWidth: 'fit-content'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 3V19M15 3L9 5M15 3L21 5V21L15 19M15 19L9 21M9 5V21M9 5L3 3V19L9 21" stroke={activeTab === 'menu' ? 'black' : '#888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Menü
+          </div>
+          <div 
+            onClick={() => setActiveTab('design')}
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px', 
+              cursor: 'pointer', 
+              color: activeTab === 'design' ? 'black' : '#888',
+              fontWeight: '500',
+              fontSize: '14px',
+              transition: 'none',
+              marginLeft: '0'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20H20.5M18 10L21 7L17 3L14 6M18 10L8 20H4V16L14 6M18 10L14 6" stroke={activeTab === 'design' ? 'black' : '#888'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Tasarım
+          </div>
+        </div>
+        <div style={{ display: 'flex', backgroundColor: 'black', borderRadius: '9999px', padding: '10px', boxShadow: '0 5px 50px #0000000a', marginLeft: '5px' }}>
+          <div 
+            onClick={() => setIsQRPopupOpen(true)}
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px', 
+              cursor: 'pointer', 
+              color: 'white',
+              fontWeight: '500',
+              fontSize: '14px',
+              transition: 'none'
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 3H9V9H3V3Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 3H21V9H15V3Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 15H9V21H3V15Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 15H16M18 15H19M16 19H19V16H16V19Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            QR +
+          </div>
+        </div>
+      </div>
+      {isQRPopupOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10001
+          }}
+          onClick={() => setIsQRPopupOpen(false)}
+        >
+          <div 
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '20px',
+              padding: '40px',
+              maxWidth: '425px',
+              width: '76.5%',
+              position: 'relative',
+              boxShadow: 'rgba(0, 0, 0, 0.18) 0px 5px 50px'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+              <div style={{ width: '300px', height: '300px', backgroundColor: '#f0f0f0', borderRadius: '10px' }}>
+              </div>
+            </div>
+            <div style={{ width: '300px', margin: '0 auto', position: 'relative' }}>
+              <input
+                type="text"
+                value="https://example.com/menu"
+                readOnly
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  paddingRight: '12px',
+                  border: '1px solid #e5e5e5',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  marginBottom: '8px'
+                }}
+              />
+              {isCopied && (
+                <div style={{ position: 'absolute', right: '12px', top: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                  <div style={{ width: '24px', height: '24px', backgroundColor: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#666', whiteSpace: 'nowrap', backgroundColor: '#f0f0f0', padding: '4px 8px', borderRadius: '4px' }}>
+                    Kopyalandı
+                  </div>
+                </div>
+              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px' }}>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('https://example.com/menu');
+                    setIsCopied(true);
+                    setTimeout(() => setIsCopied(false), 2000);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '5px',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ width: '24px', height: '24px', backgroundColor: '#e5e5e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 4L3 11L10 14L13 21L20 4Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span style={{ fontSize: '14px', color: 'black' }}>Kopyala</span>
+                </button>
+                <button
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '5px',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    marginLeft: '5px'
+                  }}
+                >
+                  <div style={{ width: '24px', height: '24px', backgroundColor: '#e5e5e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.4898 14.9907C19.8414 16.831 18.6124 18.4108 16.9879 19.492C15.3635 20.5732 13.4316 21.0972 11.4835 20.9851C9.5353 20.873 7.67634 20.1308 6.18668 18.8704C4.69703 17.61 3.65738 15.8996 3.22438 13.997C2.79138 12.0944 2.98849 10.1026 3.78602 8.32177C4.58354 6.54091 5.93827 5.06746 7.64608 4.12343C9.35389 3.17941 11.3223 2.81593 13.2546 3.08779C16.5171 3.54676 18.6725 5.91142 21 8M21 8V2M21 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span style={{ fontSize: '14px', color: 'black' }}>Yenile</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="p-[10px] h-full">
         {categories.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full">
@@ -244,14 +419,14 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                     setEditingCategoryName({ ...editingCategoryName, [categoryId]: name });
                   }}
                 >
-                    <div className="mb-4 relative" style={{ zIndex: 10, pointerEvents: 'auto' }}>
-                      <div className="flex items-center gap-2 w-full px-3 py-2 border border-gray-200 rounded-full focus-within:ring-2 focus-within:ring-black" style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}>
+                    <div className="mb-4 relative" style={{ zIndex: 100, pointerEvents: 'auto', position: 'relative' }}>
+                      <div className="flex items-center gap-2 w-full px-3 py-2 border border-gray-200 rounded-full focus-within:ring-2 focus-within:ring-black" style={{ position: 'relative', zIndex: 100, pointerEvents: 'auto' }}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0" style={{ pointerEvents: 'none' }}>
                           <path d="M20 20L15.8033 15.8033M15.8033 15.8033C17.1605 14.4461 18 12.5711 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18C12.5711 18 14.4461 17.1605 15.8033 15.8033Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <input
                           type="text"
-                          placeholder="Menü arayın…"
+                          placeholder="Ürün arayın…"
                           className="flex-1 bg-transparent focus:outline-none text-sm"
                           style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}
                           onFocus={() => setOpenSearchPopup(category.id)}
@@ -269,18 +444,19 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
                             setModalItemId("new");
                             setModalCategoryId(category.id);
                           }}
-                          className="w-[32px] h-[32px] rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center flex-shrink-0"
+                          className="w-[32px] h-[32px] rounded-full flex items-center justify-center flex-shrink-0"
+                          style={{ background: 'linear-gradient(135deg, #c041ff59, #ff898973)', position: 'relative', zIndex: openSearchPopup === category.id ? -1 : 1 }}
                         >
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 7V17M7 12H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M12 7V17M7 12H17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </button>
                       </div>
                       {openSearchPopup === category.id && (
                         <div 
-                          className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#e5e5e5] rounded-xl shadow-md z-[100] p-2.5 max-h-[300px] overflow-y-auto"
+                          className="absolute top-full left-0 right-0 bg-white p-2.5 max-h-[300px] overflow-y-auto"
                           onMouseDown={(e) => e.preventDefault()}
-                          style={{ position: 'absolute' }}
+                          style={{ position: 'absolute', marginTop: '10px', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.38) 0px 5px 50px', zIndex: 10000 }}
                         >
                           {dummyProducts.map((product, index) => (
                             <div
@@ -349,12 +525,13 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
               ))}
             </div>
             <div className="flex justify-center mt-5">
-              <button
-                onClick={addCategory}
-                className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow z-50"
-              >
+                <button
+                  onClick={addCategory}
+                  className="w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+                  style={{ background: 'linear-gradient(135deg, #c041ff59, #ff898973)', zIndex: openSearchPopup ? 0 : 50 }}
+                >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 7V17M7 12H17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 7V17M7 12H17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
             </div>

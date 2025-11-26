@@ -107,16 +107,6 @@ export default function MenuItemViewModal({
                   <span className={styles.modalDetailValue}>{(item as any).portion}</span>
                 </div>
               )}
-              {(item as any).allergens && (item as any).allergens.length > 0 && (
-                <div className={styles.modalDetailItem}>
-                  <span className={styles.modalDetailLabel}>Alerjenler:</span>
-                  <div className={styles.modalDetailTags}>
-                    {((item as any).allergens as string[]).map((allergen, index) => (
-                      <span key={index} className={styles.modalDetailTag}>{allergen}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
               {(item as any).variations && (item as any).variations.length > 0 && (
                 <div className={styles.modalDetailItem}>
                   <span className={styles.modalDetailLabel}>Varyasyonlar:</span>

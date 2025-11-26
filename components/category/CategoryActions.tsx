@@ -5,15 +5,34 @@ import styles from "../../styles/category.module.css";
 
 type CategoryActionsProps = {
   categoryId: string;
+  isEditing?: boolean;
   onEdit: () => void;
   onToggle: () => void;
   onDelete: () => void;
+  onSave?: () => void;
+  onSaveMouseDown?: () => void;
 };
 
-export default function CategoryActions({ categoryId, onEdit, onToggle, onDelete }: CategoryActionsProps) {
+export default function CategoryActions({ categoryId, isEditing = false, onEdit, onToggle, onDelete, onSave, onSaveMouseDown }: CategoryActionsProps) {
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isEditing) {
+      e.preventDefault();
+      if (onSaveMouseDown) {
+        onSaveMouseDown();
+      }
+    }
+  };
+
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onEdit();
+    e.preventDefault();
+    if (isEditing) {
+      if (onSave) {
+        onSave();
+      }
+    } else {
+      onEdit();
+    }
   };
 
   const handleToggle = (e: React.MouseEvent) => {
@@ -26,10 +45,17 @@ export default function CategoryActions({ categoryId, onEdit, onToggle, onDelete
       <CategoryIconButton
         type="edit"
         onClick={handleEdit}
+        onMouseDown={handleMouseDown}
         icon={
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 10L21 7L17 3L14 6M18 10L8 20H4V16L14 6M18 10L14 6" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          isEditing ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 7L9.00004 18L3.99994 13" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 10L21 7L17 3L14 6M18 10L8 20H4V16L14 6M18 10L14 6" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )
         }
       />
       <CategoryIconButton
