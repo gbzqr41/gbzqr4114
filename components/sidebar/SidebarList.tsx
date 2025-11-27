@@ -44,7 +44,9 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
     return React.cloneElement(defaultIcon as React.ReactElement<any>, {
       children: React.Children.map((defaultIcon as React.ReactElement<any>).props.children, (child: any) => {
         if (React.isValidElement(child) && child.type === 'path') {
+          const props = (child as React.ReactElement<any>).props || {};
           return React.cloneElement(child as React.ReactElement<any>, {
+            ...props,
             strokeWidth: strokeWidth
           } as any);
         }
