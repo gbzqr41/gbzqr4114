@@ -78,7 +78,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
   const handleRemoveVariation = (index: number) => {
     setFormData({
       ...formData,
-      variations: formData.variations.filter((_, i) => i !== index),
+      variations: formData.variations.filter((_: any, i: number) => i !== index),
     });
   };
 
@@ -95,7 +95,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
   const handleRemoveIngredient = (index: number) => {
     setFormData({
       ...formData,
-      ingredients: formData.ingredients.filter((_, i) => i !== index),
+      ingredients: formData.ingredients.filter((_: any, i: number) => i !== index),
     });
   };
 
@@ -112,7 +112,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
   const handleRemoveRequiredProduct = (index: number) => {
     setFormData({
       ...formData,
-      requiredProducts: formData.requiredProducts.filter((_, i) => i !== index),
+      requiredProducts: formData.requiredProducts.filter((_: any, i: number) => i !== index),
     });
   };
 
@@ -129,7 +129,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
   const handleRemoveRecommendedProduct = (index: number) => {
     setFormData({
       ...formData,
-      recommendedProducts: formData.recommendedProducts.filter((_, i) => i !== index),
+      recommendedProducts: formData.recommendedProducts.filter((_: any, i: number) => i !== index),
     });
   };
 
@@ -274,7 +274,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
             <div className={styles.formSection}>
               <label className={styles.label}>İçindekiler</label>
               <div className={styles.variationsList}>
-                {formData.ingredients.map((ingredient, index) => (
+                {formData.ingredients.map((ingredient: string, index: number) => (
                   <div key={index} className={styles.variationItem}>
                     <span className={styles.variationName}>{ingredient}</span>
                     <button
@@ -309,7 +309,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
             <div className={styles.formSection}>
               <label className={styles.label}>Zorunlu Ürün</label>
               <div className={styles.variationsList}>
-                {formData.requiredProducts.map((reqProduct, index) => (
+                {formData.requiredProducts.map((reqProduct: string, index: number) => (
                   <div key={index} className={styles.variationItem}>
                     <span className={styles.variationName}>{reqProduct}</span>
                     <button
@@ -344,7 +344,7 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
             <div className={styles.formSection}>
               <label className={styles.label}>Yanında İyi Gider</label>
               <div className={styles.variationsList}>
-                {formData.recommendedProducts.map((recProduct, index) => (
+                {formData.recommendedProducts.map((recProduct: string, index: number) => (
                   <div key={index} className={styles.variationItem}>
                     <span className={styles.variationName}>{recProduct}</span>
                     <button

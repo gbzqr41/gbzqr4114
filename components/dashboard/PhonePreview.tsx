@@ -3,11 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Category } from "./SidebarEditor";
 
-const MAX_CATEGORY_TITLE = 30;
-const getDisplayName = (name: string) => {
-  return name.length > MAX_CATEGORY_TITLE ? name.slice(0, MAX_CATEGORY_TITLE) + "..." : name;
-};
-
 type PhonePreviewProps = {
   categories: Category[];
   businessName?: string;
@@ -61,19 +56,39 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
           <div 
             className="w-full h-full bg-white overflow-hidden relative" 
             style={{ 
-              borderRadius: 'calc(3rem - 8px)'
+              borderRadius: 'calc(3rem - 8px)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
             }}
           >
             <div 
-              className="h-full overflow-y-auto pt-8"
+              className="h-full overflow-y-auto"
+              style={{ 
+                padding: '15px 10px 10px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden'
+              }}
             >
-              <div className="px-6 py-4 space-y-8">
+              <div style={{ 
+                height: '300px', 
+                backgroundColor: '#fee2e2', 
+                borderRadius: '8px', 
+                padding: '25px',
+                marginBottom: '16px',
+                flexShrink: 0
+              }}>
+                <h1 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>Merhaba</h1>
+              </div>
+
+              <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0 }}>
                 {categories.length > 0 && (
                   categories.map((category) => (
                     <div key={category.id} className="space-y-4">
-                      <h2 className="text-xl font-semibold text-black">{getDisplayName(category.name)}</h2>
+                      <h2 className="text-xl font-semibold text-black">{category.name}</h2>
                       {category.items.length === 0 ? (
-                        <p className="text-sm text-gray-400">Ürün yok</p>
+                        <p className="text-sm text-gray-400">No items in this category</p>
                       ) : (
                         <div className="space-y-3">
                           {category.items.map((item) => (
