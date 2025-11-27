@@ -30,9 +30,15 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
     description: product.description || "",
     image: product.image || "",
     variations: product.variations || [],
+    ingredients: (product as any).ingredients || [],
+    requiredProducts: (product as any).requiredProducts || [],
+    recommendedProducts: (product as any).recommendedProducts || [],
   });
 
   const [newVariation, setNewVariation] = useState({ name: "", extraPrice: 0 });
+  const [newIngredient, setNewIngredient] = useState("");
+  const [newRequiredProduct, setNewRequiredProduct] = useState("");
+  const [newRecommendedProduct, setNewRecommendedProduct] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
@@ -44,6 +50,9 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
         description: product.description || "",
         image: product.image || "",
         variations: product.variations || [],
+        ingredients: (product as any).ingredients || [],
+        requiredProducts: (product as any).requiredProducts || [],
+        recommendedProducts: (product as any).recommendedProducts || [],
       });
     }
   }, [isOpen, product]);
@@ -70,6 +79,57 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
     setFormData({
       ...formData,
       variations: formData.variations.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleAddIngredient = () => {
+    if (newIngredient.trim()) {
+      setFormData({
+        ...formData,
+        ingredients: [...formData.ingredients, newIngredient.trim()],
+      });
+      setNewIngredient("");
+    }
+  };
+
+  const handleRemoveIngredient = (index: number) => {
+    setFormData({
+      ...formData,
+      ingredients: formData.ingredients.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleAddRequiredProduct = () => {
+    if (newRequiredProduct.trim()) {
+      setFormData({
+        ...formData,
+        requiredProducts: [...formData.requiredProducts, newRequiredProduct.trim()],
+      });
+      setNewRequiredProduct("");
+    }
+  };
+
+  const handleRemoveRequiredProduct = (index: number) => {
+    setFormData({
+      ...formData,
+      requiredProducts: formData.requiredProducts.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleAddRecommendedProduct = () => {
+    if (newRecommendedProduct.trim()) {
+      setFormData({
+        ...formData,
+        recommendedProducts: [...formData.recommendedProducts, newRecommendedProduct.trim()],
+      });
+      setNewRecommendedProduct("");
+    }
+  };
+
+  const handleRemoveRecommendedProduct = (index: number) => {
+    setFormData({
+      ...formData,
+      recommendedProducts: formData.recommendedProducts.filter((_, i) => i !== index),
     });
   };
 
@@ -208,6 +268,111 @@ export default function ProductEditModal({ product, isOpen, onClose, onSave }: P
                 placeholder="Ürün açıklamasını girin"
                 rows={4}
               />
+            </div>
+
+            {/* Ingredients */}
+            <div className={styles.formSection}>
+              <label className={styles.label}>İçindekiler</label>
+              <div className={styles.variationsList}>
+                {formData.ingredients.map((ingredient, index) => (
+                  <div key={index} className={styles.variationItem}>
+                    <span className={styles.variationName}>{ingredient}</span>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleRemoveIngredient(index)}
+                    >
+                      Sil
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.addVariationWrapper}>
+                <input
+                  type="text"
+                  value={newIngredient}
+                  onChange={(e) => setNewIngredient(e.target.value)}
+                  className={styles.textInput}
+                  placeholder="İçindekiler"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddIngredient();
+                    }
+                  }}
+                />
+                <button className={styles.addVariationButton} onClick={handleAddIngredient}>
+                  Ekle
+                </button>
+              </div>
+            </div>
+
+            {/* Required Products */}
+            <div className={styles.formSection}>
+              <label className={styles.label}>Zorunlu Ürün</label>
+              <div className={styles.variationsList}>
+                {formData.requiredProducts.map((reqProduct, index) => (
+                  <div key={index} className={styles.variationItem}>
+                    <span className={styles.variationName}>{reqProduct}</span>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleRemoveRequiredProduct(index)}
+                    >
+                      Sil
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.addVariationWrapper}>
+                <input
+                  type="text"
+                  value={newRequiredProduct}
+                  onChange={(e) => setNewRequiredProduct(e.target.value)}
+                  className={styles.textInput}
+                  placeholder="Zorunlu ürün"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddRequiredProduct();
+                    }
+                  }}
+                />
+                <button className={styles.addVariationButton} onClick={handleAddRequiredProduct}>
+                  Ekle
+                </button>
+              </div>
+            </div>
+
+            {/* Recommended Products */}
+            <div className={styles.formSection}>
+              <label className={styles.label}>Yanında İyi Gider</label>
+              <div className={styles.variationsList}>
+                {formData.recommendedProducts.map((recProduct, index) => (
+                  <div key={index} className={styles.variationItem}>
+                    <span className={styles.variationName}>{recProduct}</span>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleRemoveRecommendedProduct(index)}
+                    >
+                      Sil
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.addVariationWrapper}>
+                <input
+                  type="text"
+                  value={newRecommendedProduct}
+                  onChange={(e) => setNewRecommendedProduct(e.target.value)}
+                  className={styles.textInput}
+                  placeholder="Yanında iyi gider ürün"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddRecommendedProduct();
+                    }
+                  }}
+                />
+                <button className={styles.addVariationButton} onClick={handleAddRecommendedProduct}>
+                  Ekle
+                </button>
+              </div>
             </div>
           </div>
 

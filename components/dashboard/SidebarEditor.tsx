@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import CategoryAddButton from "../category/CategoryAddButton";
 import CategoryCard from "../category/CategoryCard";
 import MenuItemCard from "../menu/MenuItemCard";
@@ -46,6 +47,10 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
   const [activeTab, setActiveTab] = useState<'menu' | 'design'>('menu');
   const [isQRPopupOpen, setIsQRPopupOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [qrKey, setQrKey] = useState(0);
+  const [qrId, setQrId] = useState(() => Math.random().toString(36).substring(2, 15));
+  const [customLink, setCustomLink] = useState("");
+  const [qrLink, setQrLink] = useState("https://example.com/menu");
 
   const addCategory = () => {
     const newCategory: Category = {
@@ -309,80 +314,126 @@ export default function SidebarEditor({ categories, onCategoriesChange }: Sideba
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-              <div style={{ width: '300px', height: '300px', backgroundColor: '#f0f0f0', borderRadius: '10px' }}>
+              <div style={{ width: '300px', height: '300px', backgroundColor: '#f0f0f0', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                <QRCodeSVG key={qrKey} value={`${qrLink}?qr=${qrId}`} size={260} />
               </div>
             </div>
-            <div style={{ width: '300px', margin: '0 auto', position: 'relative' }}>
+            <div style={{ width: '300px', margin: '0 auto', marginBottom: '16px' }}>
               <input
                 type="text"
-                value="https://example.com/menu"
-                readOnly
+                value={customLink}
+                onChange={(e) => setCustomLink(e.target.value)}
+                placeholder="Link girin"
                 style={{
                   width: '100%',
                   padding: '12px',
-                  paddingRight: '12px',
                   border: '1px solid #e5e5e5',
                   borderRadius: '8px',
                   fontSize: '14px',
                   marginBottom: '8px'
                 }}
               />
-              {isCopied && (
-                <div style={{ position: 'absolute', right: '12px', top: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                  <div style={{ width: '24px', height: '24px', backgroundColor: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 6L9 17L4 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#666', whiteSpace: 'nowrap', backgroundColor: '#f0f0f0', padding: '4px 8px', borderRadius: '4px' }}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (customLink.trim()) {
+                    setQrLink(customLink.trim());
+                    setQrId(Math.random().toString(36).substring(2, 15));
+                    setQrKey(prev => prev + 1);
+                  }
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  backgroundColor: '#000',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  marginBottom: '16px'
+                }}
+              >
+                Oluştur
+              </button>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="text"
+                  value={qrLink}
+                  readOnly
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    paddingRight: isCopied ? '100px' : '12px',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '8px',
+                    fontSize: '14px'
+                  }}
+                />
+                {isCopied && (
+                  <div style={{ 
+                    position: 'absolute', 
+                    right: '12px', 
+                    top: '50%', 
+                    transform: 'translateY(-50%)',
+                    fontSize: '12px',
+                    color: '#666',
+                    whiteSpace: 'nowrap'
+                  }}>
                     Kopyalandı
                   </div>
-                </div>
-              )}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '5px' }}>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText('https://example.com/menu');
-                    setIsCopied(true);
-                    setTimeout(() => setIsCopied(false), 2000);
-                  }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '5px',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <div style={{ width: '24px', height: '24px', backgroundColor: '#e5e5e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 4L3 11L10 14L13 21L20 4Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span style={{ fontSize: '14px', color: 'black' }}>Kopyala</span>
-                </button>
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '5px',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    marginLeft: '5px'
-                  }}
-                >
-                  <div style={{ width: '24px', height: '24px', backgroundColor: '#e5e5e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.4898 14.9907C19.8414 16.831 18.6124 18.4108 16.9879 19.492C15.3635 20.5732 13.4316 21.0972 11.4835 20.9851C9.5353 20.873 7.67634 20.1308 6.18668 18.8704C4.69703 17.61 3.65738 15.8996 3.22438 13.997C2.79138 12.0944 2.98849 10.1026 3.78602 8.32177C4.58354 6.54091 5.93827 5.06746 7.64608 4.12343C9.35389 3.17941 11.3223 2.81593 13.2546 3.08779C16.5171 3.54676 18.6725 5.91142 21 8M21 8V2M21 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span style={{ fontSize: '14px', color: 'black' }}>Yenile</span>
-                </button>
+                )}
               </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (qrLink) {
+                    navigator.clipboard.writeText(qrLink).then(() => {
+                      setIsCopied(true);
+                      setTimeout(() => setIsCopied(false), 2000);
+                    }).catch(() => {
+                      setIsCopied(false);
+                    });
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 16px',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4L3 11L10 14L13 21L20 4Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '14px', color: 'black' }}>Kopyala</span>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setQrId(Math.random().toString(36).substring(2, 15));
+                  setQrKey(prev => prev + 1);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 16px',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.4898 14.9907C19.8414 16.831 18.6124 18.4108 16.9879 19.492C15.3635 20.5732 13.4316 21.0972 11.4835 20.9851C9.5353 20.873 7.67634 20.1308 6.18668 18.8704C4.69703 17.61 3.65738 15.8996 3.22438 13.997C2.79138 12.0944 2.98849 10.1026 3.78602 8.32177C4.58354 6.54091 5.93827 5.06746 7.64608 4.12343C9.35389 3.17941 11.3223 2.81593 13.2546 3.08779C16.5171 3.54676 18.6725 5.91142 21 8M21 8V2M21 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '14px', color: 'black' }}>Yenile</span>
+              </button>
             </div>
           </div>
         </div>

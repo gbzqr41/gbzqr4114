@@ -80,48 +80,53 @@ export default function MenuItemViewModal({
           </div>
 
           <div className={styles.modalInfoSection}>
-            <h3 className={styles.modalName}>{item.name}</h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <h3 className={styles.modalName}>{item.name}</h3>
+              <span style={{ fontSize: '18px', fontWeight: '600', color: '#000' }}>
+                {new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(item.price)} TL
+              </span>
+            </div>
+            
             <p className={styles.modalDescription}>
-              {item.description || "A traditional Anatolian soup made with fermented yogurt and grains."}
+              {item.description || "Dürüm ile ilgili açıklama"}
             </p>
             
-            <div className={styles.modalInfoRow}>
-              <div className={styles.modalInfoItem}>
-                <span className={styles.modalInfoIcon}>⏱</span>
-                <span className={styles.modalInfoText}>{(item as any).cookingTime || "—"} min</span>
-              </div>
-              <div className={styles.modalInfoItem}>
-                <span className={styles.modalInfoIcon}>🔥</span>
-                <span className={styles.modalInfoText}>{(item as any).calories || "—"} kcal</span>
-              </div>
-              <div className={styles.modalInfoItem}>
-                <span className={styles.modalInfoIcon}>⚖️</span>
-                <span className={styles.modalInfoText}>{(item as any).portion || "—"} g</span>
+            <div style={{ marginTop: '8px', marginBottom: '8px' }}>
+              <span style={{ fontSize: '14px', color: '#666' }}>İçindekiler</span>
+            </div>
+            
+            <div style={{ borderTop: '1px solid #e5e5e5', paddingTop: '12px', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>30dk.</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>400</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>-</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>kcal</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>-</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#000' }}>g</span>
+                <span style={{ fontSize: '14px', color: '#666' }}>200gram için</span>
               </div>
             </div>
             
-            <div className={styles.modalDetails}>
-              {(item as any).portion && (
-                <div className={styles.modalDetailItem}>
-                  <span className={styles.modalDetailLabel}>Gramaj:</span>
-                  <span className={styles.modalDetailValue}>{(item as any).portion}</span>
-                </div>
-              )}
-              {(item as any).variations && (item as any).variations.length > 0 && (
-                <div className={styles.modalDetailItem}>
-                  <span className={styles.modalDetailLabel}>Varyasyonlar:</span>
-                  <div className={styles.modalDetailVariations}>
-                    {((item as any).variations as Array<{ name: string; extraPrice: number }>).map((variation, index) => (
-                      <div key={index} className={styles.modalDetailVariation}>
-                        <span>{variation.name}</span>
-                        <span className={styles.modalDetailVariationPrice}>
-                          +{new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(variation.extraPrice)} TL
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ fontSize: '14px', fontWeight: '600', color: '#000', marginBottom: '8px' }}>Zorunlu Seçim</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ padding: '12px', backgroundColor: '#f9f9f9', borderRadius: '8px', fontSize: '14px' }}>Küçük boy L</div>
+                <div style={{ padding: '12px', backgroundColor: '#f9f9f9', borderRadius: '8px', fontSize: '14px' }}>Büyük boy XL</div>
+                <div style={{ padding: '12px', backgroundColor: '#f9f9f9', borderRadius: '8px', fontSize: '14px' }}>Mega Boy XXL</div>
+              </div>
+            </div>
+            
+            <div>
+              <div style={{ fontSize: '14px', fontWeight: '600', color: '#000', marginBottom: '12px' }}>
+                Önerilen Ürünler
+                <span style={{ fontSize: '12px', fontWeight: '400', color: '#666', marginLeft: '8px' }}>Yanında iyi gider</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', padding: '12px', minHeight: '80px' }}></div>
+                <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', padding: '12px', minHeight: '80px' }}></div>
+                <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', padding: '12px', minHeight: '80px' }}></div>
+                <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', padding: '12px', minHeight: '80px' }}></div>
+              </div>
             </div>
           </div>
         </div>

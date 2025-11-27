@@ -49,7 +49,7 @@ export default function LeftSidebar() {
             <input
               ref={searchInputRef}
               type="text"
-              placeholder="Ne Aramıştınız?"
+              placeholder="Ara"
               className="flex-1 bg-transparent text-white focus:outline-none text-[13px] placeholder:text-[rgb(132,132,132)] placeholder:font-medium"
               style={{ minWidth: 0, width: 0 }}
             />
@@ -58,7 +58,7 @@ export default function LeftSidebar() {
               onClick={() => searchInputRef.current?.focus()}
               style={{
                 padding: '4px 8px',
-                fontSize: '11px',
+                fontSize: '9px',
                 color: 'rgb(132, 132, 132)',
                 backgroundColor: 'transparent',
                 border: '1px solid rgb(43, 43, 43)',

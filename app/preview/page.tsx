@@ -20,18 +20,20 @@ export default function PreviewPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-md mx-auto bg-white min-h-screen">
-        <div className="px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">
-          <h1 className="text-2xl font-bold text-black">{businessName}</h1>
+    <div className="min-h-screen bg-white" style={{ padding: '15px 10px 10px 10px' }}>
+      <div className="max-w-md mx-auto bg-white min-h-screen" style={{ width: '100%', maxWidth: '100%' }}>
+        <div style={{ 
+          height: '300px', 
+          backgroundColor: '#fee2e2', 
+          borderRadius: '8px', 
+          padding: '25px',
+          marginBottom: '16px'
+        }}>
+          <h1 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>Merhaba</h1>
         </div>
 
-        <div className="px-6 py-4 space-y-8">
-          {categories.length === 0 ? (
-            <div className="text-center text-gray-400 py-12">
-              <p>No categories yet. Add categories and menu items to see them here.</p>
-            </div>
-          ) : (
+        <div className="space-y-8">
+          {categories.length > 0 && (
             categories.map((category) => (
               <div key={category.id} className="space-y-4">
                 <h2 className="text-xl font-semibold text-black">{category.name}</h2>
