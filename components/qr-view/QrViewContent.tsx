@@ -23,7 +23,7 @@ export default function QrViewContent() {
     <div className="min-h-screen bg-white" style={{ padding: '15px 10px 10px 10px', height: '100vh', overflow: 'hidden' }}>
       <div className="max-w-md mx-auto bg-white h-full" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <div style={{ 
-          height: '300px', 
+          height: '150px', 
           backgroundColor: '#fee2e2', 
           borderRadius: '8px', 
           padding: '25px',

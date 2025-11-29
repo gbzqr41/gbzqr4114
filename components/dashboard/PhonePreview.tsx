@@ -48,7 +48,7 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
             width: '100%', 
             height: '100%', 
             boxSizing: 'border-box',
-            borderRadius: '3rem',
+            borderRadius: '1.8rem',
             padding: '8px',
             overflow: 'hidden'
           }}
@@ -56,12 +56,42 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
           <div 
             className="w-full h-full bg-white overflow-hidden relative" 
             style={{ 
-              borderRadius: 'calc(3rem - 8px)',
+              borderRadius: 'calc(1.8rem - 8px)',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden'
             }}
           >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '10px',
+              gap: '10px',
+              flexShrink: 0
+            }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: '#f3f4f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div style={{
+                flex: 1,
+                textAlign: 'center',
+                fontSize: '14px',
+                color: '#000'
+              }}>
+                Gaziler Mah. 1711 Sok.
+              </div>
+            </div>
             <div 
               className="h-full overflow-y-auto"
               style={{ 
@@ -72,7 +102,7 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
               }}
             >
               <div style={{ 
-                height: '300px', 
+                height: '150px', 
                 backgroundColor: '#fee2e2', 
                 borderRadius: '8px', 
                 padding: '25px',
