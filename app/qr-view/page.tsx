@@ -1,7 +1,11 @@
 import QrViewContent from "@/components/qr-view/QrViewContent";
 
 export default function QrViewPage() {
-  return <QrViewContent />;
+  return (
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
+      <QrViewContent />
+    </div>
+  );
 }
 
 

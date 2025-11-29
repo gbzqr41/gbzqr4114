@@ -20,8 +20,38 @@ export default function QrViewContent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white" style={{ padding: '15px 10px 10px 10px', height: '100vh', overflow: 'hidden' }}>
-      <div className="max-w-md mx-auto bg-white h-full" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div className="bg-white" style={{ padding: '15px 10px 10px 10px', height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div className="max-w-md mx-auto bg-white h-full" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', flex: 1 }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '10px',
+          gap: '10px',
+          flexShrink: 0
+        }}>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            backgroundColor: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div style={{
+            flex: 1,
+            textAlign: 'center',
+            fontSize: '14px',
+            color: '#000'
+          }}>
+            Gaziler Mah. 1711 Sok.
+          </div>
+        </div>
         <div style={{ 
           height: '150px', 
           backgroundColor: '#fee2e2', 
@@ -31,6 +61,17 @@ export default function QrViewContent() {
           flexShrink: 0
         }}>
           <h1 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>Merhaba</h1>
+        </div>
+        <div style={{ marginBottom: '16px', flexShrink: 0 }}>
+          <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>Menü</h2>
+        </div>
+        <div style={{ 
+          height: '100px', 
+          backgroundColor: '#fee2e2', 
+          borderRadius: '8px', 
+          marginBottom: '16px',
+          flexShrink: 0
+        }}>
         </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0 }}>
