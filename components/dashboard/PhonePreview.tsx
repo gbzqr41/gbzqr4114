@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Category } from "./SidebarEditor";
-import QrViewContent from "@/components/qr-view/QrViewContent";
 
 type PhonePreviewProps = {
   categories: Category[];
@@ -92,23 +91,17 @@ export default function PhonePreview({ categories, businessName = "My Restaurant
               overflow: 'hidden'
             }}
           >
-            <div 
-              className="scrollbar-hide"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                boxSizing: 'border-box'
+            <iframe
+              src="/qr-view"
+              scrolling="yes"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: 'calc(1.8rem - 8px)',
+                overflow: 'auto'
               }}
-            >
-              <QrViewContent />
-            </div>
+            />
           </div>
         </div>
       </div>

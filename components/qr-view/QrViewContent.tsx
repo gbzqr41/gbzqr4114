@@ -33,7 +33,7 @@ export default function QrViewContent() {
           }
         }
       `}</style>
-      <div className="bg-white" style={{ padding: '20px 10px 90px 10px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <div className="bg-white" style={{ padding: '20px 10px 90px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <div style={{
           display: 'flex',
@@ -85,7 +85,7 @@ export default function QrViewContent() {
         </div>
         <div style={{ 
           height: '150px', 
-          backgroundColor: '#fee2e2', 
+          backgroundColor: 'rgb(242, 242, 242)', 
           borderRadius: '8px', 
           padding: '25px',
           marginBottom: '16px',
@@ -137,7 +137,7 @@ export default function QrViewContent() {
           marginBottom: '16px', 
           flexShrink: 0 
         }}>
-          {[1, 2, 3, 4].map((item) => (
+          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
             <div
               key={item}
               style={{
