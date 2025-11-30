@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
+import AddressTablePopup from "./AddressTablePopup";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -12,6 +13,9 @@ export default function QrViewContent() {
   const [showServiceMenu, setShowServiceMenu] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [showCartSuccess, setShowCartSuccess] = useState(false);
+  const [showAddressPopup, setShowAddressPopup] = useState(false);
+  const [addressPopupMode, setAddressPopupMode] = useState<'table' | 'address' | 'addAddress'>('address');
+  const categoryScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadData = () => {
@@ -57,6 +61,15 @@ export default function QrViewContent() {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    if (categoryScrollRef.current) {
+      const activeBtn = categoryScrollRef.current.querySelector(`[data-category="${activeButton}"]`) as HTMLElement;
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [activeButton]);
+
   const handleAddToCart = (item: MenuItem, quantity: number, variations?: any, extras?: any) => {
     // Cart functionality - localStorage'a kaydet
     const cart = JSON.parse(localStorage.getItem('gbzqr_cart') || '[]');
@@ -87,8 +100,8 @@ export default function QrViewContent() {
           }
         }
       `}</style>
-      <div className="bg-white" style={{ padding: '20px 10px 90px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <div className="bg-white" style={{ padding: '20px 10px 0 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px' }}>
+        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, height: '100%' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -114,12 +127,18 @@ export default function QrViewContent() {
               <path d="M3 12H21M3 6H21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <div style={{
-            flex: 1,
-            textAlign: 'center',
-            fontSize: '14px',
-            color: '#000'
-          }}>
+          <div 
+            onClick={() => {
+              setAddressPopupMode('address');
+              setShowAddressPopup(true);
+            }}
+            style={{
+              flex: 1,
+              textAlign: 'center',
+              fontSize: '14px',
+              color: '#000',
+              cursor: 'pointer'
+            }}>
             Gaziler Mah. 1711 Sok.
           </div>
           <div style={{
@@ -138,51 +157,90 @@ export default function QrViewContent() {
           </div>
         </div>
         <div style={{ 
-          height: '150px', 
+          height: '180px', 
           backgroundColor: 'rgb(242, 242, 242)', 
           borderRadius: '8px', 
           padding: '25px',
           marginBottom: '16px',
           flexShrink: 0
         }}>
-          <h1 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>Merhaba</h1>
         </div>
-        <div style={{ 
-          display: 'flex', 
-          gap: '10px', 
-          marginBottom: '16px', 
-          flexShrink: 0 
-        }}>
+        <div 
+          ref={categoryScrollRef}
+          className="category-scroll"
+          style={{ 
+            display: 'flex', 
+            gap: '7px', 
+            marginBottom: '16px', 
+            flexShrink: 0,
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+        >
+          <style>{`
+            .category-scroll::-webkit-scrollbar {
+              display: none;
+            }
+            .category-scroll {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
           <button
+            data-category="burger"
             onClick={() => setActiveButton("burger")}
             style={{
-              padding: '3px',
+              padding: '5px 15px',
               border: '2px solid #000',
-              borderRadius: '4px',
+              borderRadius: '9999px',
               backgroundColor: activeButton === "burger" ? '#000' : 'transparent',
               color: activeButton === "burger" ? '#fff' : '#000',
               cursor: 'pointer',
               fontSize: '14px',
-              fontWeight: '500'
+              fontWeight: '500',
+              flexShrink: 0
             }}
           >
             burger
           </button>
           <button
+            data-category="döner"
             onClick={() => setActiveButton("döner")}
             style={{
-              padding: '3px',
+              padding: '5px 15px',
               border: '2px solid #000',
-              borderRadius: '4px',
+              borderRadius: '9999px',
               backgroundColor: activeButton === "döner" ? '#000' : 'transparent',
               color: activeButton === "döner" ? '#fff' : '#000',
               cursor: 'pointer',
               fontSize: '14px',
-              fontWeight: '500'
+              fontWeight: '500',
+              flexShrink: 0
             }}
           >
             döner
           </button>
+          {['pizza', 'salata', 'çorba', 'tatlı', 'içecek', 'kahve', 'sandwich', 'makarna', 'balık', 'tavuk'].map((category) => (
+            <button
+              key={category}
+              data-category={category}
+              onClick={() => setActiveButton(category)}
+              style={{
+                padding: '5px 15px',
+                border: '2px solid #000',
+                borderRadius: '9999px',
+                backgroundColor: activeButton === category ? '#000' : 'transparent',
+                color: activeButton === category ? '#fff' : '#000',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                flexShrink: 0
+              }}
+            >
+              {category}
+            </button>
+          ))}
         </div>
         <div style={{ 
           display: 'flex', 
@@ -241,7 +299,7 @@ export default function QrViewContent() {
           ))}
         </div>
 
-        <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0 }}>
+        <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
           {categories.length > 0 && (
             categories.map((category) => (
               <div key={category.id} className="space-y-4">
@@ -284,115 +342,22 @@ export default function QrViewContent() {
             ))
           )}
         </div>
-      </div>
-      {isMenuOpen && (
-        <>
-          <div 
-            onClick={() => setIsMenuOpen(false)}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              zIndex: 9998
-            }}
-          />
-          <div style={{
-            position: 'absolute',
-            top: '5%',
-            left: 0,
-            right: 0,
-            height: '90%',
-            maxHeight: '90vh',
-            backgroundColor: '#fff',
-            borderTopLeftRadius: '20px',
-            borderTopRightRadius: '20px',
-            zIndex: 9999,
-            overflowY: 'auto',
-            padding: '20px',
-            animation: 'slideUp 0.3s ease-out'
-          }}>
-            <div style={{
-              width: '40px',
-              height: '4px',
-              backgroundColor: '#d1d5db',
-              borderRadius: '2px',
-              margin: '0 auto 20px',
-              cursor: 'pointer'
-            }} onClick={() => setIsMenuOpen(false)} />
-            <div style={{
-              width: '100%',
-              height: '150px',
-              backgroundColor: '#f3f4f6',
-              borderRadius: '12px',
-              marginBottom: '20px',
-              overflow: 'hidden'
-            }}>
-              <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop"
-                alt="Restaurant"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
-                }}
-              />
-            </div>
-            <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#000', margin: '0 0 16px 0' }}>
-              {businessName}
-            </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span style={{ fontSize: '14px', color: '#000' }}>+90 555 123 45 67</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span style={{ fontSize: '14px', color: '#000' }}>Gaziler Mah. 1711 Sok. No:5</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 17L12 22L22 17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 12L12 17L22 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span style={{ fontSize: '14px', color: '#000' }}>www.restaurant.com</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginTop: '8px' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 6V12L16 14" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <span style={{ fontSize: '14px', color: '#000', fontWeight: '500' }}>Çalışma Saatleri</span>
-                  <span style={{ fontSize: '12px', color: '#6b7280' }}>Pazartesi - Cuma: 09:00 - 22:00</span>
-                  <span style={{ fontSize: '12px', color: '#6b7280' }}>Cumartesi - Pazar: 10:00 - 23:00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: '#fff',
-        borderTop: '1px solid #e5e7eb',
-        display: 'flex',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        padding: '12px 0',
-        zIndex: 1000
-      }}>
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          maxWidth: '448px',
+          margin: '0 auto',
+          backgroundColor: '#fff',
+          borderTop: '1px solid #e5e7eb',
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          padding: '12px 0',
+          zIndex: 1000
+        }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -510,12 +475,137 @@ export default function QrViewContent() {
           <span style={{ fontSize: '10px', color: '#000' }}>Sepet</span>
         </div>
       </div>
+      {isMenuOpen && (
+        <>
+          <div 
+            onClick={() => setIsMenuOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 9998
+            }}
+          />
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            height: '80%',
+            backgroundColor: '#fff',
+            borderTopLeftRadius: '20px',
+            borderTopRightRadius: '20px',
+            zIndex: 9999,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            animation: 'slideUp 0.3s ease-out',
+            boxSizing: 'border-box'
+          }}>
+            <div style={{
+              overflowY: 'auto',
+              flex: '1 1 0',
+              height: '100%',
+              minHeight: '100%',
+              padding: '20px',
+              paddingBottom: '40px',
+              backgroundColor: '#fff',
+              width: '100%',
+              boxSizing: 'border-box'
+            }}>
+            <div style={{
+              width: '40px',
+              height: '4px',
+              backgroundColor: '#d1d5db',
+              borderRadius: '2px',
+              margin: '0 auto 20px',
+              cursor: 'pointer'
+            }} onClick={() => setIsMenuOpen(false)} />
+            <div style={{
+              width: '100%',
+              height: '150px',
+              backgroundColor: '#f3f4f6',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              overflow: 'hidden'
+            }}>
+              <img
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop"
+                alt="Restaurant"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+            <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#000', margin: '0 0 16px 0' }}>
+              {businessName}
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '14px', color: '#000' }}>+90 555 123 45 67</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '14px', color: '#000' }}>Gaziler Mah. 1711 Sok. No:5</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '14px', color: '#000' }}>www.restaurant.com</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginTop: '8px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 6V12L16 14" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <span style={{ fontSize: '14px', color: '#000', fontWeight: '500' }}>Çalışma Saatleri</span>
+                  <span style={{ fontSize: '12px', color: '#6b7280' }}>Pazartesi - Cuma: 09:00 - 22:00</span>
+                  <span style={{ fontSize: '12px', color: '#6b7280' }}>Cumartesi - Pazar: 10:00 - 23:00</span>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
     {selectedItem && (
       <MenuDetailView
         item={selectedItem}
         onClose={() => setSelectedItem(null)}
         onAddToCart={handleAddToCart}
+      />
+    )}
+    {showAddressPopup && (
+      <AddressTablePopup
+        mode={addressPopupMode}
+        onClose={() => setShowAddressPopup(false)}
+        onModeChange={(newMode) => setAddressPopupMode(newMode)}
+        onSelectTable={(table) => {
+          console.log('Selected table:', table);
+        }}
+        onSelectAddress={(address) => {
+          console.log('Selected address:', address);
+        }}
+        onSaveAddress={(address) => {
+          console.log('Saved address:', address);
+        }}
       />
     )}
     {showCartSuccess && (
@@ -581,6 +671,7 @@ export default function QrViewContent() {
         }
       }
     `}</style>
+      </div>
     </>
   );
 }

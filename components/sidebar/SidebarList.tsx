@@ -147,7 +147,13 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
             onClick={() => setIsProfilePopupOpen(!isProfilePopupOpen)}
             className={styles.sideUserSection}
           >
-            <div className={styles.sideUserAvatar}></div>
+            <div className={styles.sideUserAvatar} style={{ backgroundColor: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img 
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop" 
+                alt="Profile" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
+              />
+            </div>
             <div className={styles.sideUserInfo}>
               <div className={styles.sideUserName}>Ahmet Özcan</div>
               <div className={styles.sideUserTitle}>Yönetici</div>
@@ -159,7 +165,13 @@ export default function SidebarList({ activeItem = "QR Menü", onItemClick }: Si
           {isProfilePopupOpen && (
             <div ref={profilePopupRef} className={styles.sideUserPopup}>
               <div className={styles.sideUserPopupTop}>
-                <div className={styles.sideUserPopupAvatar}></div>
+                <div className={styles.sideUserPopupAvatar} style={{ backgroundColor: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img 
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop" 
+                    alt="Profile" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
+                  />
+                </div>
                 <div className={styles.sideUserPopupInfo}>
                   <div className={styles.sideUserPopupName}>Ahmet Özcan</div>
                   <div className={styles.sideUserPopupTitle}>Yönetici</div>
