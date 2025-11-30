@@ -10,15 +10,36 @@ export default function QrViewContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const storedCategories = localStorage.getItem("gbzqr_categories");
-    const storedBusinessName = localStorage.getItem("gbzqr_businessName");
-    
-    if (storedCategories) {
-      setCategories(JSON.parse(storedCategories));
-    }
-    if (storedBusinessName) {
-      setBusinessName(storedBusinessName);
-    }
+    const loadData = () => {
+      const storedCategories = localStorage.getItem("gbzqr_categories");
+      const storedBusinessName = localStorage.getItem("gbzqr_businessName");
+      
+      if (storedCategories) {
+        setCategories(JSON.parse(storedCategories));
+      }
+      if (storedBusinessName) {
+        setBusinessName(storedBusinessName);
+      }
+    };
+
+    loadData();
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'gbzqr_categories' || e.key === 'gbzqr_businessName') {
+        loadData();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    const interval = setInterval(() => {
+      loadData();
+    }, 500);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
