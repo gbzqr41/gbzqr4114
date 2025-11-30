@@ -15,6 +15,7 @@ export default function QrViewContent() {
   const [showCartSuccess, setShowCartSuccess] = useState(false);
   const [showAddressPopup, setShowAddressPopup] = useState(false);
   const [addressPopupMode, setAddressPopupMode] = useState<'table' | 'address' | 'addAddress'>('address');
+  const [currentSlide, setCurrentSlide] = useState(0);
   const categoryScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,6 +71,13 @@ export default function QrViewContent() {
     }
   }, [activeButton]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleAddToCart = (item: MenuItem, quantity: number, variations?: any, extras?: any) => {
     // Cart functionality - localStorage'a kaydet
     const cart = JSON.parse(localStorage.getItem('gbzqr_cart') || '[]');
@@ -108,7 +116,7 @@ export default function QrViewContent() {
           padding: '0',
           gap: '10px',
           flexShrink: 0,
-          margin: '10px'
+          margin: '10px 0'
         }}>
           <div 
             onClick={() => setIsMenuOpen(true)}
@@ -159,12 +167,72 @@ export default function QrViewContent() {
         </div>
         <div style={{ 
           height: '180px', 
-          backgroundColor: 'rgb(242, 242, 242)', 
           borderRadius: '8px', 
-          padding: '25px',
           marginBottom: '16px',
-          flexShrink: 0
+          flexShrink: 0,
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          <div style={{
+            display: 'flex',
+            width: '200%',
+            height: '100%',
+            transform: `translateX(-${currentSlide * 50}%)`,
+            transition: 'transform 0.5s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '50%',
+              height: '100%',
+              backgroundImage: 'url(https://i.pinimg.com/736x/47/06/6c/47066ccfb40ce0b87e27828aa0760b42.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}></div>
+            <div style={{ 
+              width: '50%',
+              height: '100%',
+              backgroundImage: 'url(https://i.pinimg.com/736x/0d/34/a5/0d34a54ab821af63f1d7241d7bfd983f.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}></div>
+          </div>
+          <div style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+            paddingTop: '3px',
+            zIndex: 10
+          }}>
+            <div 
+              onClick={() => setCurrentSlide(0)}
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: currentSlide === 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+                border: '1px solid rgba(0, 0, 0, 0.2)'
+              }}
+            ></div>
+            <div 
+              onClick={() => setCurrentSlide(1)}
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: currentSlide === 1 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+                border: '1px solid rgba(0, 0, 0, 0.2)'
+              }}
+            ></div>
+          </div>
         </div>
         <div 
           ref={categoryScrollRef}
