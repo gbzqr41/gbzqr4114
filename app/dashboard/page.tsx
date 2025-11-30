@@ -12,7 +12,7 @@ export default function DashboardPage() {
   return (
     <div className="bg-white flex overflow-hidden" style={{ height: '100vh', minHeight: 0 }}>
       <LeftSidebar />
-      <div className="flex-1 w-full h-full p-[50px] flex flex-col" style={{ overflow: 'hidden', minHeight: 0 }}>
+      <div className="flex-1 w-full h-full pt-[50px] px-[50px] pb-[20px] flex flex-col" style={{ overflow: 'hidden', minHeight: 0 }}>
         <div className="flex items-center justify-between mb-6" style={{ flexShrink: 0 }}>
           <div>
             <h2 className="text-[28px] text-black font-bold">QR Menü Oluşturma</h2>
@@ -29,7 +29,7 @@ export default function DashboardPage() {
             <div className="w-[46%] border-r border-gray-200" style={{ overflow: 'hidden' }}>
               <SidebarEditor categories={categories} onCategoriesChange={setCategories} />
             </div>
-            <div className="w-[54%] flex items-center justify-center" style={{ boxSizing: 'border-box', minHeight: 0, overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px', flexShrink: 1 }}>
+            <div className="w-[54%] flex items-center justify-center" style={{ boxSizing: 'border-box', height: '100%', minHeight: 0, overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px', flexShrink: 1 }}>
               <PhonePreview categories={categories} />
             </div>
           </div>
