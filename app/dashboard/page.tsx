@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const [isLocked, setIsLocked] = useState(false);
   const [password, setPassword] = useState("");
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [serviceAlert, setServiceAlert] = useState<{ type: string; timestamp: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleFullscreen = () => {
@@ -55,7 +56,39 @@ export default function DashboardPage() {
     window.open("/qr-view", "_blank");
   };
 
+  useEffect(() => {
+    const checkServiceAlert = () => {
+      const alertData = localStorage.getItem('gbzqr_serviceAlert');
+      if (alertData) {
+        const parsed = JSON.parse(alertData);
+        if (parsed.timestamp && (!serviceAlert || parsed.timestamp !== serviceAlert.timestamp)) {
+          setServiceAlert(parsed);
+          const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          oscillator.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          oscillator.frequency.value = 800;
+          oscillator.type = 'sine';
+          gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+          oscillator.start(audioContext.currentTime);
+          oscillator.stop(audioContext.currentTime + 0.5);
+        }
+      }
+    };
+
+    const interval = setInterval(checkServiceAlert, 500);
+    window.addEventListener('storage', checkServiceAlert);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', checkServiceAlert);
+    };
+  }, [serviceAlert]);
+
   return (
+    <>
     <div className="bg-white flex overflow-hidden" style={{ height: '100vh', minHeight: 0 }} ref={containerRef}>
       <LeftSidebar />
       <div className="flex-1 w-full h-full pt-[50px] px-[50px] pb-[20px] flex flex-col" style={{ overflow: 'hidden', minHeight: 0 }}>
@@ -273,6 +306,51 @@ export default function DashboardPage() {
         </div>
       )}
     </div>
+    {serviceAlert && (
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        backgroundColor: '#fff',
+        border: '2px solid #000',
+        borderRadius: '12px',
+        padding: '20px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        zIndex: 10000,
+        minWidth: '300px'
+      }}>
+        <div style={{ marginBottom: '16px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>
+            {serviceAlert.type === 'waiter' ? 'Müşteri Garson Çağırdı' : 'Müşteri Hesap İstiyor'}
+          </h3>
+          <p style={{ fontSize: '14px', color: '#6b7280' }}>
+            {serviceAlert.type === 'waiter' 
+              ? 'Bir müşteri garson çağırdı. Lütfen masaya gidin.' 
+              : 'Bir müşteri hesap istiyor. Lütfen masaya gidin.'}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setServiceAlert(null);
+            localStorage.removeItem('gbzqr_serviceAlert');
+          }}
+          style={{
+            width: '100%',
+            padding: '12px',
+            backgroundColor: '#000',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: '600',
+            cursor: 'pointer'
+          }}
+        >
+          Tamam
+        </button>
+      </div>
+    )}
+    </>
   );
 }
 

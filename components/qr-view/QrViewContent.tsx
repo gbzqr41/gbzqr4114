@@ -8,6 +8,7 @@ export default function QrViewContent() {
   const [businessName, setBusinessName] = useState("My Restaurant");
   const [activeButton, setActiveButton] = useState<string>("burger");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showServiceMenu, setShowServiceMenu] = useState(false);
 
   useEffect(() => {
     const loadData = () => {
@@ -357,6 +358,96 @@ export default function QrViewContent() {
             <path d="M18 18.7083C18 17.0886 16.8283 15 15 15H9C7.17172 15 6 17.0886 6 18.7083M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <span style={{ fontSize: '10px', color: '#000' }}>Profil</span>
+        </div>
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <button
+            onClick={() => setShowServiceMenu(!showServiceMenu)}
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              backgroundColor: '#000',
+              border: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 1001
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 11V6C18 4.34315 16.6569 3 15 3C13.3431 3 12 4.34315 12 6V11M18 11C18 12.6569 16.6569 14 15 14C13.3431 14 12 12.6569 12 11M18 11H21C21.5523 11 22 11.4477 22 12V20C22 21.1046 21.1046 22 20 22H4C2.89543 22 2 21.1046 2 20V12C2 11.4477 2.44772 11 3 11H12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          {showServiceMenu && (
+            <>
+              <div 
+                onClick={() => setShowServiceMenu(false)}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  zIndex: 1001
+                }}
+              />
+              <div style={{
+              position: 'absolute',
+              bottom: '68px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: '#fff',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              padding: '8px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              zIndex: 1002,
+              minWidth: '140px'
+            }}>
+              <button
+                onClick={() => {
+                  localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'waiter', timestamp: Date.now() }));
+                  window.dispatchEvent(new Event('storage'));
+                  setShowServiceMenu(false);
+                }}
+                style={{
+                  padding: '12px 16px',
+                  backgroundColor: '#fff',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  color: '#000',
+                  textAlign: 'left'
+                }}
+              >
+                Garson Çağır
+              </button>
+              <button
+                onClick={() => {
+                  localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'bill', timestamp: Date.now() }));
+                  window.dispatchEvent(new Event('storage'));
+                  setShowServiceMenu(false);
+                }}
+                style={{
+                  padding: '12px 16px',
+                  backgroundColor: '#fff',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  color: '#000',
+                  textAlign: 'left'
+                }}
+              >
+                Sipariş İste
+              </button>
+            </div>
+            </>
+          )}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
