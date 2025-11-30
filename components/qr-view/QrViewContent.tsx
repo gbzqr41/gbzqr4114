@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Category } from "@/components/dashboard/SidebarEditor";
+import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
+import MenuDetailView from "@/components/menu/MenuDetailView";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -9,6 +10,8 @@ export default function QrViewContent() {
   const [activeButton, setActiveButton] = useState<string>("burger");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showServiceMenu, setShowServiceMenu] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   useEffect(() => {
     const loadData = () => {
@@ -42,6 +45,35 @@ export default function QrViewContent() {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
+  const handleAddToCart = (item: MenuItem, quantity: number, variations?: any, extras?: any) => {
+    // Cart functionality - localStorage'a kaydet
+    const cart = JSON.parse(localStorage.getItem('gbzqr_cart') || '[]');
+    const cartItem = {
+      ...item,
+      quantity,
+      variations,
+      extras,
+      id: `${item.id}_${Date.now()}`
+    };
+    cart.push(cartItem);
+    localStorage.setItem('gbzqr_cart', JSON.stringify(cart));
+    setShowCartSuccess(true);
+    setTimeout(() => {
+      setShowCartSuccess(false);
+    }, 2000);
+  };
 
   return (
     <>
@@ -162,6 +194,17 @@ export default function QrViewContent() {
           {[1, 2, 3, 4, 5, 6, 7].map((item) => (
             <div
               key={item}
+              onClick={() => {
+                const mockItem: MenuItem = {
+                  id: `mock-${item}`,
+                  name: 'Klasik Burger',
+                  description: 'Etli, taze ve lezzetli burger',
+                  price: 149.00,
+                  isAvailable: true,
+                  image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=500&fit=crop'
+                };
+                setSelectedItem(mockItem);
+              }}
               style={{
                 height: '140px',
                 display: 'flex',
@@ -170,7 +213,8 @@ export default function QrViewContent() {
                 padding: '12px',
                 border: '1px solid #e5e7eb',
                 borderRadius: '8px',
-                backgroundColor: '#fff'
+                backgroundColor: '#fff',
+                cursor: 'pointer'
               }}
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -209,9 +253,10 @@ export default function QrViewContent() {
                     {category.items.map((item) => (
                       <div
                         key={item.id}
+                        onClick={() => item.isAvailable && setSelectedItem(item)}
                         className={`p-4 rounded-lg border ${
                           item.isAvailable
-                            ? "bg-white border-gray-200"
+                            ? "bg-white border-gray-200 cursor-pointer"
                             : "bg-gray-50 border-gray-200 opacity-60"
                         }`}
                       >
@@ -228,7 +273,7 @@ export default function QrViewContent() {
                             )}
                           </div>
                           <div className="ml-4">
-                            <p className="font-bold text-black">${item.price.toFixed(2)}</p>
+                            <p className="font-bold text-black">{item.price.toFixed(2)} TL</p>
                           </div>
                         </div>
                       </div>
@@ -256,10 +301,11 @@ export default function QrViewContent() {
           />
           <div style={{
             position: 'absolute',
-            bottom: 0,
+            top: '5%',
             left: 0,
             right: 0,
-            height: '80%',
+            height: '90%',
+            maxHeight: '90vh',
             backgroundColor: '#fff',
             borderTopLeftRadius: '20px',
             borderTopRightRadius: '20px',
@@ -465,6 +511,76 @@ export default function QrViewContent() {
         </div>
       </div>
     </div>
+    {selectedItem && (
+      <MenuDetailView
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+        onAddToCart={handleAddToCart}
+      />
+    )}
+    {showCartSuccess && (
+      <div
+        style={{
+          position: 'fixed',
+          top: '30px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          backgroundColor: '#fff',
+          border: '1px solid #e5e7eb',
+          borderRadius: '12px',
+          padding: '12px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          zIndex: 10001,
+          animation: 'fadeInOut 2s ease-in-out',
+          pointerEvents: 'none'
+        }}
+      >
+        <div style={{
+          width: '38px',
+          height: '38px',
+          borderRadius: '50%',
+          backgroundColor: '#10b981',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <span style={{
+          fontSize: '14px',
+          fontWeight: '500',
+          color: '#000'
+        }}>
+          Sepete Eklendi
+        </span>
+      </div>
+    )}
+    <style>{`
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+        10% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        90% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+    `}</style>
     </>
   );
 }
