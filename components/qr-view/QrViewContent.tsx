@@ -100,7 +100,7 @@ export default function QrViewContent() {
           }
         }
       `}</style>
-      <div className="bg-white" style={{ padding: '20px 10px 0 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px' }}>
+      <div className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px' }}>
         <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, height: '100%' }}>
         <div style={{
           display: 'flex',
@@ -108,7 +108,7 @@ export default function QrViewContent() {
           padding: '0',
           gap: '10px',
           flexShrink: 0,
-          marginBottom: '16px'
+          margin: '10px'
         }}>
           <div 
             onClick={() => setIsMenuOpen(true)}
