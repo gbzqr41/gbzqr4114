@@ -16,7 +16,10 @@ export default function QrViewContent() {
   const [showAddressPopup, setShowAddressPopup] = useState(false);
   const [addressPopupMode, setAddressPopupMode] = useState<'table' | 'address' | 'addAddress'>('address');
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showStickySearch, setShowStickySearch] = useState(false);
   const categoryScrollRef = useRef<HTMLDivElement>(null);
+  const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadData = () => {
@@ -78,6 +81,42 @@ export default function QrViewContent() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = mainContainerRef.current;
+      if (container) {
+        const scrollTop = container.scrollTop;
+        if (scrollTop > 100) {
+          setShowStickySearch(true);
+        } else {
+          setShowStickySearch(false);
+        }
+      } else {
+        const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollY > 100) {
+          setShowStickySearch(true);
+        } else {
+          setShowStickySearch(false);
+        }
+      }
+    };
+
+    const container = mainContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+      return () => container.removeEventListener('scroll', handleScroll);
+    } else {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      document.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        document.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
+
   const handleAddToCart = (item: MenuItem, quantity: number, variations?: any, extras?: any) => {
     // Cart functionality - localStorage'a kaydet
     const cart = JSON.parse(localStorage.getItem('gbzqr_cart') || '[]');
@@ -108,8 +147,76 @@ export default function QrViewContent() {
           }
         }
       `}</style>
-      <div className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px' }}>
-        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, height: '100%' }}>
+      {showStickySearch && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          maxWidth: '448px',
+          margin: '0 auto',
+          zIndex: 1001,
+          backgroundColor: '#fff',
+          padding: '10px 10px',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{
+            width: '100%',
+            height: '50px',
+            borderRadius: '9999px',
+            backgroundColor: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 15px',
+            flexShrink: 0,
+            position: 'relative',
+            boxSizing: 'border-box'
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginRight: '10px' }}>
+              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Ne Aramıştınız"
+              style={{
+                flex: 1,
+                border: 'none',
+                outline: 'none',
+                backgroundColor: 'transparent',
+                fontSize: '14px',
+                color: '#000',
+                minWidth: 0
+              }}
+            />
+            {searchQuery && (
+              <div
+                onClick={() => setSearchQuery('')}
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  backgroundColor: '#d1d5db',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  marginLeft: '10px'
+                }}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18M6 6L18 18" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      <div ref={mainContainerRef} className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px', overflowY: 'auto', height: '100vh', backgroundColor: '#fff' }}>
+        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, height: '100%', backgroundColor: '#fff' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -186,7 +293,8 @@ export default function QrViewContent() {
               backgroundImage: 'url(https://i.pinimg.com/736x/47/06/6c/47066ccfb40ce0b87e27828aa0760b42.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: 'no-repeat',
+              position: 'relative'
             }}></div>
             <div style={{ 
               width: '50%',
@@ -194,7 +302,8 @@ export default function QrViewContent() {
               backgroundImage: 'url(https://i.pinimg.com/736x/0d/34/a5/0d34a54ab821af63f1d7241d7bfd983f.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: 'no-repeat',
+              position: 'relative'
             }}></div>
           </div>
           <div style={{
@@ -318,7 +427,20 @@ export default function QrViewContent() {
           marginBottom: '16px', 
           flexShrink: 0 
         }}>
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            backgroundColor: 'transparent'
+          }}>
+            <style>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((item) => (
             <div
               key={item}
               onClick={() => {
@@ -334,14 +456,81 @@ export default function QrViewContent() {
               }}
               style={{
                 height: '140px',
+                width: '280px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
                 padding: '12px',
-                border: '1px solid #e5e7eb',
-                borderRadius: '8px',
+                border: 'none',
+                borderRadius: '20px',
                 backgroundColor: '#fff',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 5px 50px',
+                position: 'relative',
+                zIndex: 1,
+                flexShrink: 0
+              }}
+            >
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: '0 0 4px 0' }}>
+                  Klasik Burger
+                </h3>
+                <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>
+                  Etli, taze ve lezzetli burger
+                </p>
+              </div>
+              <div style={{ width: '100px', height: '100px', flexShrink: 0 }}>
+                <img
+                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
+                  alt="Burger"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '8px'
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+          </div>
+        </div>
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '12px', 
+          marginBottom: '16px', 
+          flexShrink: 0 
+        }}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+            <div
+              key={item}
+              onClick={() => {
+                const mockItem: MenuItem = {
+                  id: `mock-vertical-${item}`,
+                  name: 'Klasik Burger',
+                  description: 'Etli, taze ve lezzetli burger',
+                  price: 149.00,
+                  isAvailable: true,
+                  image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=500&fit=crop'
+                };
+                setSelectedItem(mockItem);
+              }}
+              style={{
+                height: '140px',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '12px',
+                border: 'none',
+                borderRadius: '20px',
+                backgroundColor: '#fff',
+                cursor: 'pointer',
+                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 5px 50px',
+                position: 'relative',
+                zIndex: 1,
+                flexShrink: 0
               }}
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
