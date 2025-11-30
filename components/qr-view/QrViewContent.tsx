@@ -105,9 +105,10 @@ export default function QrViewContent() {
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          padding: '10px',
+          padding: '0',
           gap: '10px',
-          flexShrink: 0
+          flexShrink: 0,
+          marginBottom: '16px'
         }}>
           <div 
             onClick={() => setIsMenuOpen(true)}
@@ -123,7 +124,7 @@ export default function QrViewContent() {
               cursor: 'pointer'
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', margin: 'auto' }}>
               <path d="M3 12H21M3 6H21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
@@ -151,7 +152,7 @@ export default function QrViewContent() {
             justifyContent: 'center',
             flexShrink: 0
           }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', margin: 'auto' }}>
               <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
