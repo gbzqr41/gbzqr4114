@@ -446,6 +446,101 @@ export default function QrViewContent() {
             />
           </div>
         </div>
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          marginBottom: '16px',
+          flexShrink: 0
+        }}>
+          <div style={{
+            flex: 1,
+            height: '180px',
+            borderRadius: '20px',
+            backgroundColor: 'rgb(247, 247, 247)',
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+            position: 'relative'
+          }}>
+            <div style={{
+              width: '100px',
+              height: '100px',
+              position: 'absolute',
+              top: '-20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              borderRadius: '50%',
+              overflow: 'hidden'
+            }}>
+              <img
+                src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
+                alt="Şefin Seçimi"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%', marginTop: '60px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
+                Dürüm
+              </h3>
+              <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
+                Domates, turşu, soğan, marul
+              </p>
+              <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
+                399 TL
+              </div>
+            </div>
+          </div>
+          <div style={{
+            flex: 1,
+            height: '180px',
+            borderRadius: '20px',
+            backgroundColor: 'rgb(247, 247, 247)',
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+            position: 'relative'
+          }}>
+            <div style={{
+              width: '100px',
+              height: '100px',
+              position: 'absolute',
+              top: '-20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              borderRadius: '50%',
+              overflow: 'hidden'
+            }}>
+              <img
+                src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
+                alt="Şefin Seçimi"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%', marginTop: '60px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
+                Dürüm
+              </h3>
+              <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
+                Domates, turşu, soğan, marul
+              </p>
+              <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
+                399 TL
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
           {categories.length > 0 && (
