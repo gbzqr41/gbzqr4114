@@ -400,6 +400,29 @@ export default function QrViewContent() {
             ))}
           </div>
         </div>
+        <div style={{
+          height: '150px',
+          borderRadius: '20px',
+          backgroundColor: 'rgb(247, 247, 247)',
+          padding: '20px',
+          marginBottom: '16px',
+          flexShrink: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between'
+        }}>
+          <div>
+            <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: '0 0 8px 0' }}>
+              Mc Donald's
+            </h3>
+            <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
+              Domates, turşu, soğan, marul
+            </p>
+          </div>
+          <div style={{ fontSize: '18px', fontWeight: '600', color: '#000' }}>
+            399 TL
+          </div>
+        </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
           {categories.length > 0 && (
