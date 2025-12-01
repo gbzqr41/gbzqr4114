@@ -17,6 +17,7 @@ export default function QrViewContent() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showStickySearch, setShowStickySearch] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState<string>("Sabah Kahvaltısı");
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -304,6 +305,40 @@ export default function QrViewContent() {
               }}
             ></div>
           </div>
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '16px',
+          padding: '0 5px',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          flexShrink: 0
+        }}>
+          <style>{`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          <Search size={20} color="black" style={{ flexShrink: 0 }} />
+          {['Sabah Kahvaltısı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
+            <span
+              key={menu}
+              onClick={() => setSelectedMenu(menu)}
+              style={{
+                fontSize: '14px',
+                color: selectedMenu === menu ? '#000' : '#9ca3af',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                fontWeight: selectedMenu === menu ? '500' : '400'
+              }}
+            >
+              {menu}
+            </span>
+          ))}
         </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
