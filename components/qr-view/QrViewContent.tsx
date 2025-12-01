@@ -17,8 +17,9 @@ export default function QrViewContent() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showStickySearch, setShowStickySearch] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>("Sabah Kahvaltısı");
+  const [selectedMenu, setSelectedMenu] = useState<string>("Kahvaltı");
   const menuScrollRef = useRef<HTMLDivElement>(null);
+  const menuContainerRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -219,7 +220,18 @@ export default function QrViewContent() {
               cursor: 'pointer',
               flex: 1
             }}>
-            <Navigation size={24} color="black" style={{ flexShrink: 0 }} />
+            <div style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: '#f3f4f6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Navigation size={24} color="black" />
+            </div>
             <span style={{ fontSize: '16px' }}>Gaziler Mah. 1711 Sok.</span>
           </div>
           <div style={{
@@ -306,14 +318,27 @@ export default function QrViewContent() {
             ></div>
           </div>
         </div>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '16px',
-          flexShrink: 0
-        }}>
-          <Search size={24} color="black" style={{ flexShrink: 0, marginRight: '5px' }} />
+        <div 
+          ref={menuContainerRef}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            marginBottom: '16px',
+            flexShrink: 0
+          }}>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            backgroundColor: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            <Search size={24} color="black" />
+          </div>
           <div
             ref={menuScrollRef}
             style={{
@@ -331,16 +356,31 @@ export default function QrViewContent() {
                 display: none;
               }
             `}</style>
-            {['Sabah Kahvaltısı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
+            {['Kahvaltı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
               <span
                 key={menu}
                 data-menu={menu}
                 onClick={() => {
                   setSelectedMenu(menu);
-                  const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${menu}"]`) as HTMLElement;
-                  if (menuElement) {
-                    menuElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                  }
+                  setTimeout(() => {
+                    const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${menu}"]`) as HTMLElement;
+                    if (menuElement && menuScrollRef.current && menuContainerRef.current) {
+                      const containerRect = menuContainerRef.current.getBoundingClientRect();
+                      const scrollRect = menuScrollRef.current.getBoundingClientRect();
+                      const elementRect = menuElement.getBoundingClientRect();
+                      const currentScrollLeft = menuScrollRef.current.scrollLeft;
+                      const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
+                      const elementWidth = elementRect.width;
+                      const containerWidth = containerRect.width;
+                      const searchIconWidth = 40;
+                      const gap = 12;
+                      const scrollAreaWidth = scrollRect.width;
+                      const centerOfContainer = (containerWidth / 2);
+                      const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
+                      const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
+                      menuScrollRef.current.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
+                    }
+                  }, 0);
                 }}
                 style={{
                   fontSize: '16px',
