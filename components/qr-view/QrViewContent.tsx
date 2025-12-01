@@ -18,6 +18,7 @@ export default function QrViewContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showStickySearch, setShowStickySearch] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("Sabah Kahvaltısı");
+  const menuScrollRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -214,13 +215,12 @@ export default function QrViewContent() {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              fontSize: '14px',
               color: '#000',
               cursor: 'pointer',
               flex: 1
             }}>
-            <Navigation size={20} color="black" style={{ flexShrink: 0 }} />
-            <span>Gaziler Mah. 1711 Sok.</span>
+            <Navigation size={24} color="black" style={{ flexShrink: 0 }} />
+            <span style={{ fontSize: '16px' }}>Gaziler Mah. 1711 Sok.</span>
           </div>
           <div style={{
             width: '40px',
@@ -232,7 +232,7 @@ export default function QrViewContent() {
             justifyContent: 'center',
             flexShrink: 0
           }}>
-            <Heart size={20} style={{ display: 'block', margin: 'auto' }} color="black" />
+            <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
           </div>
         </div>
         <div style={{ 
@@ -311,34 +311,50 @@ export default function QrViewContent() {
           alignItems: 'center',
           gap: '12px',
           marginBottom: '16px',
-          padding: '0 5px',
-          overflowX: 'auto',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
           flexShrink: 0
         }}>
-          <style>{`
-            div::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
-          <Search size={20} color="black" style={{ flexShrink: 0 }} />
-          {['Sabah Kahvaltısı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
-            <span
-              key={menu}
-              onClick={() => setSelectedMenu(menu)}
-              style={{
-                fontSize: '14px',
-                color: selectedMenu === menu ? '#000' : '#9ca3af',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                flexShrink: 0,
-                fontWeight: selectedMenu === menu ? '500' : '400'
-              }}
-            >
-              {menu}
-            </span>
-          ))}
+          <Search size={24} color="black" style={{ flexShrink: 0, marginRight: '5px' }} />
+          <div
+            ref={menuScrollRef}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              flex: 1
+            }}
+          >
+            <style>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            {['Sabah Kahvaltısı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
+              <span
+                key={menu}
+                data-menu={menu}
+                onClick={() => {
+                  setSelectedMenu(menu);
+                  const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${menu}"]`) as HTMLElement;
+                  if (menuElement) {
+                    menuElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                  }
+                }}
+                style={{
+                  fontSize: '16px',
+                  color: selectedMenu === menu ? '#000' : '#9ca3af',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                  fontWeight: selectedMenu === menu ? '500' : '400'
+                }}
+              >
+                {menu}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
