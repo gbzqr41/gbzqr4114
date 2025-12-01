@@ -221,8 +221,8 @@ export default function QrViewContent() {
               flex: 1
             }}>
             <div style={{
-              width: '40px',
-              height: '40px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
               backgroundColor: '#f3f4f6',
               display: 'flex',
@@ -235,8 +235,8 @@ export default function QrViewContent() {
             <span style={{ fontSize: '16px' }}>Gaziler Mah. 1711 Sok.</span>
           </div>
           <div style={{
-            width: '40px',
-            height: '40px',
+            width: '42px',
+            height: '42px',
             borderRadius: '50%',
             backgroundColor: '#f3f4f6',
             display: 'flex',
@@ -328,8 +328,8 @@ export default function QrViewContent() {
             flexShrink: 0
           }}>
           <div style={{
-            width: '40px',
-            height: '40px',
+            width: '42px',
+            height: '42px',
             borderRadius: '50%',
             backgroundColor: '#f3f4f6',
             display: 'flex',
@@ -361,8 +361,7 @@ export default function QrViewContent() {
                 key={menu}
                 data-menu={menu}
                 onClick={() => {
-                  setSelectedMenu(menu);
-                  setTimeout(() => {
+                  requestAnimationFrame(() => {
                     const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${menu}"]`) as HTMLElement;
                     if (menuElement && menuScrollRef.current && menuContainerRef.current) {
                       const containerRect = menuContainerRef.current.getBoundingClientRect();
@@ -372,15 +371,19 @@ export default function QrViewContent() {
                       const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
                       const elementWidth = elementRect.width;
                       const containerWidth = containerRect.width;
-                      const searchIconWidth = 40;
+                      const searchIconWidth = 42;
                       const gap = 12;
                       const scrollAreaWidth = scrollRect.width;
-                      const centerOfContainer = (containerWidth / 2);
                       const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
                       const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
-                      menuScrollRef.current.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
+                      const maxScroll = menuScrollRef.current.scrollWidth - scrollRect.width;
+                      menuScrollRef.current.scrollTo({ 
+                        left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
+                        behavior: 'smooth' 
+                      });
                     }
-                  }, 0);
+                  });
+                  setSelectedMenu(menu);
                 }}
                 style={{
                   fontSize: '16px',
@@ -388,7 +391,8 @@ export default function QrViewContent() {
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
-                  fontWeight: selectedMenu === menu ? '500' : '400'
+                  fontWeight: selectedMenu === menu ? '600' : '400',
+                  transition: 'font-weight 0.2s ease, color 0.2s ease'
                 }}
               >
                 {menu}
