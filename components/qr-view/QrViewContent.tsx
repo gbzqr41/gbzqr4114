@@ -401,26 +401,49 @@ export default function QrViewContent() {
           </div>
         </div>
         <div style={{
-          height: '150px',
+          height: '120px',
           borderRadius: '20px',
           backgroundColor: 'rgb(247, 247, 247)',
           padding: '20px',
           marginBottom: '16px',
           flexShrink: 0,
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between'
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          overflow: 'hidden',
+          position: 'relative'
         }}>
-          <div>
-            <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: '0 0 8px 0' }}>
-              Mc Donald's
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
+              Dürüm
             </h3>
             <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
               Domates, turşu, soğan, marul
             </p>
+            <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
+              399 TL
+            </div>
           </div>
-          <div style={{ fontSize: '18px', fontWeight: '600', color: '#000' }}>
-            399 TL
+          <div style={{
+            width: '100px',
+            height: '100px',
+            position: 'absolute',
+            right: '-20px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            borderRadius: '50%',
+            overflow: 'hidden'
+          }}>
+            <img
+              src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
+              alt="Şefin Seçimi"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
           </div>
         </div>
 
