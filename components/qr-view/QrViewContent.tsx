@@ -9,7 +9,6 @@ import { Search, X, Home, User, Bell, ShoppingCart, Calendar, Phone, MapPin, Glo
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [businessName, setBusinessName] = useState("My Restaurant");
-  const [activeButton, setActiveButton] = useState<string>("burger");
   const [showServiceMenu, setShowServiceMenu] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [showCartSuccess, setShowCartSuccess] = useState(false);
@@ -18,7 +17,6 @@ export default function QrViewContent() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showStickySearch, setShowStickySearch] = useState(false);
-  const categoryScrollRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,14 +53,6 @@ export default function QrViewContent() {
   }, []);
 
 
-  useEffect(() => {
-    if (categoryScrollRef.current) {
-      const activeBtn = categoryScrollRef.current.querySelector(`[data-category="${activeButton}"]`) as HTMLElement;
-      if (activeBtn) {
-        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-  }, [activeButton]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -314,219 +304,6 @@ export default function QrViewContent() {
               }}
             ></div>
           </div>
-        </div>
-        <div 
-          ref={categoryScrollRef}
-          className="category-scroll"
-          style={{ 
-            display: 'flex', 
-            gap: '7px', 
-            marginBottom: '16px', 
-            flexShrink: 0,
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}
-        >
-          <style>{`
-            .category-scroll::-webkit-scrollbar {
-              display: none;
-            }
-            .category-scroll {
-              -ms-overflow-style: none;
-              scrollbar-width: none;
-            }
-          `}</style>
-          <button
-            data-category="burger"
-            onClick={() => setActiveButton("burger")}
-            style={{
-              padding: '5px 15px',
-              border: '2px solid #000',
-              borderRadius: '9999px',
-              backgroundColor: activeButton === "burger" ? '#000' : 'transparent',
-              color: activeButton === "burger" ? '#fff' : '#000',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '500',
-              flexShrink: 0
-            }}
-          >
-            burger
-          </button>
-          <button
-            data-category="döner"
-            onClick={() => setActiveButton("döner")}
-            style={{
-              padding: '5px 15px',
-              border: '2px solid #000',
-              borderRadius: '9999px',
-              backgroundColor: activeButton === "döner" ? '#000' : 'transparent',
-              color: activeButton === "döner" ? '#fff' : '#000',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '500',
-              flexShrink: 0
-            }}
-          >
-            döner
-          </button>
-          {['pizza', 'salata', 'çorba', 'tatlı', 'içecek', 'kahve', 'sandwich', 'makarna', 'balık', 'tavuk'].map((category) => (
-            <button
-              key={category}
-              data-category={category}
-              onClick={() => setActiveButton(category)}
-              style={{
-                padding: '5px 15px',
-                border: '2px solid #000',
-                borderRadius: '9999px',
-                backgroundColor: activeButton === category ? '#000' : 'transparent',
-                color: activeButton === category ? '#fff' : '#000',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '500',
-                flexShrink: 0
-              }}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '12px', 
-          marginBottom: '16px', 
-          flexShrink: 0 
-        }}>
-          <div style={{
-            display: 'flex',
-            gap: '12px',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            backgroundColor: 'transparent'
-          }}>
-            <style>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((item) => (
-            <div
-              key={item}
-              onClick={() => {
-                const mockItem: MenuItem = {
-                  id: `mock-${item}`,
-                  name: 'Klasik Burger',
-                  description: 'Etli, taze ve lezzetli burger',
-                  price: 149.00,
-                  isAvailable: true,
-                  image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=500&fit=crop'
-                };
-                setSelectedItem(mockItem);
-              }}
-              style={{
-                height: '140px',
-                width: '280px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px',
-                border: 'none',
-                borderRadius: '20px',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 5px 50px',
-                position: 'relative',
-                zIndex: 1,
-                flexShrink: 0
-              }}
-            >
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: '0 0 4px 0' }}>
-                  Klasik Burger
-                </h3>
-                <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>
-                  Etli, taze ve lezzetli burger
-                </p>
-              </div>
-              <div style={{ width: '100px', height: '100px', flexShrink: 0 }}>
-                <img
-                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
-                  alt="Burger"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px'
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-          </div>
-        </div>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '12px', 
-          marginBottom: '16px', 
-          flexShrink: 0 
-        }}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-            <div
-              key={item}
-              onClick={() => {
-                const mockItem: MenuItem = {
-                  id: `mock-vertical-${item}`,
-                  name: 'Klasik Burger',
-                  description: 'Etli, taze ve lezzetli burger',
-                  price: 149.00,
-                  isAvailable: true,
-                  image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=500&fit=crop'
-                };
-                setSelectedItem(mockItem);
-              }}
-              style={{
-                height: '140px',
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px',
-                border: 'none',
-                borderRadius: '20px',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 5px 50px',
-                position: 'relative',
-                zIndex: 1,
-                flexShrink: 0
-              }}
-            >
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: '0 0 4px 0' }}>
-                  Klasik Burger
-                </h3>
-                <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>
-                  Etli, taze ve lezzetli burger
-                </p>
-              </div>
-              <div style={{ width: '100px', height: '100px', flexShrink: 0 }}>
-                <img
-                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
-                  alt="Burger"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px'
-                  }}
-                />
-              </div>
-            </div>
-          ))}
         </div>
 
         <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
