@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
 import AddressTablePopup from "./AddressTablePopup";
-import { Search, X, Home, User, Bell, ShoppingCart, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart } from "lucide-react";
+import { Search, X, Home, User, Bell, ShoppingCart, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter } from "lucide-react";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -17,10 +17,13 @@ export default function QrViewContent() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showStickySearch, setShowStickySearch] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>("Kahvaltı");
+  const [selectedMenu, setSelectedMenu] = useState<string>("");
   const menuScrollRef = useRef<HTMLDivElement>(null);
   const menuContainerRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   useEffect(() => {
     const loadData = () => {
@@ -99,6 +102,21 @@ export default function QrViewContent() {
       };
     }
   }, []);
+
+  const handleSwipe = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Swipe left - next slide
+        setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
+      } else {
+        // Swipe right - previous slide
+        setCurrentSlide((prev) => (prev === 0 ? 2 : prev - 1));
+      }
+    }
+  };
 
   const handleAddToCart = (item: MenuItem, quantity: number, variations?: any, extras?: any) => {
     // Cart functionality - localStorage'a kaydet
@@ -247,14 +265,25 @@ export default function QrViewContent() {
             <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
           </div>
         </div>
-        <div style={{ 
-          height: '180px', 
-          borderRadius: '8px', 
-          marginBottom: '16px',
-          flexShrink: 0,
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
+        <div 
+          ref={sliderRef}
+          style={{ 
+            height: '230px', 
+            borderRadius: '12px', 
+            marginBottom: '16px',
+            flexShrink: 0,
+            position: 'relative',
+            overflow: 'hidden',
+            touchAction: 'pan-y'
+          }}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            touchEndX.current = e.changedTouches[0].clientX;
+            handleSwipe();
+          }}
+        >
           <div style={{
             display: 'flex',
             width: '300%',
@@ -349,6 +378,29 @@ export default function QrViewContent() {
             ></div>
           </div>
         </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '12px',
+          flexShrink: 0
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer'
+          }}>
+            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Filtrele</span>
+          </div>
+        </div>
         <div 
           ref={menuContainerRef}
           style={{
@@ -363,6 +415,7 @@ export default function QrViewContent() {
             height: '42px',
             borderRadius: '50%',
             backgroundColor: '#f3f4f6',
+            border: '2px solid #f3f4f6',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -375,7 +428,7 @@ export default function QrViewContent() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '10px',
               overflowX: 'auto',
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -418,12 +471,18 @@ export default function QrViewContent() {
                 }}
                 style={{
                   fontSize: '16px',
-                  color: selectedMenu === menu ? '#000' : '#9ca3af',
+                  color: selectedMenu === menu ? '#fff' : '#000',
+                  backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
+                  padding: '0 15px',
+                  height: '42px',
+                  borderRadius: '9999px',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
                   fontWeight: selectedMenu === menu ? '600' : '400',
-                  transition: 'font-weight 0.2s ease, color 0.2s ease'
+                  transition: 'font-weight 0.2s ease, color 0.2s ease, background-color 0.2s ease'
                 }}
               >
                 {menu}
