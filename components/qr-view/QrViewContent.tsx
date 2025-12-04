@@ -238,7 +238,10 @@ export default function QrViewContent() {
           gap: '10px',
           flexShrink: 0,
           margin: '10px 0',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          backgroundColor: 'transparent',
+          position: 'relative',
+          zIndex: 10
         }}>
           <div 
             onClick={() => {
@@ -253,23 +256,28 @@ export default function QrViewContent() {
               cursor: 'pointer',
               flex: 1
             }}>
-            <span style={{ fontSize: '15px', textAlign: 'center' }}>Ev</span>
           </div>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '3px',
-            flexShrink: 0
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 10
           }}>
             <div style={{
-              width: '42px',
-              height: '42px',
+              width: '50px',
+              height: '50px',
               borderRadius: '50%',
-              backgroundColor: '#f3f4f6',
+              backgroundColor: 'rgba(243, 244, 246, 0.8)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0
+              flexShrink: 0,
+              position: 'relative',
+              zIndex: 10
             }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
@@ -277,14 +285,18 @@ export default function QrViewContent() {
               </svg>
             </div>
             <div style={{
-              width: '42px',
-              height: '42px',
+              width: '50px',
+              height: '50px',
               borderRadius: '50%',
-              backgroundColor: '#f3f4f6',
+              backgroundColor: 'rgba(243, 244, 246, 0.8)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0
+              flexShrink: 0,
+              position: 'relative',
+              zIndex: 10
             }}>
               <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
             </div>
@@ -294,12 +306,16 @@ export default function QrViewContent() {
           ref={sliderRef}
           style={{ 
             height: '230px', 
-            borderRadius: '12px', 
+            borderRadius: '0',
+            marginTop: '-80px',
+            marginLeft: '-10px',
+            marginRight: '-10px',
             marginBottom: '16px',
             flexShrink: 0,
             position: 'relative',
             overflow: 'hidden',
-            touchAction: 'pan-y'
+            touchAction: 'pan-y',
+            width: 'calc(100% + 20px)'
           }}
           onTouchStart={(e) => {
             touchStartX.current = e.touches[0].clientX;
@@ -327,6 +343,12 @@ export default function QrViewContent() {
                 loop
                 muted
                 playsInline
+                onEnded={(e) => {
+                  e.currentTarget.play();
+                }}
+                onPause={(e) => {
+                  e.currentTarget.play();
+                }}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -346,6 +368,12 @@ export default function QrViewContent() {
                 loop
                 muted
                 playsInline
+                onEnded={(e) => {
+                  e.currentTarget.play();
+                }}
+                onPause={(e) => {
+                  e.currentTarget.play();
+                }}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -595,6 +623,12 @@ export default function QrViewContent() {
                 loop
                 muted
                 playsInline
+                onEnded={(e) => {
+                  e.currentTarget.play();
+                }}
+                onPause={(e) => {
+                  e.currentTarget.play();
+                }}
                 style={{
                   width: '100%',
                   height: '84px',
@@ -878,6 +912,12 @@ export default function QrViewContent() {
                 loop
                 muted
                 playsInline
+                onEnded={(e) => {
+                  e.currentTarget.play();
+                }}
+                onPause={(e) => {
+                  e.currentTarget.play();
+                }}
                 style={{
                   width: '100px',
                   height: '100px',
