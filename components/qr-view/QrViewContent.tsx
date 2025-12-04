@@ -237,8 +237,16 @@ export default function QrViewContent() {
           padding: '0',
           gap: '10px',
           flexShrink: 0,
-          margin: '10px 0'
+          margin: '10px 0',
+          justifyContent: 'space-between'
         }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span style={{ fontSize: '15px', color: '#000' }}>İyi Geceler, <span style={{ fontWeight: '700' }}>Ebru</span></span>
+          </div>
           <div 
             onClick={() => {
               setAddressPopupMode('address');
@@ -247,11 +255,22 @@ export default function QrViewContent() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              justifyContent: 'center',
               color: '#000',
               cursor: 'pointer',
               flex: 1
             }}>
+            <span style={{ fontSize: '15px', textAlign: 'center' }}>Gaziler Mah. 1711 Sok.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '4px' }}>
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '3px',
+            flexShrink: 0
+          }}>
             <div style={{
               width: '42px',
               height: '42px',
@@ -262,21 +281,23 @@ export default function QrViewContent() {
               justifyContent: 'center',
               flexShrink: 0
             }}>
-              <Navigation size={24} color="black" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
+                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
+              </svg>
             </div>
-            <span style={{ fontSize: '16px' }}>Gaziler Mah. 1711 Sok.</span>
-          </div>
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '50%',
-            backgroundColor: '#f3f4f6',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0
-          }}>
-            <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%',
+              backgroundColor: '#f3f4f6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
+            </div>
           </div>
         </div>
         <div 
@@ -328,21 +349,56 @@ export default function QrViewContent() {
             <div style={{ 
               width: '33.333%',
               height: '100%',
+              position: 'relative'
+            }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              >
+                <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div style={{ 
+              width: '33.333%',
+              height: '100%',
               backgroundImage: 'url(https://i.pinimg.com/736x/47/06/6c/47066ccfb40ce0b87e27828aa0760b42.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               position: 'relative'
-            }}></div>
-            <div style={{ 
-              width: '33.333%',
-              height: '100%',
-              backgroundImage: 'url(https://i.pinimg.com/736x/0d/34/a5/0d34a54ab821af63f1d7241d7bfd983f.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative'
-            }}></div>
+            }}>
+              <div style={{
+                position: 'absolute',
+                left: '20px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: '#fff'
+              }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: '500',
+                  color: '#fff',
+                  margin: '0 0 10px 0'
+                }}>
+                  HAMBURGER
+                </h3>
+                <h1 style={{
+                  fontSize: '28px',
+                  fontWeight: '600',
+                  color: '#fff',
+                  margin: 0
+                }}>
+                  Lezzetli Burger
+                </h1>
+              </div>
+            </div>
           </div>
           <div style={{
             position: 'absolute',
@@ -358,37 +414,34 @@ export default function QrViewContent() {
             <div 
               onClick={() => setCurrentSlide(0)}
               style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
+                width: '20px',
+                height: '2px',
                 backgroundColor: currentSlide === 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
-                border: '1px solid rgba(0, 0, 0, 0.2)'
+                borderRadius: '1px'
               }}
             ></div>
             <div 
               onClick={() => setCurrentSlide(1)}
               style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
+                width: '20px',
+                height: '2px',
                 backgroundColor: currentSlide === 1 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
-                border: '1px solid rgba(0, 0, 0, 0.2)'
+                borderRadius: '1px'
               }}
             ></div>
             <div 
               onClick={() => setCurrentSlide(2)}
               style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
+                width: '20px',
+                height: '2px',
                 backgroundColor: currentSlide === 2 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
-                border: '1px solid rgba(0, 0, 0, 0.2)'
+                borderRadius: '1px'
               }}
             ></div>
           </div>
@@ -405,7 +458,7 @@ export default function QrViewContent() {
             alignItems: 'center',
             gap: '8px'
           }}>
-            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
+            <span style={{ fontSize: '15px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
           </div>
           <div style={{
             display: 'flex',
@@ -413,7 +466,7 @@ export default function QrViewContent() {
             gap: '8px',
             cursor: 'pointer'
           }}>
-            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Filtrele</span>
+            <span style={{ fontSize: '15px', fontWeight: '600', color: '#000' }}>Filtrele</span>
           </div>
         </div>
         <div 
@@ -426,8 +479,8 @@ export default function QrViewContent() {
             flexShrink: 0
           }}>
           <div style={{
-            width: '42px',
-            height: '42px',
+            width: '50px',
+            height: '50px',
             borderRadius: '50%',
             backgroundColor: '#f3f4f6',
             border: '2px solid #f3f4f6',
@@ -443,7 +496,7 @@ export default function QrViewContent() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               overflowX: 'auto',
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -455,41 +508,44 @@ export default function QrViewContent() {
                 display: none;
               }
             `}</style>
-            {['Kahvaltı', 'Çorba', 'Et', 'Salat', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
+            {['Kahvaltı', 'Çorba', 'Et ve Tavuk', 'Salatalar', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
               <span
                 key={menu}
                 data-menu={menu}
                 onClick={() => {
+                  const newSelectedMenu = menu;
                   requestAnimationFrame(() => {
-                    const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${menu}"]`) as HTMLElement;
-                    if (menuElement && menuScrollRef.current && menuContainerRef.current) {
-                      const containerRect = menuContainerRef.current.getBoundingClientRect();
-                      const scrollRect = menuScrollRef.current.getBoundingClientRect();
-                      const elementRect = menuElement.getBoundingClientRect();
-                      const currentScrollLeft = menuScrollRef.current.scrollLeft;
-                      const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
-                      const elementWidth = elementRect.width;
-                      const containerWidth = containerRect.width;
-                      const searchIconWidth = 42;
-                      const gap = 12;
-                      const scrollAreaWidth = scrollRect.width;
-                      const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
-                      const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
-                      const maxScroll = menuScrollRef.current.scrollWidth - scrollRect.width;
-                      menuScrollRef.current.scrollTo({ 
-                        left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
-                        behavior: 'smooth' 
-                      });
-                    }
+                    requestAnimationFrame(() => {
+                      setSelectedMenu(newSelectedMenu);
+                      const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${newSelectedMenu}"]`) as HTMLElement;
+                      if (menuElement && menuScrollRef.current && menuContainerRef.current) {
+                        const containerRect = menuContainerRef.current.getBoundingClientRect();
+                        const scrollRect = menuScrollRef.current.getBoundingClientRect();
+                        const elementRect = menuElement.getBoundingClientRect();
+                        const currentScrollLeft = menuScrollRef.current.scrollLeft;
+                        const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
+                        const elementWidth = elementRect.width;
+                        const containerWidth = containerRect.width;
+                        const searchIconWidth = 50;
+                        const gap = 12;
+                        const scrollAreaWidth = scrollRect.width;
+                        const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
+                        const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
+                        const maxScroll = menuScrollRef.current.scrollWidth - scrollRect.width;
+                        menuScrollRef.current.scrollTo({ 
+                          left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
+                          behavior: 'smooth' 
+                        });
+                      }
+                    });
                   });
-                  setSelectedMenu(menu);
                 }}
                 style={{
                   fontSize: '16px',
                   color: selectedMenu === menu ? '#fff' : '#000',
                   backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
                   padding: '0 15px',
-                  height: '42px',
+                  height: '50px',
                   borderRadius: '9999px',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
@@ -497,23 +553,11 @@ export default function QrViewContent() {
                   display: 'flex',
                   alignItems: 'center',
                   fontWeight: selectedMenu === menu ? '600' : '400',
-                  transition: 'font-weight 0.2s ease, color 0.2s ease, background-color 0.2s ease'
+                  transition: 'color 0.2s ease, background-color 0.2s ease',
+                  minWidth: 'fit-content',
+                  boxSizing: 'border-box'
                 }}
               >
-                {menu === 'Kahvaltı' && (
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 122.88 101.89" 
-                    style={{ 
-                      width: '20px', 
-                      height: '20px', 
-                      marginRight: '8px',
-                      fill: selectedMenu === menu ? '#fff' : '#000'
-                    }}
-                  >
-                    <path fillRule="evenodd" d="M86.25,10.25C76.11,9.2,62.8,19.23,51,28.1,45,32.69,39.25,37,34.34,39.5c-2.46,1.26-4.85,2.39-7.12,3.47-6.24,3-11.56,5.49-14.1,8.55A18.39,18.39,0,0,0,9.8,57.16a13.24,13.24,0,0,0-.69,3.41C14.08,59,19.05,57.15,24,55A160.74,160.74,0,0,0,42,46C59.41,35.79,72,23.85,86.15,10.34l.1-.09Zm17.81-1.83a3.48,3.48,0,1,1-1.91,6.7c-.55-.16-.75.77-1,1.88C100.05,22.31,98.7,28.69,87,27.21c-1-.12-1.11.68-1.26,1.63-.84,5-1.83,11-14.73,10.28-.37,0-.45.83-.54,1.82C70,46.42,69.36,53,55.39,52.23c-1.53-.09-2.73-.23-3.7-.34s-1.15-.48-1.36-.33a25.77,25.77,0,0,0-2.4,4.24c-.52,1-1.13,2.16-2,3.72-2.33,4.33-6.82,4.2-11,4.07a13.35,13.35,0,0,0-3.45.09l-.36.21a21.5,21.5,0,0,0-1.6,2.3,3.49,3.49,0,0,1-6.05-3.49,30.76,30.76,0,0,1,2.31-3.3,6,6,0,0,1,2.62-2c2-1,4.31-.89,6.74-.82,2.12.07,4.39.14,4.68-.42.7-1.28,1.36-2.55,1.93-3.64,1.94-3.72,2.88-5.5,4.48-6.66,2-1.41,3.42-1.24,6.22-.92.87.09,2,.22,3.31.3,7.26.41,7.53-2.53,7.75-5,.42-4.59.78-8.52,7.85-8.15,6.69.35,7.13-2.28,7.5-4.47.75-4.52,1.39-8.36,9-7.4,5.33.68,6-2.27,6.47-4.73,1.07-5.07,2-9.33,9.71-7.13ZM92.54,7.1C103.43-6,118.68-.23,115.62,18a11.72,11.72,0,0,1,3.28,2.9c3.95,4.9,4.54,10.32,3.57,15.71-.91,5.08-3.17,10-5.22,14.35a83.62,83.62,0,0,1-12.74,19.74,75.58,75.58,0,0,1-16.28,14l0,0a105.45,105.45,0,0,1-16.37,9.4,88.71,88.71,0,0,1-18.5,6.15,58,58,0,0,1-17.84,1.38c-6.22-.67-12.1-2.92-16.68-7.93l-.09-.09c-.37-.42-.73-.85-1.06-1.29a17,17,0,0,1-2-3.47C.31,87.36-4.69,73.72,4.87,65.33a2.49,2.49,0,0,1-.48-1.17,18.25,18.25,0,0,1,.8-8.6,22.93,22.93,0,0,1,4.17-7.14c3.23-3.89,9-6.63,15.77-9.85,2.25-1.07,4.62-2.19,7-3.41,4.55-2.33,10.07-6.49,16-10.94C62.43,13.42,78.86,1,91.92,6.75a2.53,2.53,0,0,1,.62.35ZM81.43,45.17c-2.76,2.21-5.6,4.31-8.49,6.31A126.4,126.4,0,0,1,36.65,69.29c-5.35,1.77-9.59,3.16-13.09,5.79-.31.23-.63.5-.95.79a9.79,9.79,0,0,0-3.29,6.49,10.47,10.47,0,0,0,2.23,7.07c.23.31.49.62.77.93l.08.08c3.67,4,8.48,5.82,13.61,6.37a52.88,52.88,0,0,0,16.3-1.3,83.22,83.22,0,0,0,17.48-5.8,101.11,101.11,0,0,0,15.62-9l.18-.13a70.66,70.66,0,0,0,15.24-13.08,79.29,79.29,0,0,0,12-18.63c1.93-4.12,4.07-8.72,4.85-13.13.74-4.1.32-8.19-2.57-11.79a6.56,6.56,0,0,0-2.28-1.9,5,5,0,0,0-2.62-.42c-5.64.48-11.06,6.34-15.82,11.49-1.66,1.79-3.24,3.51-4.82,5q-4,3.76-8.14,7Z"/>
-                  </svg>
-                )}
                 {menu}
               </span>
             ))}
@@ -524,7 +568,7 @@ export default function QrViewContent() {
           flexShrink: 0
         }}>
           <h2 style={{
-            fontSize: '18px',
+            fontSize: '15px',
             fontWeight: '600',
             color: '#000',
             marginBottom: '12px'
@@ -532,10 +576,10 @@ export default function QrViewContent() {
             Şefin Seçimi
           </h2>
           <div style={{
-            height: '160px',
-            backgroundColor: '#f3f4f6',
+            height: '210px',
+            backgroundColor: 'transparent',
             borderRadius: '20px',
-            padding: '20px',
+            padding: '0',
             overflowX: 'auto',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -549,7 +593,7 @@ export default function QrViewContent() {
             `}</style>
             <div style={{
               width: '180px',
-              height: '140px',
+              height: '190px',
               backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
@@ -566,199 +610,225 @@ export default function QrViewContent() {
                 playsInline
                 style={{
                   width: '100%',
-                  height: '60%',
-                  objectFit: 'cover'
+                  height: '84px',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                  borderTopLeftRadius: '16px',
+                  borderTopRightRadius: '16px',
+                  borderBottomLeftRadius: '16px',
+                  borderBottomRightRadius: '16px'
                 }}
               >
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
               <div style={{
-                padding: '12px',
+                padding: '8px 12px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '40%'
+                flex: 1,
+                minHeight: 0
               }}>
-                <div>
-                  <h3 style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    margin: '0 0 4px 0',
-                    color: '#000'
-                  }}>
-                    Dürüm
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    margin: 0,
-                    color: '#A2A2A2'
-                  }}>
-                    Domates, turşu, soğan, marul
-                  </p>
-                </div>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 5px 0',
+                  color: '#000',
+                  lineHeight: '1.2'
+                }}>
+                  Dürüm
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 7px 0',
+                  color: '#A2A2A2',
+                  lineHeight: '1.2'
+                }}>
+                  Domates, turşu, soğan, marul
+                </p>
                 <div style={{
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  marginTop: '8px'
+                  lineHeight: '1.2'
                 }}>
-                  399 TL
+                  399,00 TL
                 </div>
               </div>
             </div>
             <div style={{
               width: '180px',
-              height: '140px',
+              height: '190px',
               backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
-              flexShrink: 0
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column'
             }}>
               <img
-                src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=80"
+                src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
                 alt="Kokoreç"
                 style={{
                   width: '100%',
-                  height: '60%',
-                  objectFit: 'cover'
+                  height: '84px',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                  borderTopLeftRadius: '16px',
+                  borderTopRightRadius: '16px',
+                  borderBottomLeftRadius: '16px',
+                  borderBottomRightRadius: '16px'
                 }}
               />
               <div style={{
-                padding: '12px',
+                padding: '8px 12px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '40%'
+                flex: 1,
+                minHeight: 0
               }}>
-                <div>
-                  <h3 style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    margin: '0 0 4px 0',
-                    color: '#000'
-                  }}>
-                    Kokoreç
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    margin: 0,
-                    color: '#A2A2A2'
-                  }}>
-                    Soğan, maydanoz, baharat
-                  </p>
-                </div>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 5px 0',
+                  color: '#000',
+                  lineHeight: '1.2'
+                }}>
+                  Kokoreç
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 7px 0',
+                  color: '#A2A2A2',
+                  lineHeight: '1.2'
+                }}>
+                  Soğan, maydanoz, baharat
+                </p>
                 <div style={{
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  marginTop: '8px'
+                  lineHeight: '1.2'
                 }}>
-                  299 TL
+                  299,00 TL
                 </div>
               </div>
             </div>
             <div style={{
               width: '180px',
-              height: '140px',
+              height: '190px',
               backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
-              flexShrink: 0
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column'
             }}>
               <img
-                src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80"
+                src="https://i.pinimg.com/1200x/f7/90/e8/f790e80e420556ae58def8563c5adbd0.jpg"
                 alt="Lahmacun"
                 style={{
                   width: '100%',
-                  height: '60%',
-                  objectFit: 'cover'
+                  height: '84px',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                  borderTopLeftRadius: '16px',
+                  borderTopRightRadius: '16px',
+                  borderBottomLeftRadius: '16px',
+                  borderBottomRightRadius: '16px'
                 }}
               />
               <div style={{
-                padding: '12px',
+                padding: '8px 12px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '40%'
+                flex: 1,
+                minHeight: 0
               }}>
-                <div>
-                  <h3 style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    margin: '0 0 4px 0',
-                    color: '#000'
-                  }}>
-                    Lahmacun
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    margin: 0,
-                    color: '#A2A2A2'
-                  }}>
-                    Kıyma, soğan, domates, biber
-                  </p>
-                </div>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 5px 0',
+                  color: '#000',
+                  lineHeight: '1.2'
+                }}>
+                  Lahmacun
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 7px 0',
+                  color: '#A2A2A2',
+                  lineHeight: '1.2'
+                }}>
+                  Kıyma, soğan, domates, biber
+                </p>
                 <div style={{
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  marginTop: '8px'
+                  lineHeight: '1.2'
                 }}>
-                  149 TL
+                  149,00 TL
                 </div>
               </div>
             </div>
             <div style={{
               width: '180px',
-              height: '140px',
+              height: '190px',
               backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
-              flexShrink: 0
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column'
             }}>
               <img
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80"
+                src="https://i.pinimg.com/1200x/4e/8b/0e/4e8b0ec1b0fa6d8360b796e7e3e6092e.jpg"
                 alt="Pizza"
                 style={{
                   width: '100%',
-                  height: '60%',
-                  objectFit: 'cover'
+                  height: '84px',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                  borderTopLeftRadius: '16px',
+                  borderTopRightRadius: '16px',
+                  borderBottomLeftRadius: '16px',
+                  borderBottomRightRadius: '16px'
                 }}
               />
               <div style={{
-                padding: '12px',
+                padding: '8px 12px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '40%'
+                flex: 1,
+                minHeight: 0
               }}>
-                <div>
-                  <h3 style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    margin: '0 0 4px 0',
-                    color: '#000'
-                  }}>
-                    Pizza
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    margin: 0,
-                    color: '#A2A2A2'
-                  }}>
-                    Peynir, domates, zeytin
-                  </p>
-                </div>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 5px 0',
+                  color: '#000',
+                  lineHeight: '1.2'
+                }}>
+                  Pizza
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 7px 0',
+                  color: '#A2A2A2',
+                  lineHeight: '1.2'
+                }}>
+                  Peynir, domates, zeytin
+                </p>
                 <div style={{
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  marginTop: '8px'
+                  lineHeight: '1.2'
                 }}>
-                  449 TL
+                  449,00 TL
                 </div>
               </div>
             </div>
@@ -774,6 +844,8 @@ export default function QrViewContent() {
           margin: '0 auto',
           backgroundColor: '#fff',
           borderTop: '1px solid #e5e7eb',
+          borderTopLeftRadius: '20px',
+          borderTopRightRadius: '20px',
           display: 'flex',
           justifyContent: 'space-around',
           alignItems: 'center',
@@ -782,11 +854,15 @@ export default function QrViewContent() {
         }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
           <Home size={24} color="black" />
-          <span style={{ fontSize: '10px', color: '#000' }}>Anasayfa</span>
+          <span style={{ fontSize: '12px', color: '#000' }}>Anasayfa</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-          <User size={24} color="black" />
-          <span style={{ fontSize: '10px', color: '#000' }}>Profil</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4"/>
+            <path d="M12 8h.01"/>
+          </svg>
+          <span style={{ fontSize: '12px', color: '#000' }}>Keşfet</span>
         </div>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <button
@@ -804,7 +880,12 @@ export default function QrViewContent() {
               zIndex: 1001
             }}
           >
-            <Bell size={24} color="white" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/>
+              <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/>
+              <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
+              <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+            </svg>
           </button>
           {showServiceMenu && (
             <>
@@ -876,13 +957,21 @@ export default function QrViewContent() {
             </>
           )}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
-          <ShoppingCart size={24} color="black" />
-          <span style={{ fontSize: '10px', color: '#000' }}>Bildirim</span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+            <path d="M3.103 6.034h17.794"/>
+            <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/>
+          </svg>
+          <span style={{ fontSize: '12px', color: '#000' }}>Sepet</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-          <Calendar size={24} color="black" />
-          <span style={{ fontSize: '10px', color: '#000' }}>Sepet</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="10" r="3"/>
+            <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/>
+          </svg>
+          <span style={{ fontSize: '12px', color: '#000' }}>Profil</span>
         </div>
       </div>
     </div>
