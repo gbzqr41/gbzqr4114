@@ -240,13 +240,6 @@ export default function QrViewContent() {
           margin: '10px 0',
           justifyContent: 'space-between'
         }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}>
-            <span style={{ fontSize: '15px', color: '#000' }}>İyi Geceler, <span style={{ fontWeight: '700' }}>Ebru</span></span>
-          </div>
           <div 
             onClick={() => {
               setAddressPopupMode('address');
@@ -260,10 +253,7 @@ export default function QrViewContent() {
               cursor: 'pointer',
               flex: 1
             }}>
-            <span style={{ fontSize: '15px', textAlign: 'center' }}>Gaziler Mah. 1711 Sok.</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '4px' }}>
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
+            <span style={{ fontSize: '15px', textAlign: 'center' }}>Ev</span>
           </div>
           <div style={{
             display: 'flex',
@@ -514,31 +504,29 @@ export default function QrViewContent() {
                 data-menu={menu}
                 onClick={() => {
                   const newSelectedMenu = menu;
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                      setSelectedMenu(newSelectedMenu);
-                      const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${newSelectedMenu}"]`) as HTMLElement;
-                      if (menuElement && menuScrollRef.current && menuContainerRef.current) {
-                        const containerRect = menuContainerRef.current.getBoundingClientRect();
-                        const scrollRect = menuScrollRef.current.getBoundingClientRect();
-                        const elementRect = menuElement.getBoundingClientRect();
-                        const currentScrollLeft = menuScrollRef.current.scrollLeft;
-                        const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
-                        const elementWidth = elementRect.width;
-                        const containerWidth = containerRect.width;
-                        const searchIconWidth = 50;
-                        const gap = 12;
-                        const scrollAreaWidth = scrollRect.width;
-                        const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
-                        const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
-                        const maxScroll = menuScrollRef.current.scrollWidth - scrollRect.width;
-                        menuScrollRef.current.scrollTo({ 
-                          left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
-                          behavior: 'smooth' 
-                        });
-                      }
-                    });
-                  });
+                  setSelectedMenu(newSelectedMenu);
+                  setTimeout(() => {
+                    const menuElement = menuScrollRef.current?.querySelector(`[data-menu="${newSelectedMenu}"]`) as HTMLElement;
+                    if (menuElement && menuScrollRef.current && menuContainerRef.current) {
+                      const containerRect = menuContainerRef.current.getBoundingClientRect();
+                      const scrollRect = menuScrollRef.current.getBoundingClientRect();
+                      const elementRect = menuElement.getBoundingClientRect();
+                      const currentScrollLeft = menuScrollRef.current.scrollLeft;
+                      const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
+                      const elementWidth = elementRect.width;
+                      const containerWidth = containerRect.width;
+                      const searchIconWidth = 50;
+                      const gap = 8;
+                      const scrollAreaWidth = scrollRect.width;
+                      const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
+                      const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
+                      const maxScroll = menuScrollRef.current.scrollWidth - scrollRect.width;
+                      menuScrollRef.current.scrollTo({ 
+                        left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
+                        behavior: 'smooth' 
+                      });
+                    }
+                  }, 0);
                 }}
                 style={{
                   fontSize: '16px',
@@ -554,7 +542,6 @@ export default function QrViewContent() {
                   alignItems: 'center',
                   fontWeight: selectedMenu === menu ? '600' : '400',
                   transition: 'color 0.2s ease, background-color 0.2s ease',
-                  minWidth: 'fit-content',
                   boxSizing: 'border-box'
                 }}
               >
@@ -831,6 +818,208 @@ export default function QrViewContent() {
                   449,00 TL
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          marginBottom: '16px',
+          flexShrink: 0
+        }}>
+          <h2 style={{
+            fontSize: '15px',
+            fontWeight: '600',
+            color: '#000',
+            marginBottom: '12px'
+          }}>
+            Kahvaltı
+          </h2>
+          <div style={{
+            backgroundColor: '#f3f4f6',
+            borderRadius: '20px',
+            padding: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              padding: '10px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Menemen
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#A2A2A2'
+                }}>
+                  Yumurta, domates, biber, soğan
+                </p>
+                <div style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: '#000'
+                }}>
+                  89,00 TL
+                </div>
+              </div>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              >
+                <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              padding: '10px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Omlet
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#A2A2A2'
+                }}>
+                  Yumurta, peynir, domates
+                </p>
+                <div style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: '#000'
+                }}>
+                  79,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
+                alt="Omlet"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              padding: '10px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Sucuklu Yumurta
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#A2A2A2'
+                }}>
+                  Yumurta, sucuk, domates
+                </p>
+                <div style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: '#000'
+                }}>
+                  99,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/1200x/f7/90/e8/f790e80e420556ae58def8563c5adbd0.jpg"
+                alt="Sucuklu Yumurta"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              padding: '10px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Kaşarlı Tost
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#A2A2A2'
+                }}>
+                  Ekmek, kaşar peyniri, domates
+                </p>
+                <div style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: '#000'
+                }}>
+                  69,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/1200x/4e/8b/0e/4e8b0ec1b0fa6d8360b796e7e3e6092e.jpg"
+                alt="Kaşarlı Tost"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
             </div>
           </div>
         </div>
