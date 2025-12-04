@@ -59,8 +59,8 @@ export default function QrViewContent() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
-    }, 3000);
+      setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -257,13 +257,32 @@ export default function QrViewContent() {
         }}>
           <div style={{
             display: 'flex',
-            width: '200%',
+            width: '300%',
             height: '100%',
-            transform: `translateX(-${currentSlide * 50}%)`,
+            transform: `translateX(-${currentSlide * 33.333}%)`,
             transition: 'transform 0.5s ease-in-out'
           }}>
             <div style={{ 
-              width: '50%',
+              width: '33.333%',
+              height: '100%',
+              position: 'relative'
+            }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              >
+                <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div style={{ 
+              width: '33.333%',
               height: '100%',
               backgroundImage: 'url(https://i.pinimg.com/736x/47/06/6c/47066ccfb40ce0b87e27828aa0760b42.jpg)',
               backgroundSize: 'cover',
@@ -272,7 +291,7 @@ export default function QrViewContent() {
               position: 'relative'
             }}></div>
             <div style={{ 
-              width: '50%',
+              width: '33.333%',
               height: '100%',
               backgroundImage: 'url(https://i.pinimg.com/736x/0d/34/a5/0d34a54ab821af63f1d7241d7bfd983f.jpg)',
               backgroundSize: 'cover',
@@ -311,6 +330,18 @@ export default function QrViewContent() {
                 height: '8px',
                 borderRadius: '50%',
                 backgroundColor: currentSlide === 1 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+                border: '1px solid rgba(0, 0, 0, 0.2)'
+              }}
+            ></div>
+            <div 
+              onClick={() => setCurrentSlide(2)}
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: currentSlide === 2 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
                 border: '1px solid rgba(0, 0, 0, 0.2)'
