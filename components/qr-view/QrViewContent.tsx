@@ -505,189 +505,246 @@ export default function QrViewContent() {
           </div>
         </div>
         <div style={{
-          height: '120px',
-          borderRadius: '20px',
-          backgroundColor: 'rgb(247, 247, 247)',
-          padding: '20px',
-          marginBottom: '16px',
-          flexShrink: 0,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          overflow: 'hidden',
-          position: 'relative'
-        }}>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
-              Dürüm
-            </h3>
-            <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
-              Domates, turşu, soğan, marul
-            </p>
-            <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
-              399 TL
-            </div>
-          </div>
-          <div style={{
-            width: '100px',
-            height: '100px',
-            position: 'absolute',
-            right: '-20px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            borderRadius: '50%',
-            overflow: 'hidden'
-          }}>
-            <img
-              src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
-              alt="Şefin Seçimi"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            />
-          </div>
-        </div>
-        <div style={{
-          display: 'flex',
-          gap: '12px',
           marginBottom: '16px',
           flexShrink: 0
         }}>
-          <div style={{
-            flex: 1,
-            height: '180px',
-            borderRadius: '20px',
-            backgroundColor: 'rgb(247, 247, 247)',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            overflow: 'hidden',
-            position: 'relative'
+          <h2 style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#000',
+            marginBottom: '12px'
           }}>
+            Şefin Seçimi
+          </h2>
+          <div style={{
+            height: '200px',
+            backgroundColor: '#f3f4f6',
+            borderRadius: '20px',
+            padding: '20px',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            display: 'flex',
+            gap: '10px'
+          }}>
+            <style>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
             <div style={{
-              width: '100px',
-              height: '100px',
-              position: 'absolute',
-              top: '-20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              borderRadius: '50%',
-              overflow: 'hidden'
+              minWidth: '280px',
+              height: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              position: 'relative',
+              flexShrink: 0
             }}>
-              <img
-                src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
-                alt="Şefin Seçimi"
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover'
                 }}
-              />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%', marginTop: '60px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
-                Dürüm
-              </h3>
-              <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
-                Domates, turşu, soğan, marul
-              </p>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
-                399 TL
+              >
+                <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
+              </video>
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
+                padding: '16px',
+                color: '#fff'
+              }}>
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#fff'
+                }}>
+                  Dürüm
+                </h3>
+                <p style={{
+                  fontSize: '12px',
+                  margin: '0 0 8px 0',
+                  color: '#fff',
+                  opacity: 0.9
+                }}>
+                  Domates, turşu, soğan, marul
+                </p>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#fff'
+                }}>
+                  399 TL
+                </div>
               </div>
             </div>
-          </div>
-          <div style={{
-            flex: 1,
-            height: '180px',
-            borderRadius: '20px',
-            backgroundColor: 'rgb(247, 247, 247)',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            overflow: 'hidden',
-            position: 'relative'
-          }}>
             <div style={{
-              width: '100px',
-              height: '100px',
-              position: 'absolute',
-              top: '-20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              borderRadius: '50%',
-              overflow: 'hidden'
+              minWidth: '280px',
+              height: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              position: 'relative',
+              flexShrink: 0
             }}>
               <img
-                src="https://i.ibb.co/6c7bGNkK/Vance-Studios.jpg"
-                alt="Şefin Seçimi"
+                src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400"
+                alt="Kokoreç"
                 style={{
                   width: '100%',
-                  height: '100%',
+                  height: '60%',
                   objectFit: 'cover'
                 }}
               />
+              <div style={{
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '40%'
+              }}>
+                <div>
+                  <h3 style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    margin: '0 0 4px 0',
+                    color: '#000'
+                  }}>
+                    Kokoreç
+                  </h3>
+                  <p style={{
+                    fontSize: '12px',
+                    margin: 0,
+                    color: '#6b7280'
+                  }}>
+                    Soğan, maydanoz, baharat
+                  </p>
+                </div>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#000',
+                  marginTop: '8px'
+                }}>
+                  299 TL
+                </div>
+              </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%', marginTop: '60px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: '600', color: '#000', margin: 0 }}>
-                Dürüm
-              </h3>
-              <p style={{ fontSize: '12px', fontWeight: '400', color: '#6b7280', margin: 0 }}>
-                Domates, turşu, soğan, marul
-              </p>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#000', margin: 0 }}>
-                399 TL
+            <div style={{
+              minWidth: '280px',
+              height: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              position: 'relative',
+              flexShrink: 0
+            }}>
+              <img
+                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400"
+                alt="Lahmacun"
+                style={{
+                  width: '100%',
+                  height: '60%',
+                  objectFit: 'cover'
+                }}
+              />
+              <div style={{
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '40%'
+              }}>
+                <div>
+                  <h3 style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    margin: '0 0 4px 0',
+                    color: '#000'
+                  }}>
+                    Lahmacun
+                  </h3>
+                  <p style={{
+                    fontSize: '12px',
+                    margin: 0,
+                    color: '#6b7280'
+                  }}>
+                    Kıyma, soğan, domates, biber
+                  </p>
+                </div>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#000',
+                  marginTop: '8px'
+                }}>
+                  149 TL
+                </div>
+              </div>
+            </div>
+            <div style={{
+              minWidth: '280px',
+              height: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              position: 'relative',
+              flexShrink: 0
+            }}>
+              <img
+                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400"
+                alt="Pizza"
+                style={{
+                  width: '100%',
+                  height: '60%',
+                  objectFit: 'cover'
+                }}
+              />
+              <div style={{
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '40%'
+              }}>
+                <div>
+                  <h3 style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    margin: '0 0 4px 0',
+                    color: '#000'
+                  }}>
+                    Pizza
+                  </h3>
+                  <p style={{
+                    fontSize: '12px',
+                    margin: 0,
+                    color: '#6b7280'
+                  }}>
+                    Peynir, domates, zeytin
+                  </p>
+                </div>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#000',
+                  marginTop: '8px'
+                }}>
+                  449 TL
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="space-y-8" style={{ overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: '0' }}>
-          {categories.length > 0 && (
-            categories.map((category) => (
-              <div key={category.id} className="space-y-4">
-                <h2 className="text-xl font-semibold text-black">{category.name}</h2>
-                {category.items.length === 0 ? (
-                  <p className="text-sm text-gray-400">No items in this category</p>
-                ) : (
-                  <div className="space-y-3">
-                    {category.items.map((item) => (
-                      <div
-                        key={item.id}
-                        onClick={() => item.isAvailable && setSelectedItem(item)}
-                        className={`p-4 rounded-lg border ${
-                          item.isAvailable
-                            ? "bg-white border-gray-200 cursor-pointer"
-                            : "bg-gray-50 border-gray-200 opacity-60"
-                        }`}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-semibold text-black">{item.name}</h3>
-                              {!item.isAvailable && (
-                                <span className="text-xs text-red-600">(Unavailable)</span>
-                              )}
-                            </div>
-                            {item.description && (
-                              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                            )}
-                          </div>
-                          <div className="ml-4">
-                            <p className="font-bold text-black">{item.price.toFixed(2)} TL</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))
-          )}
         </div>
         <div style={{
           position: 'fixed',
