@@ -229,8 +229,8 @@ export default function QrViewContent() {
           </div>
         </div>
       )}
-      <div ref={mainContainerRef} className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '90px', overflowY: 'auto', height: '100vh', backgroundColor: '#fff', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, height: '100%', backgroundColor: '#fff' }}>
+      <div ref={mainContainerRef} className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '100px', overflowY: 'auto', height: '100vh', backgroundColor: '#fff', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, backgroundColor: '#fff', paddingBottom: '100px' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -822,7 +822,7 @@ export default function QrViewContent() {
           </div>
         </div>
         <div style={{
-          marginBottom: '16px',
+          marginBottom: '31px',
           flexShrink: 0
         }}>
           <h2 style={{
@@ -834,18 +834,18 @@ export default function QrViewContent() {
             Kahvaltı
           </h2>
           <div style={{
-            backgroundColor: '#f3f4f6',
+            backgroundColor: 'transparent',
             borderRadius: '20px',
-            padding: '10px',
+            padding: '0',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px'
+            gap: '10px'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              backgroundColor: '#fff',
+              backgroundColor: '#f3f4f6',
               borderRadius: '16px',
               padding: '10px'
             }}>
@@ -893,7 +893,7 @@ export default function QrViewContent() {
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              backgroundColor: '#fff',
+              backgroundColor: '#f3f4f6',
               borderRadius: '16px',
               padding: '10px'
             }}>
@@ -937,7 +937,7 @@ export default function QrViewContent() {
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              backgroundColor: '#fff',
+              backgroundColor: '#f3f4f6',
               borderRadius: '16px',
               padding: '10px'
             }}>
@@ -981,7 +981,7 @@ export default function QrViewContent() {
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              backgroundColor: '#fff',
+              backgroundColor: '#f3f4f6',
               borderRadius: '16px',
               padding: '10px'
             }}>
@@ -1031,8 +1031,10 @@ export default function QrViewContent() {
           width: '100%',
           maxWidth: '448px',
           margin: '0 auto',
-          backgroundColor: '#fff',
-          borderTop: '1px solid #e5e7eb',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderTop: '1px solid rgba(229, 231, 235, 0.5)',
           borderTopLeftRadius: '20px',
           borderTopRightRadius: '20px',
           display: 'flex',
@@ -1146,12 +1148,23 @@ export default function QrViewContent() {
             </>
           )}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-            <path d="M3.103 6.034h17.794"/>
-            <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/>
-          </svg>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
+          <div style={{ position: 'relative' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+              <path d="M3.103 6.034h17.794"/>
+              <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/>
+            </svg>
+            <div style={{
+              position: 'absolute',
+              top: '-2px',
+              right: '-2px',
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              backgroundColor: '#ff4444'
+            }}></div>
+          </div>
           <span style={{ fontSize: '12px', color: '#000' }}>Sepet</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
