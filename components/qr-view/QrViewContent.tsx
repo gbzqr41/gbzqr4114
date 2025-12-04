@@ -24,6 +24,8 @@ export default function QrViewContent() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
+  const sliderVideoRef = useRef<HTMLVideoElement>(null);
+  const cardVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const loadData = () => {
@@ -65,6 +67,18 @@ export default function QrViewContent() {
       setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
     }, 10000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (sliderVideoRef.current) {
+      sliderVideoRef.current.play().catch(() => {});
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cardVideoRef.current) {
+      cardVideoRef.current.play().catch(() => {});
+    }
   }, []);
 
   useEffect(() => {
@@ -297,6 +311,7 @@ export default function QrViewContent() {
               position: 'relative'
             }}>
               <video
+                ref={sliderVideoRef}
                 autoPlay
                 loop
                 muted
@@ -517,7 +532,7 @@ export default function QrViewContent() {
             Şefin Seçimi
           </h2>
           <div style={{
-            height: '200px',
+            height: '160px',
             backgroundColor: '#f3f4f6',
             borderRadius: '20px',
             padding: '20px',
@@ -533,72 +548,75 @@ export default function QrViewContent() {
               }
             `}</style>
             <div style={{
-              minWidth: '280px',
-              height: '100%',
-              backgroundColor: '#fff',
+              width: '180px',
+              height: '140px',
+              backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
-              flexShrink: 0
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column'
             }}>
               <video
+                ref={cardVideoRef}
                 autoPlay
                 loop
                 muted
                 playsInline
                 style={{
                   width: '100%',
-                  height: '100%',
+                  height: '60%',
                   objectFit: 'cover'
                 }}
               >
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
               <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
-                padding: '16px',
-                color: '#fff'
+                padding: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '40%'
               }}>
-                <h3 style={{
-                  fontSize: '18px',
-                  fontWeight: '600',
-                  margin: '0 0 4px 0',
-                  color: '#fff'
-                }}>
-                  Dürüm
-                </h3>
-                <p style={{
-                  fontSize: '12px',
-                  margin: '0 0 8px 0',
-                  color: '#fff',
-                  opacity: 0.9
-                }}>
-                  Domates, turşu, soğan, marul
-                </p>
+                <div>
+                  <h3 style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    margin: '0 0 4px 0',
+                    color: '#000'
+                  }}>
+                    Dürüm
+                  </h3>
+                  <p style={{
+                    fontSize: '13px',
+                    margin: 0,
+                    color: '#A2A2A2'
+                  }}>
+                    Domates, turşu, soğan, marul
+                  </p>
+                </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: '600',
-                  color: '#fff'
+                  color: '#000',
+                  marginTop: '8px'
                 }}>
                   399 TL
                 </div>
               </div>
             </div>
             <div style={{
-              minWidth: '280px',
-              height: '100%',
-              backgroundColor: '#fff',
+              width: '180px',
+              height: '140px',
+              backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
               flexShrink: 0
             }}>
               <img
-                src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400"
+                src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=80"
                 alt="Kokoreç"
                 style={{
                   width: '100%',
@@ -607,7 +625,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '16px',
+                padding: '12px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -615,7 +633,7 @@ export default function QrViewContent() {
               }}>
                 <div>
                   <h3 style={{
-                    fontSize: '18px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     margin: '0 0 4px 0',
                     color: '#000'
@@ -623,15 +641,15 @@ export default function QrViewContent() {
                     Kokoreç
                   </h3>
                   <p style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     margin: 0,
-                    color: '#6b7280'
+                    color: '#A2A2A2'
                   }}>
                     Soğan, maydanoz, baharat
                   </p>
                 </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
                   marginTop: '8px'
@@ -641,16 +659,16 @@ export default function QrViewContent() {
               </div>
             </div>
             <div style={{
-              minWidth: '280px',
-              height: '100%',
-              backgroundColor: '#fff',
+              width: '180px',
+              height: '140px',
+              backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
               flexShrink: 0
             }}>
               <img
-                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400"
+                src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80"
                 alt="Lahmacun"
                 style={{
                   width: '100%',
@@ -659,7 +677,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '16px',
+                padding: '12px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -667,7 +685,7 @@ export default function QrViewContent() {
               }}>
                 <div>
                   <h3 style={{
-                    fontSize: '18px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     margin: '0 0 4px 0',
                     color: '#000'
@@ -675,15 +693,15 @@ export default function QrViewContent() {
                     Lahmacun
                   </h3>
                   <p style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     margin: 0,
-                    color: '#6b7280'
+                    color: '#A2A2A2'
                   }}>
                     Kıyma, soğan, domates, biber
                   </p>
                 </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
                   marginTop: '8px'
@@ -693,16 +711,16 @@ export default function QrViewContent() {
               </div>
             </div>
             <div style={{
-              minWidth: '280px',
-              height: '100%',
-              backgroundColor: '#fff',
+              width: '180px',
+              height: '140px',
+              backgroundColor: 'transparent',
               borderRadius: '16px',
               overflow: 'hidden',
               position: 'relative',
               flexShrink: 0
             }}>
               <img
-                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400"
+                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80"
                 alt="Pizza"
                 style={{
                   width: '100%',
@@ -711,7 +729,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '16px',
+                padding: '12px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -719,7 +737,7 @@ export default function QrViewContent() {
               }}>
                 <div>
                   <h3 style={{
-                    fontSize: '18px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     margin: '0 0 4px 0',
                     color: '#000'
@@ -727,15 +745,15 @@ export default function QrViewContent() {
                     Pizza
                   </h3>
                   <p style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     margin: 0,
-                    color: '#6b7280'
+                    color: '#A2A2A2'
                   }}>
                     Peynir, domates, zeytin
                   </p>
                 </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
                   marginTop: '8px'
