@@ -16,10 +16,12 @@ export default function QrViewContent() {
   const [addressPopupMode, setAddressPopupMode] = useState<'table' | 'address' | 'addAddress'>('address');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showStickySearch, setShowStickySearch] = useState(false);
+  const [showStickyCategories, setShowStickyCategories] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<string>("");
   const menuScrollRef = useRef<HTMLDivElement>(null);
   const menuContainerRef = useRef<HTMLDivElement>(null);
+  const stickyMenuScrollRef = useRef<HTMLDivElement>(null);
+  const stickyMenuContainerRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
@@ -87,16 +89,16 @@ export default function QrViewContent() {
       if (container) {
         const scrollTop = container.scrollTop;
         if (scrollTop > 100) {
-          setShowStickySearch(true);
+          setShowStickyCategories(true);
         } else {
-          setShowStickySearch(false);
+          setShowStickyCategories(false);
         }
       } else {
         const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (scrollY > 100) {
-          setShowStickySearch(true);
+          setShowStickyCategories(true);
         } else {
-          setShowStickySearch(false);
+          setShowStickyCategories(false);
         }
       }
     };
@@ -165,7 +167,7 @@ export default function QrViewContent() {
           display: none;
         }
       `}</style>
-      {showStickySearch && (
+      {showStickyCategories && (
         <div style={{
           position: 'fixed',
           top: 0,
@@ -179,53 +181,107 @@ export default function QrViewContent() {
           padding: '10px 10px',
           boxSizing: 'border-box'
         }}>
-          <div style={{
-            width: '100%',
-            height: '50px',
-            borderRadius: '9999px',
-            backgroundColor: '#f3f4f6',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 15px',
-            flexShrink: 0,
-            position: 'relative',
-            boxSizing: 'border-box'
-          }}>
-            <Search size={20} style={{ flexShrink: 0, marginRight: '10px' }} color="black" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Ne Aramıştınız"
+          <div 
+            ref={stickyMenuContainerRef}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              flexShrink: 0
+            }}>
+            <div style={{
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              backgroundColor: '#f3f4f6',
+              border: '2px solid #f3f4f6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Search size={24} color="black" />
+            </div>
+            <div
+              ref={stickyMenuScrollRef}
               style={{
-                flex: 1,
-                border: 'none',
-                outline: 'none',
-                backgroundColor: 'transparent',
-                fontSize: '14px',
-                color: '#000',
-                minWidth: 0
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                overflowX: 'auto',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                flex: 1
               }}
-            />
-            {searchQuery && (
-              <div
-                onClick={() => setSearchQuery('')}
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  backgroundColor: '#d1d5db',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                  marginLeft: '10px'
-                }}
-              >
-                <X size={12} color="black" strokeWidth={3} />
-              </div>
-            )}
+            >
+              <style>{`
+                div::-webkit-scrollbar {
+                  display: none;
+                }
+              `}</style>
+              {['Kahvaltı', 'Çorba', 'Et ve Tavuk', 'Salatalar', 'Tatlı', 'İçecek', 'Kahve', 'Sandwich', 'Makarna', 'Balık'].map((menu) => (
+                <span
+                  key={menu}
+                  data-menu={menu}
+                  onClick={() => {
+                    const newSelectedMenu = menu;
+                    setSelectedMenu(newSelectedMenu);
+                    setTimeout(() => {
+                      const menuElement = stickyMenuScrollRef.current?.querySelector(`[data-menu="${newSelectedMenu}"]`) as HTMLElement;
+                      if (menuElement && stickyMenuScrollRef.current && stickyMenuContainerRef.current) {
+                        const containerRect = stickyMenuContainerRef.current.getBoundingClientRect();
+                        const scrollRect = stickyMenuScrollRef.current.getBoundingClientRect();
+                        const elementRect = menuElement.getBoundingClientRect();
+                        const currentScrollLeft = stickyMenuScrollRef.current.scrollLeft;
+                        const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
+                        const elementWidth = elementRect.width;
+                        const containerWidth = containerRect.width;
+                        const searchIconWidth = 50;
+                        const gap = 8;
+                        const scrollAreaWidth = scrollRect.width;
+                        const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
+                        const targetScrollLeft = elementOffsetInScroll - (centerOfScrollArea - searchIconWidth - gap) + (elementWidth / 2);
+                        const maxScroll = stickyMenuScrollRef.current.scrollWidth - scrollRect.width;
+                        stickyMenuScrollRef.current.scrollTo({ 
+                          left: Math.max(0, Math.min(targetScrollLeft, maxScroll)), 
+                          behavior: 'smooth' 
+                        });
+                      }
+                      const stickySectionId = menu.toLowerCase().replace(/\s+/g, '-');
+                      const stickySectionElement = document.getElementById(stickySectionId) || document.querySelector(`[data-section="${stickySectionId}"]`);
+                      if (stickySectionElement && mainContainerRef.current) {
+                        const containerRect = mainContainerRef.current.getBoundingClientRect();
+                        const sectionRect = stickySectionElement.getBoundingClientRect();
+                        const scrollTop = mainContainerRef.current.scrollTop;
+                        const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
+                        mainContainerRef.current.scrollTo({
+                          top: targetScrollTop,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }, 0);
+                  }}
+                  style={{
+                    fontSize: '16px',
+                    color: selectedMenu === menu ? '#fff' : '#000',
+                    backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
+                    padding: '0 15px',
+                    height: '50px',
+                    borderRadius: '9999px',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: selectedMenu === menu ? '600' : '400',
+                    transition: 'color 0.2s ease, background-color 0.2s ease',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  {menu}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -554,6 +610,30 @@ export default function QrViewContent() {
                         behavior: 'smooth' 
                       });
                     }
+                    const sectionId = menu.toLowerCase().replace(/\s+/g, '-').replace('ve', 've');
+                    const sectionElement = document.getElementById(sectionId) || document.querySelector(`[data-section="${sectionId}"]`);
+                    if (sectionElement && mainContainerRef.current) {
+                      const containerRect = mainContainerRef.current.getBoundingClientRect();
+                      const sectionRect = sectionElement.getBoundingClientRect();
+                      const scrollTop = mainContainerRef.current.scrollTop;
+                      const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
+                      mainContainerRef.current.scrollTo({
+                        top: targetScrollTop,
+                        behavior: 'smooth'
+                      });
+                    }
+                    const normalSectionId = menu.toLowerCase().replace(/\s+/g, '-').replace('ve', 've');
+                    const normalSectionElement = document.getElementById(normalSectionId) || document.querySelector(`[data-section="${normalSectionId}"]`);
+                    if (normalSectionElement && mainContainerRef.current) {
+                      const containerRect = mainContainerRef.current.getBoundingClientRect();
+                      const sectionRect = normalSectionElement.getBoundingClientRect();
+                      const scrollTop = mainContainerRef.current.scrollTop;
+                      const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
+                      mainContainerRef.current.scrollTo({
+                        top: targetScrollTop,
+                        behavior: 'smooth'
+                      });
+                    }
                   }, 0);
                 }}
                 style={{
@@ -859,12 +939,15 @@ export default function QrViewContent() {
           marginBottom: '31px',
           flexShrink: 0
         }}>
-          <h2 style={{
-            fontSize: '15px',
-            fontWeight: '600',
-            color: '#000',
-            marginBottom: '12px'
-          }}>
+          <h2 
+            id="kahvaltı"
+            data-section="kahvaltı"
+            style={{
+              fontSize: '15px',
+              fontWeight: '600',
+              color: '#000',
+              marginBottom: '12px'
+            }}>
             Kahvaltı
           </h2>
           <div style={{
