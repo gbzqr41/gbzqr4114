@@ -266,8 +266,8 @@ export default function QrViewContent() {
             zIndex: 10
           }}>
             <div style={{
-              width: '50px',
-              height: '50px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
               backgroundColor: 'rgba(243, 244, 246, 0.8)',
               backdropFilter: 'blur(20px)',
@@ -279,14 +279,14 @@ export default function QrViewContent() {
               position: 'relative',
               zIndex: 10
             }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
                 <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
               </svg>
             </div>
             <div style={{
-              width: '50px',
-              height: '50px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
               backgroundColor: 'rgba(243, 244, 246, 0.8)',
               backdropFilter: 'blur(20px)',
@@ -298,7 +298,7 @@ export default function QrViewContent() {
               position: 'relative',
               zIndex: 10
             }}>
-              <Heart size={24} style={{ display: 'block', margin: 'auto' }} color="black" />
+              <Heart size={20} style={{ display: 'block', margin: 'auto' }} color="black" />
             </div>
           </div>
         </div>
