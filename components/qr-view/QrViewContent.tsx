@@ -873,7 +873,8 @@ export default function QrViewContent() {
             padding: '0',
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px'
+            gap: '10px',
+            marginBottom: '100px'
           }}>
             <div style={{
               display: 'flex',
