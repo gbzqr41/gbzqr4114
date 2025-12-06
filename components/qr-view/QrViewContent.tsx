@@ -336,50 +336,6 @@ export default function QrViewContent() {
               flex: 1
             }}>
           </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '3px',
-            flexShrink: 0,
-            position: 'relative',
-            zIndex: 10
-          }}>
-            <div style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(243, 244, 246, 0.8)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              position: 'relative',
-              zIndex: 10
-            }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
-                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
-              </svg>
-            </div>
-            <div style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(243, 244, 246, 0.8)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              position: 'relative',
-              zIndex: 10
-            }}>
-              <Heart size={20} style={{ display: 'block', margin: 'auto' }} color="black" />
-            </div>
-          </div>
         </div>
         <div 
           ref={sliderRef}
@@ -555,7 +511,7 @@ export default function QrViewContent() {
             alignItems: 'center',
             gap: '8px'
           }}>
-            <span style={{ fontSize: '15px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
+            <span style={{ fontSize: '18px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
           </div>
           <div style={{
             display: 'flex',
@@ -687,7 +643,7 @@ export default function QrViewContent() {
           flexShrink: 0
         }}>
           <h2 style={{
-            fontSize: '15px',
+            fontSize: '16px',
             fontWeight: '600',
             color: '#000',
             marginBottom: '12px'
@@ -696,9 +652,9 @@ export default function QrViewContent() {
           </h2>
           <div style={{
             height: '210px',
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(255, 248, 156, 0.32)',
             borderRadius: '20px',
-            padding: '0',
+            padding: '10px',
             overflowX: 'auto',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -1177,8 +1133,6 @@ export default function QrViewContent() {
           left: 0,
           right: 0,
           width: '100%',
-          maxWidth: '448px',
-          margin: '0 auto',
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
