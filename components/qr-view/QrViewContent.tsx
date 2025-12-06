@@ -268,19 +268,26 @@ export default function QrViewContent() {
                           behavior: 'smooth' 
                         });
                       }
-                      const stickySectionId = menu.toLowerCase().replace(/\s+/g, '-');
+                      let stickySectionId = menu.toLowerCase().replace(/\s+/g, '-');
+                      if (menu === 'Çorba') {
+                        stickySectionId = 'çorba';
+                      }
                       const stickySectionElement = document.getElementById(stickySectionId) || document.querySelector(`[data-section="${stickySectionId}"]`);
                       if (stickySectionElement && mainContainerRef.current) {
-                        const containerRect = mainContainerRef.current.getBoundingClientRect();
-                        const sectionRect = stickySectionElement.getBoundingClientRect();
-                        const currentScrollTop = mainContainerRef.current.scrollTop;
-                        const offset = 5;
-                        const relativeTop = sectionRect.top - containerRect.top;
-                        const targetScrollTop = currentScrollTop + relativeTop - offset;
-                        mainContainerRef.current.scrollTo({
-                          top: Math.max(0, targetScrollTop),
-                          behavior: 'smooth'
-                        });
+                        setTimeout(() => {
+                          const container = mainContainerRef.current;
+                          if (!container || !stickySectionElement) return;
+                          const containerRect = container.getBoundingClientRect();
+                          const elementRect = stickySectionElement.getBoundingClientRect();
+                          const scrollTop = container.scrollTop;
+                          const elementTopRelativeToContainer = elementRect.top - containerRect.top + scrollTop;
+                          const headerHeight = stickyMenuContainerRef.current?.parentElement?.offsetHeight || 65;
+                          const targetScrollTop = elementTopRelativeToContainer - headerHeight - 5;
+                          container.scrollTo({
+                            top: Math.max(0, targetScrollTop),
+                            behavior: 'smooth'
+                          });
+                        }, 150);
                       }
                     }, 0);
                   }}
@@ -595,19 +602,26 @@ export default function QrViewContent() {
                         behavior: 'smooth' 
                       });
                     }
-                    const sectionId = menu.toLowerCase().replace(/\s+/g, '-').replace('ve', 've');
+                    let sectionId = menu.toLowerCase().replace(/\s+/g, '-').replace('ve', 've');
+                    if (menu === 'Çorba') {
+                      sectionId = 'çorba';
+                    }
                     const sectionElement = document.getElementById(sectionId) || document.querySelector(`[data-section="${sectionId}"]`);
                     if (sectionElement && mainContainerRef.current) {
-                      const containerRect = mainContainerRef.current.getBoundingClientRect();
-                      const sectionRect = sectionElement.getBoundingClientRect();
-                      const currentScrollTop = mainContainerRef.current.scrollTop;
-                      const offset = 5;
-                      const relativeTop = sectionRect.top - containerRect.top;
-                      const targetScrollTop = currentScrollTop + relativeTop - offset;
-                      mainContainerRef.current.scrollTo({
-                        top: Math.max(0, targetScrollTop),
-                        behavior: 'smooth'
-                      });
+                      setTimeout(() => {
+                        const container = mainContainerRef.current;
+                        if (!container || !sectionElement) return;
+                        const containerRect = container.getBoundingClientRect();
+                        const elementRect = sectionElement.getBoundingClientRect();
+                        const scrollTop = container.scrollTop;
+                        const elementTopRelativeToContainer = elementRect.top - containerRect.top + scrollTop;
+                        const headerHeight = stickyMenuContainerRef.current?.parentElement?.offsetHeight || 65;
+                        const targetScrollTop = elementTopRelativeToContainer - headerHeight - 5;
+                        container.scrollTo({
+                          top: Math.max(0, targetScrollTop),
+                          behavior: 'smooth'
+                        });
+                      }, 150);
                     }
                   }, 0);
                 }}
@@ -650,7 +664,9 @@ export default function QrViewContent() {
             backgroundColor: '#f3f4f6',
             borderRadius: '20px',
             padding: '15px',
+            margin: '15px 15px 15px 0',
             overflowX: 'auto',
+            overflowY: 'hidden',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
             display: 'flex',
@@ -698,7 +714,7 @@ export default function QrViewContent() {
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
               <div style={{
-                padding: '8px 12px 0 12px',
+                padding: '8px 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -709,7 +725,11 @@ export default function QrViewContent() {
                   fontWeight: '600',
                   margin: '0 0 5px 0',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   Dürüm
                 </h3>
@@ -717,7 +737,13 @@ export default function QrViewContent() {
                   fontSize: '13px',
                   margin: '0 0 7px 0',
                   color: '#6A6A6A',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  textOverflow: 'ellipsis',
+                  width: '100%'
                 }}>
                   Domates, turşu, soğan, marul
                 </p>
@@ -725,7 +751,11 @@ export default function QrViewContent() {
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   399,00 TL
                 </div>
@@ -757,7 +787,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px 0 12px',
+                padding: '8px 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -768,7 +798,11 @@ export default function QrViewContent() {
                   fontWeight: '600',
                   margin: '0 0 5px 0',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   Kokoreç
                 </h3>
@@ -776,7 +810,13 @@ export default function QrViewContent() {
                   fontSize: '13px',
                   margin: '0 0 7px 0',
                   color: '#6A6A6A',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  textOverflow: 'ellipsis',
+                  width: '100%'
                 }}>
                   Soğan, maydanoz, baharat
                 </p>
@@ -784,7 +824,11 @@ export default function QrViewContent() {
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   299,00 TL
                 </div>
@@ -816,7 +860,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px 0 12px',
+                padding: '8px 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -827,7 +871,11 @@ export default function QrViewContent() {
                   fontWeight: '600',
                   margin: '0 0 5px 0',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   Lahmacun
                 </h3>
@@ -835,7 +883,13 @@ export default function QrViewContent() {
                   fontSize: '13px',
                   margin: '0 0 7px 0',
                   color: '#6A6A6A',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  textOverflow: 'ellipsis',
+                  width: '100%'
                 }}>
                   Kıyma, soğan, domates, biber
                 </p>
@@ -843,7 +897,11 @@ export default function QrViewContent() {
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   149,00 TL
                 </div>
@@ -875,7 +933,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px 0 12px',
+                padding: '8px 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -886,7 +944,11 @@ export default function QrViewContent() {
                   fontWeight: '600',
                   margin: '0 0 5px 0',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   Pizza
                 </h3>
@@ -894,7 +956,13 @@ export default function QrViewContent() {
                   fontSize: '13px',
                   margin: '0 0 7px 0',
                   color: '#6A6A6A',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  textOverflow: 'ellipsis',
+                  width: '100%'
                 }}>
                   Peynir, domates, zeytin
                 </p>
@@ -902,7 +970,11 @@ export default function QrViewContent() {
                   fontSize: '16px',
                   fontWeight: '600',
                   color: '#000',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%'
                 }}>
                   449,00 TL
                 </div>
@@ -1409,8 +1481,8 @@ export default function QrViewContent() {
           <button
             onClick={() => setShowServiceMenu(!showServiceMenu)}
             style={{
-              width: '48px',
-              height: '48px',
+              width: '60px',
+              height: '60px',
               borderRadius: '50%',
               backgroundColor: '#000',
               border: 'none',
@@ -1421,7 +1493,7 @@ export default function QrViewContent() {
               zIndex: 1001
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/>
               <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/>
               <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
@@ -1499,6 +1571,10 @@ export default function QrViewContent() {
           )}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+          <Calendar size={24} color="black" />
+          <span style={{ fontSize: '12px', color: '#000' }}>Rezerve</span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="10" r="3"/>
@@ -1506,17 +1582,13 @@ export default function QrViewContent() {
           </svg>
           <span style={{ fontSize: '12px', color: '#000' }}>Profil</span>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-          <Calendar size={24} color="black" />
-          <span style={{ fontSize: '12px', color: '#000' }}>Rezerve</span>
-        </div>
       </div>
         <div style={{
           position: 'fixed',
           bottom: '85px',
           right: '15px',
-          width: '50px',
-          height: '50px',
+          width: '60px',
+          height: '60px',
           borderRadius: '50%',
           backgroundColor: '#000',
           display: 'flex',
@@ -1526,13 +1598,13 @@ export default function QrViewContent() {
           cursor: 'pointer'
         }}>
           <div style={{ position: 'relative', animation: 'shake 2s ease-in-out infinite' }}>
-            <ShoppingBag size={24} color="white" />
+            <ShoppingBag size={25} color="white" />
             <div style={{
               position: 'absolute',
               top: '-2px',
               right: '-2px',
-              width: '12px',
-              height: '12px',
+              width: '15px',
+              height: '15px',
               borderRadius: '50%',
               backgroundColor: 'rgb(255, 68, 68)'
             }}></div>
