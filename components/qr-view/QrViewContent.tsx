@@ -288,7 +288,7 @@ export default function QrViewContent() {
                     fontSize: '16px',
                     color: selectedMenu === menu ? '#fff' : '#000',
                     backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
-                    padding: '0 15px',
+                    padding: '0 20px',
                     height: '50px',
                     borderRadius: '9999px',
                     cursor: 'pointer',
@@ -392,6 +392,29 @@ export default function QrViewContent() {
               >
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
+              <div style={{
+                position: 'absolute',
+                left: '30px',
+                bottom: '30px',
+                color: '#fff'
+              }}>
+                <h1 style={{
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  color: '#fff',
+                  margin: '0 0 8px 0'
+                }}>
+                  Doğal ve Taze
+                </h1>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '400',
+                  color: '#fff',
+                  margin: 0
+                }}>
+                  Her ürün özenle seçilmiş malzemelerle günlük hazırlanır.
+                </h3>
+              </div>
             </div>
             <div style={{ 
               width: '33.333%',
@@ -620,7 +643,7 @@ export default function QrViewContent() {
                   fontSize: '16px',
                   color: selectedMenu === menu ? '#fff' : '#000',
                   backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
-                  padding: '0 15px',
+                  padding: '0 20px',
                   height: '50px',
                   borderRadius: '9999px',
                   cursor: 'pointer',
@@ -945,7 +968,7 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '10px'
+              padding: '20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
@@ -999,7 +1022,7 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '10px'
+              padding: '20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
@@ -1043,7 +1066,7 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '10px'
+              padding: '20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
@@ -1087,7 +1110,7 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '10px'
+              padding: '20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
