@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
 import AddressTablePopup from "./AddressTablePopup";
-import { Search, X, Home, User, Bell, ShoppingCart, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter } from "lucide-react";
+import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter } from "lucide-react";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -197,8 +197,6 @@ export default function QrViewContent() {
           left: 0,
           right: 0,
           width: '100%',
-          maxWidth: '448px',
-          margin: '0 auto',
           zIndex: 1001,
           backgroundColor: '#fff',
           padding: '10px 10px',
@@ -275,10 +273,12 @@ export default function QrViewContent() {
                       if (stickySectionElement && mainContainerRef.current) {
                         const containerRect = mainContainerRef.current.getBoundingClientRect();
                         const sectionRect = stickySectionElement.getBoundingClientRect();
-                        const scrollTop = mainContainerRef.current.scrollTop;
-                        const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
+                        const currentScrollTop = mainContainerRef.current.scrollTop;
+                        const offset = 5;
+                        const relativeTop = sectionRect.top - containerRect.top;
+                        const targetScrollTop = currentScrollTop + relativeTop - offset;
                         mainContainerRef.current.scrollTo({
-                          top: targetScrollTop,
+                          top: Math.max(0, targetScrollTop),
                           behavior: 'smooth'
                         });
                       }
@@ -400,14 +400,21 @@ export default function QrViewContent() {
               <div style={{
                 position: 'absolute',
                 left: '30px',
-                bottom: '60px',
-                color: '#fff'
+                right: '30px',
+                top: '30px',
+                bottom: '70px',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'flex-end'
               }}>
                 <h1 style={{
-                  fontSize: '20px',
+                  fontSize: '25px',
                   fontWeight: '700',
                   color: '#fff',
-                  margin: 0
+                  margin: 0,
+                  maxWidth: '260px',
+                  wordWrap: 'break-word',
+                  lineHeight: '1.4'
                 }}>
                   Her üründe özenle seçilmiş malzemeler
                 </h1>
@@ -441,14 +448,21 @@ export default function QrViewContent() {
               <div style={{
                 position: 'absolute',
                 left: '30px',
-                bottom: '60px',
-                color: '#fff'
+                right: '30px',
+                top: '30px',
+                bottom: '70px',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'flex-end'
               }}>
                 <h1 style={{
-                  fontSize: '20px',
+                  fontSize: '25px',
                   fontWeight: '700',
                   color: '#fff',
-                  margin: 0
+                  margin: 0,
+                  maxWidth: '260px',
+                  wordWrap: 'break-word',
+                  lineHeight: '1.4'
                 }}>
                   Seçili makarnalar da %20 indirim
                 </h1>
@@ -457,7 +471,7 @@ export default function QrViewContent() {
           </div>
           <div style={{
             position: 'absolute',
-            bottom: '30px',
+            bottom: '20px',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
@@ -586,22 +600,12 @@ export default function QrViewContent() {
                     if (sectionElement && mainContainerRef.current) {
                       const containerRect = mainContainerRef.current.getBoundingClientRect();
                       const sectionRect = sectionElement.getBoundingClientRect();
-                      const scrollTop = mainContainerRef.current.scrollTop;
-                      const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
+                      const currentScrollTop = mainContainerRef.current.scrollTop;
+                      const offset = 5;
+                      const relativeTop = sectionRect.top - containerRect.top;
+                      const targetScrollTop = currentScrollTop + relativeTop - offset;
                       mainContainerRef.current.scrollTo({
-                        top: targetScrollTop,
-                        behavior: 'smooth'
-                      });
-                    }
-                    const normalSectionId = menu.toLowerCase().replace(/\s+/g, '-').replace('ve', 've');
-                    const normalSectionElement = document.getElementById(normalSectionId) || document.querySelector(`[data-section="${normalSectionId}"]`);
-                    if (normalSectionElement && mainContainerRef.current) {
-                      const containerRect = mainContainerRef.current.getBoundingClientRect();
-                      const sectionRect = normalSectionElement.getBoundingClientRect();
-                      const scrollTop = mainContainerRef.current.scrollTop;
-                      const targetScrollTop = scrollTop + sectionRect.top - containerRect.top - 20;
-                      mainContainerRef.current.scrollTo({
-                        top: targetScrollTop,
+                        top: Math.max(0, targetScrollTop),
                         behavior: 'smooth'
                       });
                     }
@@ -645,7 +649,7 @@ export default function QrViewContent() {
             height: '210px',
             backgroundColor: '#f3f4f6',
             borderRadius: '20px',
-            padding: '10px',
+            padding: '15px',
             overflowX: 'auto',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -694,7 +698,7 @@ export default function QrViewContent() {
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
               <div style={{
-                padding: '8px 12px',
+                padding: '8px 12px 0 12px',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -753,7 +757,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px',
+                padding: '8px 12px 0 12px',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -812,7 +816,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px',
+                padding: '8px 12px 0 12px',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -871,7 +875,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 12px',
+                padding: '8px 12px 0 12px',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -907,7 +911,7 @@ export default function QrViewContent() {
           </div>
         </div>
         <div style={{
-          marginBottom: '31px',
+          marginBottom: '10px',
           flexShrink: 0
         }}>
           <h2 
@@ -917,7 +921,10 @@ export default function QrViewContent() {
               fontSize: '16px',
               fontWeight: '600',
               color: '#000',
-              marginBottom: '12px'
+              marginBottom: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
             Kahvaltı
           </h2>
@@ -928,7 +935,7 @@ export default function QrViewContent() {
             display: 'flex',
             flexDirection: 'column',
             gap: '10px',
-            marginBottom: '100px'
+            marginBottom: '10px'
           }}>
             <div style={{
               display: 'flex',
@@ -962,27 +969,46 @@ export default function QrViewContent() {
                   89,00 TL
                 </div>
               </div>
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                onEnded={(e) => {
-                  e.currentTarget.play();
-                }}
-                onPause={(e) => {
-                  e.currentTarget.play();
-                }}
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '16px',
-                  objectFit: 'cover',
-                  flexShrink: 0
-                }}
-              >
-                <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
-              </video>
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  onEnded={(e) => {
+                    e.currentTarget.play();
+                  }}
+                  onPause={(e) => {
+                    e.currentTarget.play();
+                  }}
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '16px',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                >
+                  <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
+                </video>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '10px',
+                  left: '10px',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #000000 0%, #333333 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '14px',
+                  color: '#fff',
+                  fontWeight: '600'
+                }}>
+                  1
+                </div>
+              </div>
             </div>
             <div style={{
               display: 'flex',
@@ -1016,36 +1042,17 @@ export default function QrViewContent() {
                   79,00 TL
                 </div>
               </div>
-              <div style={{ position: 'relative', flexShrink: 0 }}>
-                <img
-                  src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
-                  alt="Omlet"
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '16px',
-                    objectFit: 'cover',
-                    flexShrink: 0
-                  }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  top: '-20px',
-                  right: '-20px',
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  backgroundColor: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '8px',
-                  color: '#fff',
-                  fontWeight: '600'
-                }}>
-                  1
-                </div>
-              </div>
+              <img
+                src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
+                alt="Omlet"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
             </div>
             <div style={{
               display: 'flex',
@@ -1126,6 +1133,237 @@ export default function QrViewContent() {
               <img
                 src="https://i.pinimg.com/1200x/4e/8b/0e/4e8b0ec1b0fa6d8360b796e7e3e6092e.jpg"
                 alt="Kaşarlı Tost"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div style={{
+          marginBottom: '10px',
+          flexShrink: 0
+        }}>
+          <h2 
+            id="çorba"
+            data-section="çorba"
+            style={{
+              fontSize: '16px',
+              fontWeight: '600',
+              color: '#000',
+              marginBottom: '12px'
+            }}>
+            Çorbalar
+          </h2>
+          <div style={{
+            backgroundColor: 'transparent',
+            borderRadius: '20px',
+            padding: '0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            marginBottom: '100px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#f3f4f6',
+              borderRadius: '16px',
+              padding: '10px 20px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Mercimek Çorbası
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#6A6A6A'
+                }}>
+                  Mercimek, soğan, havuç, patates
+                </p>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  color: '#000'
+                }}>
+                  45,00 TL
+                </div>
+              </div>
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  onEnded={(e) => {
+                    e.currentTarget.play();
+                  }}
+                  onPause={(e) => {
+                    e.currentTarget.play();
+                  }}
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '16px',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                >
+                  <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
+                </video>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '10px',
+                  left: '10px',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #000000 0%, #333333 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '14px',
+                  color: '#fff',
+                  fontWeight: '600'
+                }}>
+                  1
+                </div>
+              </div>
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#f3f4f6',
+              borderRadius: '16px',
+              padding: '10px 20px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Domates Çorbası
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#6A6A6A'
+                }}>
+                  Domates, soğan, sarımsak, fesleğen
+                </p>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  color: '#000'
+                }}>
+                  50,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
+                alt="Domates Çorbası"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#f3f4f6',
+              borderRadius: '16px',
+              padding: '10px 20px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Tavuk Çorbası
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#6A6A6A'
+                }}>
+                  Tavuk, havuç, patates, soğan
+                </p>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  color: '#000'
+                }}>
+                  55,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/1200x/f7/90/e8/f790e80e420556ae58def8563c5adbd0.jpg"
+                alt="Tavuk Çorbası"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                  flexShrink: 0
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#f3f4f6',
+              borderRadius: '16px',
+              padding: '10px 20px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  margin: '0 0 4px 0',
+                  color: '#000'
+                }}>
+                  Yayla Çorbası
+                </h3>
+                <p style={{
+                  fontSize: '13px',
+                  margin: '0 0 4px 0',
+                  color: '#6A6A6A'
+                }}>
+                  Yoğurt, pirinç, nane, sarımsak
+                </p>
+                <div style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  color: '#000'
+                }}>
+                  48,00 TL
+                </div>
+              </div>
+              <img
+                src="https://i.pinimg.com/1200x/4e/8b/0e/4e8b0ec1b0fa6d8360b796e7e3e6092e.jpg"
+                alt="Yayla Çorbası"
                 style={{
                   width: '100px',
                   height: '100px',
@@ -1260,25 +1498,6 @@ export default function QrViewContent() {
             </>
           )}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
-          <div style={{ position: 'relative' }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 10a4 4 0 0 1-8 0"/>
-              <path d="M3.103 6.034h17.794"/>
-              <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/>
-            </svg>
-            <div style={{
-              position: 'absolute',
-              top: '-2px',
-              right: '-2px',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: '#ff4444'
-            }}></div>
-          </div>
-          <span style={{ fontSize: '12px', color: '#000' }}>Sepet</span>
-        </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -1287,7 +1506,38 @@ export default function QrViewContent() {
           </svg>
           <span style={{ fontSize: '12px', color: '#000' }}>Profil</span>
         </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+          <Calendar size={24} color="black" />
+          <span style={{ fontSize: '12px', color: '#000' }}>Rezerve</span>
+        </div>
       </div>
+        <div style={{
+          position: 'fixed',
+          bottom: '85px',
+          right: '15px',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          backgroundColor: '#000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1001,
+          cursor: 'pointer'
+        }}>
+          <div style={{ position: 'relative', animation: 'shake 2s ease-in-out infinite' }}>
+            <ShoppingBag size={24} color="white" />
+            <div style={{
+              position: 'absolute',
+              top: '-2px',
+              right: '-2px',
+              width: '12px',
+              height: '12px',
+              borderRadius: '50%',
+              backgroundColor: 'rgb(255, 68, 68)'
+            }}></div>
+          </div>
+        </div>
     </div>
     {selectedItem && (
       <MenuDetailView
@@ -1370,6 +1620,17 @@ export default function QrViewContent() {
         100% {
           opacity: 0;
           transform: translateX(-50%) translateY(-10px);
+        }
+      }
+      @keyframes shake {
+        0%, 100% {
+          transform: rotate(0deg);
+        }
+        10%, 30%, 50%, 70%, 90% {
+          transform: rotate(-3deg);
+        }
+        20%, 40%, 60%, 80% {
+          transform: rotate(3deg);
         }
       }
     `}</style>
