@@ -66,7 +66,7 @@ export default function QrViewContent() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
+      setCurrentSlide((prev) => (prev === 1 ? 0 : prev + 1));
     }, 10000);
     return () => clearInterval(interval);
   }, []);
@@ -351,6 +351,7 @@ export default function QrViewContent() {
             flexShrink: 0,
             position: 'relative',
             overflow: 'hidden',
+            overflowX: 'hidden',
             touchAction: 'pan-y',
             width: 'calc(100% + 20px)'
           }}
@@ -364,15 +365,17 @@ export default function QrViewContent() {
         >
           <div style={{
             display: 'flex',
-            width: '300%',
+            width: '200%',
             height: '100%',
-            transform: `translateX(-${currentSlide * 33.333}%)`,
-            transition: 'transform 0.5s ease-in-out'
+            transform: `translateX(-${currentSlide * 50}%)`,
+            transition: 'transform 0.5s ease-in-out',
+            willChange: 'transform'
           }}>
             <div style={{ 
-              width: '33.333%',
+              width: '50%',
               height: '100%',
-              position: 'relative'
+              position: 'relative',
+              flexShrink: 0
             }}>
               <video
                 ref={sliderVideoRef}
@@ -397,31 +400,24 @@ export default function QrViewContent() {
               <div style={{
                 position: 'absolute',
                 left: '30px',
-                bottom: '30px',
+                bottom: '60px',
                 color: '#fff'
               }}>
                 <h1 style={{
                   fontSize: '20px',
                   fontWeight: '700',
                   color: '#fff',
-                  margin: '0 0 8px 0'
-                }}>
-                  Doğal ve Taze
-                </h1>
-                <h3 style={{
-                  fontSize: '15px',
-                  fontWeight: '400',
-                  color: '#fff',
                   margin: 0
                 }}>
-                  Her ürün özenle seçilmiş malzemelerle günlük hazırlanır.
-                </h3>
+                  Her üründe özenle seçilmiş malzemeler
+                </h1>
               </div>
             </div>
             <div style={{ 
-              width: '33.333%',
+              width: '50%',
               height: '100%',
-              position: 'relative'
+              position: 'relative',
+              flexShrink: 0
             }}>
               <video
                 autoPlay
@@ -442,45 +438,26 @@ export default function QrViewContent() {
               >
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/1.mp4" type="video/mp4" />
               </video>
-            </div>
-            <div style={{ 
-              width: '33.333%',
-              height: '100%',
-              backgroundImage: 'url(https://i.pinimg.com/736x/47/06/6c/47066ccfb40ce0b87e27828aa0760b42.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative'
-            }}>
               <div style={{
                 position: 'absolute',
-                left: '20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
+                left: '30px',
+                bottom: '60px',
                 color: '#fff'
               }}>
-                <h3 style={{
-                  fontSize: '20px',
-                  fontWeight: '500',
-                  color: '#fff',
-                  margin: '0 0 10px 0'
-                }}>
-                  HAMBURGER
-                </h3>
                 <h1 style={{
-                  fontSize: '28px',
-                  fontWeight: '600',
+                  fontSize: '20px',
+                  fontWeight: '700',
                   color: '#fff',
                   margin: 0
                 }}>
-                  Lezzetli Burger
+                  Seçili makarnalar da %20 indirim
                 </h1>
               </div>
             </div>
           </div>
           <div style={{
             position: 'absolute',
-            bottom: '20px',
+            bottom: '30px',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
@@ -492,7 +469,7 @@ export default function QrViewContent() {
             <div 
               onClick={() => setCurrentSlide(0)}
               style={{
-                width: '20px',
+                width: '30px',
                 height: '2px',
                 backgroundColor: currentSlide === 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
@@ -503,20 +480,9 @@ export default function QrViewContent() {
             <div 
               onClick={() => setCurrentSlide(1)}
               style={{
-                width: '20px',
+                width: '30px',
                 height: '2px',
                 backgroundColor: currentSlide === 1 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
-                cursor: 'pointer',
-                transition: 'background-color 0.3s ease',
-                borderRadius: '1px'
-              }}
-            ></div>
-            <div 
-              onClick={() => setCurrentSlide(2)}
-              style={{
-                width: '20px',
-                height: '2px',
-                backgroundColor: currentSlide === 2 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
                 transition: 'background-color 0.3s ease',
                 borderRadius: '1px'
@@ -646,7 +612,7 @@ export default function QrViewContent() {
                   color: selectedMenu === menu ? '#fff' : '#000',
                   backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
                   padding: '0 20px',
-                  height: '50px',
+                  height: '45px',
                   borderRadius: '9999px',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
@@ -977,20 +943,20 @@ export default function QrViewContent() {
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#6A6A6A'
+                  color: '#000'
                 }}>
                   Menemen
                 </h3>
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 4px 0',
-                  color: '#A2A2A2'
+                  color: '#6A6A6A'
                 }}>
                   Yumurta, domates, biber, soğan
                 </p>
                 <div style={{
                   fontSize: '20px',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   color: '#000'
                 }}>
                   89,00 TL
@@ -1031,36 +997,55 @@ export default function QrViewContent() {
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#6A6A6A'
+                  color: '#000'
                 }}>
                   Omlet
                 </h3>
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 4px 0',
-                  color: '#A2A2A2'
+                  color: '#6A6A6A'
                 }}>
                   Yumurta, peynir, domates
                 </p>
                 <div style={{
                   fontSize: '20px',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   color: '#000'
                 }}>
                   79,00 TL
                 </div>
               </div>
-              <img
-                src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
-                alt="Omlet"
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '16px',
-                  objectFit: 'cover',
-                  flexShrink: 0
-                }}
-              />
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <img
+                  src="https://i.pinimg.com/736x/e9/b8/b8/e9b8b80e371b09eb1fe826cd50d9fb8a.jpg"
+                  alt="Omlet"
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '16px',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                />
+                <div style={{
+                  position: 'absolute',
+                  top: '-20px',
+                  right: '-20px',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  backgroundColor: '#000',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '8px',
+                  color: '#fff',
+                  fontWeight: '600'
+                }}>
+                  1
+                </div>
+              </div>
             </div>
             <div style={{
               display: 'flex',
@@ -1075,20 +1060,20 @@ export default function QrViewContent() {
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#6A6A6A'
+                  color: '#000'
                 }}>
                   Sucuklu Yumurta
                 </h3>
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 4px 0',
-                  color: '#A2A2A2'
+                  color: '#6A6A6A'
                 }}>
                   Yumurta, sucuk, domates
                 </p>
                 <div style={{
                   fontSize: '20px',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   color: '#000'
                 }}>
                   99,00 TL
@@ -1119,20 +1104,20 @@ export default function QrViewContent() {
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#6A6A6A'
+                  color: '#000'
                 }}>
                   Kaşarlı Tost
                 </h3>
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 4px 0',
-                  color: '#A2A2A2'
+                  color: '#6A6A6A'
                 }}>
                   Ekmek, kaşar peyniri, domates
                 </p>
                 <div style={{
                   fontSize: '20px',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   color: '#000'
                 }}>
                   69,00 TL
