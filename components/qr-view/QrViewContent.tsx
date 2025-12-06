@@ -213,9 +213,9 @@ export default function QrViewContent() {
               flexShrink: 0
             }}>
             <div style={{
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
+              width: '45px',
+              height: '45px',
+              borderRadius: '9999px',
               backgroundColor: '#f3f4f6',
               border: '2px solid #f3f4f6',
               display: 'flex',
@@ -259,7 +259,7 @@ export default function QrViewContent() {
                         const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
                         const elementWidth = elementRect.width;
                         const containerWidth = containerRect.width;
-                        const searchIconWidth = 50;
+                        const searchIconWidth = 45;
                         const gap = 8;
                         const scrollAreaWidth = scrollRect.width;
                         const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
@@ -289,7 +289,7 @@ export default function QrViewContent() {
                     color: selectedMenu === menu ? '#fff' : '#000',
                     backgroundColor: selectedMenu === menu ? '#000' : '#f3f4f6',
                     padding: '0 20px',
-                    height: '50px',
+                    height: '45px',
                     borderRadius: '9999px',
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
@@ -401,8 +401,8 @@ export default function QrViewContent() {
                 color: '#fff'
               }}>
                 <h1 style={{
-                  fontSize: '18px',
-                  fontWeight: '600',
+                  fontSize: '20px',
+                  fontWeight: '700',
                   color: '#fff',
                   margin: '0 0 8px 0'
                 }}>
@@ -536,7 +536,7 @@ export default function QrViewContent() {
             alignItems: 'center',
             gap: '8px'
           }}>
-            <span style={{ fontSize: '18px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
+            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
           </div>
           <div style={{
             display: 'flex',
@@ -544,7 +544,7 @@ export default function QrViewContent() {
             gap: '8px',
             cursor: 'pointer'
           }}>
-            <span style={{ fontSize: '15px', fontWeight: '600', color: '#000' }}>Filtrele</span>
+            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Filtrele</span>
           </div>
         </div>
         <div 
@@ -604,7 +604,7 @@ export default function QrViewContent() {
                       const elementOffsetInScroll = elementRect.left - scrollRect.left + currentScrollLeft;
                       const elementWidth = elementRect.width;
                       const containerWidth = containerRect.width;
-                      const searchIconWidth = 50;
+                      const searchIconWidth = 45;
                       const gap = 8;
                       const scrollAreaWidth = scrollRect.width;
                       const centerOfScrollArea = searchIconWidth + gap + (scrollAreaWidth / 2);
@@ -746,7 +746,7 @@ export default function QrViewContent() {
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 7px 0',
-                  color: '#A2A2A2',
+                  color: '#6A6A6A',
                   lineHeight: '1.2'
                 }}>
                   Domates, turşu, soğan, marul
@@ -805,7 +805,7 @@ export default function QrViewContent() {
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 7px 0',
-                  color: '#A2A2A2',
+                  color: '#6A6A6A',
                   lineHeight: '1.2'
                 }}>
                   Soğan, maydanoz, baharat
@@ -864,7 +864,7 @@ export default function QrViewContent() {
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 7px 0',
-                  color: '#A2A2A2',
+                  color: '#6A6A6A',
                   lineHeight: '1.2'
                 }}>
                   Kıyma, soğan, domates, biber
@@ -923,7 +923,7 @@ export default function QrViewContent() {
                 <p style={{
                   fontSize: '13px',
                   margin: '0 0 7px 0',
-                  color: '#A2A2A2',
+                  color: '#6A6A6A',
                   lineHeight: '1.2'
                 }}>
                   Peynir, domates, zeytin
@@ -948,7 +948,7 @@ export default function QrViewContent() {
             id="kahvaltı"
             data-section="kahvaltı"
             style={{
-              fontSize: '15px',
+              fontSize: '16px',
               fontWeight: '600',
               color: '#000',
               marginBottom: '12px'
@@ -970,14 +970,14 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '20px'
+              padding: '10px 20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#000'
+                  color: '#6A6A6A'
                 }}>
                   Menemen
                 </h3>
@@ -989,7 +989,7 @@ export default function QrViewContent() {
                   Yumurta, domates, biber, soğan
                 </p>
                 <div style={{
-                  fontSize: '16px',
+                  fontSize: '20px',
                   fontWeight: '600',
                   color: '#000'
                 }}>
@@ -1024,14 +1024,14 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '20px'
+              padding: '10px 20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#000'
+                  color: '#6A6A6A'
                 }}>
                   Omlet
                 </h3>
@@ -1043,7 +1043,7 @@ export default function QrViewContent() {
                   Yumurta, peynir, domates
                 </p>
                 <div style={{
-                  fontSize: '16px',
+                  fontSize: '20px',
                   fontWeight: '600',
                   color: '#000'
                 }}>
@@ -1068,14 +1068,14 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '20px'
+              padding: '10px 20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#000'
+                  color: '#6A6A6A'
                 }}>
                   Sucuklu Yumurta
                 </h3>
@@ -1087,7 +1087,7 @@ export default function QrViewContent() {
                   Yumurta, sucuk, domates
                 </p>
                 <div style={{
-                  fontSize: '16px',
+                  fontSize: '20px',
                   fontWeight: '600',
                   color: '#000'
                 }}>
@@ -1112,14 +1112,14 @@ export default function QrViewContent() {
               gap: '12px',
               backgroundColor: '#f3f4f6',
               borderRadius: '16px',
-              padding: '20px'
+              padding: '10px 20px'
             }}>
               <div style={{ flex: 1 }}>
                 <h3 style={{
                   fontSize: '15px',
                   fontWeight: '600',
                   margin: '0 0 4px 0',
-                  color: '#000'
+                  color: '#6A6A6A'
                 }}>
                   Kaşarlı Tost
                 </h3>
@@ -1131,7 +1131,7 @@ export default function QrViewContent() {
                   Ekmek, kaşar peyniri, domates
                 </p>
                 <div style={{
-                  fontSize: '16px',
+                  fontSize: '20px',
                   fontWeight: '600',
                   color: '#000'
                 }}>
