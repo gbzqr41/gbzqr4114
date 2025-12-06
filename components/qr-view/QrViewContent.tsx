@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
 import AddressTablePopup from "./AddressTablePopup";
-import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter, MessageSquare, CreditCard, Hand, MessageCircle, Info } from "lucide-react";
+import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter, MessageSquare, CreditCard, Hand, MessageCircle, Info, Funnel, MousePointer2 } from "lucide-react";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -352,9 +352,9 @@ export default function QrViewContent() {
           height: '80px',
           backgroundColor: '#000',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
-          padding: '0 15px',
+          padding: '9px 15px 0 15px',
           flexShrink: 0,
           marginLeft: '-10px',
           marginRight: '-10px',
@@ -385,7 +385,7 @@ export default function QrViewContent() {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '10px'
+            gap: '5px'
           }}>
             <div style={{
               width: '42px',
@@ -417,7 +417,7 @@ export default function QrViewContent() {
             height: '230px', 
             borderTopLeftRadius: '20px',
             borderTopRightRadius: '20px',
-            marginTop: '0',
+            marginTop: '-20px',
             marginLeft: '-10px',
             marginRight: '-10px',
             marginBottom: '16px',
@@ -483,7 +483,7 @@ export default function QrViewContent() {
                 alignItems: 'flex-end'
               }}>
                 <h1 style={{
-                  fontSize: '25px',
+                  fontSize: '32px',
                   fontWeight: '700',
                   color: '#fff',
                   margin: 0,
@@ -491,7 +491,7 @@ export default function QrViewContent() {
                   wordWrap: 'break-word',
                   lineHeight: '1.4'
                 }}>
-                  Her üründe özenle seçilmiş malzemeler
+                  Özenle seçilmiş<br />ürünler
                 </h1>
               </div>
             </div>
@@ -531,7 +531,7 @@ export default function QrViewContent() {
                 alignItems: 'flex-end'
               }}>
                 <h1 style={{
-                  fontSize: '25px',
+                  fontSize: '32px',
                   fontWeight: '700',
                   color: '#fff',
                   margin: 0,
@@ -539,7 +539,7 @@ export default function QrViewContent() {
                   wordWrap: 'break-word',
                   lineHeight: '1.4'
                 }}>
-                  Seçili makarnalar da %20 indirim
+                  Seçili ürünlerde<br />%20 indirim
                 </h1>
               </div>
             </div>
@@ -547,8 +547,7 @@ export default function QrViewContent() {
           <div style={{
             position: 'absolute',
             bottom: '20px',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            left: '30px',
             display: 'flex',
             gap: '6px',
             alignItems: 'center',
@@ -558,7 +557,7 @@ export default function QrViewContent() {
             <div 
               onClick={() => setCurrentSlide(0)}
               style={{
-                width: '30px',
+                width: '25px',
                 height: '2px',
                 backgroundColor: currentSlide === 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
@@ -569,7 +568,7 @@ export default function QrViewContent() {
             <div 
               onClick={() => setCurrentSlide(1)}
               style={{
-                width: '30px',
+                width: '25px',
                 height: '2px',
                 backgroundColor: currentSlide === 1 ? '#fff' : 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
@@ -592,14 +591,6 @@ export default function QrViewContent() {
             gap: '8px'
           }}>
             <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Kategoriler</span>
-          </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            cursor: 'pointer'
-          }}>
-            <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>Filtrele</span>
           </div>
         </div>
         <div 
@@ -1539,12 +1530,8 @@ export default function QrViewContent() {
           <span style={{ fontSize: '12px', color: '#000' }}>Anasayfa</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 16v-4"/>
-            <path d="M12 8h.01"/>
-          </svg>
-          <span style={{ fontSize: '12px', color: '#000' }}>Keşfet</span>
+          <Funnel size={24} color="black" />
+          <span style={{ fontSize: '12px', color: '#000' }}>Filtrele</span>
         </div>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <button
@@ -1553,7 +1540,7 @@ export default function QrViewContent() {
               width: '60px',
               height: '60px',
               borderRadius: '50%',
-              backgroundColor: '#000',
+              background: 'linear-gradient(180deg, #3b82f6 0%, #3b82f6 80%, #ec4899 80%, #ec4899 100%)',
               border: 'none',
               display: 'flex',
               alignItems: 'center',
@@ -1562,7 +1549,7 @@ export default function QrViewContent() {
               zIndex: 1001
             }}
           >
-            <Hand size={32} color="white" />
+            <MousePointer2 size={32} color="white" />
           </button>
           {showServiceMenu && (
             <>
