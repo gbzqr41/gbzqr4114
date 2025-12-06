@@ -276,9 +276,10 @@ export default function QrViewContent() {
                       if (stickySectionElement && mainContainerRef.current) {
                         setTimeout(() => {
                           const container = mainContainerRef.current;
-                          if (!container || !stickySectionElement) return;
+                          const element = document.getElementById(stickySectionId) || document.querySelector(`[data-section="${stickySectionId}"]`);
+                          if (!container || !element) return;
                           const containerRect = container.getBoundingClientRect();
-                          const elementRect = stickySectionElement.getBoundingClientRect();
+                          const elementRect = element.getBoundingClientRect();
                           const scrollTop = container.scrollTop;
                           const elementTopRelativeToContainer = elementRect.top - containerRect.top + scrollTop;
                           const headerHeight = stickyMenuContainerRef.current?.parentElement?.offsetHeight || 65;
@@ -287,7 +288,7 @@ export default function QrViewContent() {
                             top: Math.max(0, targetScrollTop),
                             behavior: 'smooth'
                           });
-                        }, 150);
+                        }, 200);
                       }
                     }, 0);
                   }}
@@ -408,7 +409,7 @@ export default function QrViewContent() {
                 position: 'absolute',
                 left: '30px',
                 right: '30px',
-                top: '30px',
+                top: '40px',
                 bottom: '70px',
                 color: '#fff',
                 display: 'flex',
@@ -610,9 +611,10 @@ export default function QrViewContent() {
                     if (sectionElement && mainContainerRef.current) {
                       setTimeout(() => {
                         const container = mainContainerRef.current;
-                        if (!container || !sectionElement) return;
+                        const element = document.getElementById(sectionId) || document.querySelector(`[data-section="${sectionId}"]`);
+                        if (!container || !element) return;
                         const containerRect = container.getBoundingClientRect();
-                        const elementRect = sectionElement.getBoundingClientRect();
+                        const elementRect = element.getBoundingClientRect();
                         const scrollTop = container.scrollTop;
                         const elementTopRelativeToContainer = elementRect.top - containerRect.top + scrollTop;
                         const headerHeight = stickyMenuContainerRef.current?.parentElement?.offsetHeight || 65;
@@ -621,7 +623,7 @@ export default function QrViewContent() {
                           top: Math.max(0, targetScrollTop),
                           behavior: 'smooth'
                         });
-                      }, 150);
+                      }, 200);
                     }
                   }, 0);
                 }}
@@ -714,7 +716,7 @@ export default function QrViewContent() {
                 <source src="https://github.com/mikail006/videoml/raw/refs/heads/main/Bringing%20flavors%20to%20life,%20one%20shot%20at%20a%20time.%20%F0%9F%8D%BD%EF%B8%8F%F0%9F%8E%A5%20%23FoodArt%20%23CulinaryStorytelling%20%23FoodVideogra.mp4" type="video/mp4" />
               </video>
               <div style={{
-                padding: '8px 0',
+                padding: '8px 0 0 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -787,7 +789,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 0',
+                padding: '8px 0 0 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -860,7 +862,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 0',
+                padding: '8px 0 0 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -933,7 +935,7 @@ export default function QrViewContent() {
                 }}
               />
               <div style={{
-                padding: '8px 0',
+                padding: '8px 0 0 0',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
@@ -1585,7 +1587,7 @@ export default function QrViewContent() {
       </div>
         <div style={{
           position: 'fixed',
-          bottom: '85px',
+          bottom: '95px',
           right: '15px',
           width: '60px',
           height: '60px',
@@ -1603,8 +1605,8 @@ export default function QrViewContent() {
               position: 'absolute',
               top: '-2px',
               right: '-2px',
-              width: '15px',
-              height: '15px',
+              width: '12px',
+              height: '12px',
               borderRadius: '50%',
               backgroundColor: 'rgb(255, 68, 68)'
             }}></div>
