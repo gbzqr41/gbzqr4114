@@ -308,7 +308,7 @@ export default function QrViewContent() {
           </div>
         </div>
       )}
-      <div ref={mainContainerRef} className="bg-white" style={{ padding: '10px 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '100px', overflowY: 'auto', height: '100vh', backgroundColor: '#fff', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div ref={mainContainerRef} className="bg-white" style={{ padding: '0 10px 10px 10px', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', paddingBottom: '100px', overflowY: 'auto', height: '100vh', backgroundColor: '#fff', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <div className="max-w-md mx-auto bg-white" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', position: 'relative', flex: 1, minHeight: 0, backgroundColor: '#fff', paddingBottom: '100px' }}>
         <div style={{
           display: 'flex',
@@ -316,11 +316,13 @@ export default function QrViewContent() {
           padding: '0',
           gap: '10px',
           flexShrink: 0,
-          margin: '10px 0',
+          margin: '0',
           justifyContent: 'space-between',
           backgroundColor: 'transparent',
           position: 'relative',
-          zIndex: 10
+          zIndex: 10,
+          height: '0',
+          overflow: 'hidden'
         }}>
           <div 
             onClick={() => {
