@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
 import AddressTablePopup from "./AddressTablePopup";
-import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter, MessageSquare, CreditCard, Hand, MessageCircle } from "lucide-react";
+import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter, MessageSquare, CreditCard, Hand, MessageCircle, Info } from "lucide-react";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -347,11 +347,76 @@ export default function QrViewContent() {
             }}>
           </div>
         </div>
+        <div style={{
+          width: 'calc(100% + 20px)',
+          height: '80px',
+          backgroundColor: '#000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 15px',
+          flexShrink: 0,
+          marginLeft: '-10px',
+          marginRight: '-10px',
+          zIndex: 1
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Info size={20} color="white" />
+            </div>
+            <span style={{
+              color: '#fff',
+              fontSize: '16px',
+              fontWeight: '600'
+            }}>Resital Lounge</span>
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Bell size={20} color="white" />
+            </div>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Heart size={20} color="white" />
+            </div>
+          </div>
+        </div>
         <div 
           ref={sliderRef}
           style={{ 
             height: '230px', 
-            borderRadius: '0',
+            borderTopLeftRadius: '20px',
+            borderTopRightRadius: '20px',
             marginTop: '0',
             marginLeft: '-10px',
             marginRight: '-10px',
@@ -361,7 +426,9 @@ export default function QrViewContent() {
             overflow: 'hidden',
             overflowX: 'hidden',
             touchAction: 'pan-y',
-            width: 'calc(100% + 20px)'
+            width: 'calc(100% + 20px)',
+            zIndex: 2,
+            backgroundColor: '#000'
           }}
           onTouchStart={(e) => {
             touchStartX.current = e.touches[0].clientX;
