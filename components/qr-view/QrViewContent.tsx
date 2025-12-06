@@ -88,17 +88,40 @@ export default function QrViewContent() {
       const container = mainContainerRef.current;
       if (container) {
         const scrollTop = container.scrollTop;
-        if (scrollTop > 100) {
-          setShowStickyCategories(true);
+        const categoriesSection = container.querySelector('[data-categories-section]') as HTMLElement;
+        if (categoriesSection) {
+          const categoriesRect = categoriesSection.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const categoriesBottom = categoriesRect.bottom - containerRect.top + scrollTop;
+          if (scrollTop > categoriesBottom) {
+            setShowStickyCategories(true);
+          } else {
+            setShowStickyCategories(false);
+          }
         } else {
-          setShowStickyCategories(false);
+          if (scrollTop > 400) {
+            setShowStickyCategories(true);
+          } else {
+            setShowStickyCategories(false);
+          }
         }
       } else {
         const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        if (scrollY > 100) {
-          setShowStickyCategories(true);
+        const categoriesSection = document.querySelector('[data-categories-section]') as HTMLElement;
+        if (categoriesSection) {
+          const categoriesRect = categoriesSection.getBoundingClientRect();
+          const categoriesBottom = categoriesRect.bottom + scrollY;
+          if (scrollY > categoriesBottom) {
+            setShowStickyCategories(true);
+          } else {
+            setShowStickyCategories(false);
+          }
         } else {
-          setShowStickyCategories(false);
+          if (scrollY > 400) {
+            setShowStickyCategories(true);
+          } else {
+            setShowStickyCategories(false);
+          }
         }
       }
     };
@@ -545,6 +568,7 @@ export default function QrViewContent() {
         </div>
         <div 
           ref={menuContainerRef}
+          data-categories-section
           style={{
             display: 'flex',
             alignItems: 'center',
