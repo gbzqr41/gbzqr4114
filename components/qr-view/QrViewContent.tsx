@@ -342,7 +342,7 @@ export default function QrViewContent() {
           style={{ 
             height: '230px', 
             borderRadius: '0',
-            marginTop: '-80px',
+            marginTop: '0',
             marginLeft: '-10px',
             marginRight: '-10px',
             marginBottom: '16px',
@@ -675,7 +675,7 @@ export default function QrViewContent() {
           </h2>
           <div style={{
             height: '210px',
-            backgroundColor: 'rgba(255, 248, 156, 0.32)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '20px',
             padding: '10px',
             overflowX: 'auto',
