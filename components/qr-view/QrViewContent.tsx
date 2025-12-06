@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Category, MenuItem } from "@/components/dashboard/SidebarEditor";
 import MenuDetailView from "@/components/menu/MenuDetailView";
 import AddressTablePopup from "./AddressTablePopup";
-import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter } from "lucide-react";
+import { Search, X, Home, User, Bell, ShoppingCart, ShoppingBag, Calendar, Phone, MapPin, Globe, Clock, Check, Navigation, Heart, Grid3x3, Filter, MessageSquare, CreditCard, Hand, MessageCircle } from "lucide-react";
 
 export default function QrViewContent() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -1495,12 +1495,7 @@ export default function QrViewContent() {
               zIndex: 1001
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/>
-              <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/>
-              <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
-              <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
-            </svg>
+            <Hand size={32} color="white" />
           </button>
           {showServiceMenu && (
             <>
@@ -1508,67 +1503,23 @@ export default function QrViewContent() {
                 onClick={() => setShowServiceMenu(false)}
                 style={{
                   position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  zIndex: 1001
+                  inset: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  zIndex: 999999
                 }}
               />
               <div style={{
-              position: 'absolute',
-              bottom: '68px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-              padding: '8px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              zIndex: 1002,
-              minWidth: '140px'
-            }}>
-              <button
-                onClick={() => {
-                  localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'waiter', timestamp: Date.now() }));
-                  window.dispatchEvent(new Event('storage'));
-                  setShowServiceMenu(false);
-                }}
-                style={{
-                  padding: '12px 16px',
-                  backgroundColor: '#fff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  color: '#000',
-                  textAlign: 'left'
-                }}
-              >
-                Garson Çağır
-              </button>
-              <button
-                onClick={() => {
-                  localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'bill', timestamp: Date.now() }));
-                  window.dispatchEvent(new Event('storage'));
-                  setShowServiceMenu(false);
-                }}
-                style={{
-                  padding: '12px 16px',
-                  backgroundColor: '#fff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  color: '#000',
-                  textAlign: 'left'
-                }}
-              >
-                Sipariş İste
-              </button>
-            </div>
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '100%',
+                height: '100px',
+                backgroundColor: '#fff',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                zIndex: 1000000
+              }}></div>
             </>
           )}
         </div>
@@ -1709,6 +1660,92 @@ export default function QrViewContent() {
       }
     `}</style>
       </div>
+      {showServiceMenu && (
+        <>
+          <div 
+            onClick={() => setShowServiceMenu(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 999999
+            }}
+          />
+          <div style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            backgroundColor: '#fff',
+            borderTopLeftRadius: '20px',
+            borderTopRightRadius: '20px',
+            boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.15)',
+            zIndex: 1000000,
+            padding: '20px',
+            display: 'flex',
+            gap: '20px'
+          }}>
+            <button
+              onClick={() => {
+                localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'waiter', timestamp: Date.now() }));
+                window.dispatchEvent(new Event('storage'));
+                setShowServiceMenu(false);
+              }}
+              style={{
+                flex: 1,
+                padding: '15px',
+                backgroundColor: '#f3f4f6',
+                color: '#000',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8.8 20v-4.1l1.9.2a2.3 2.3 0 0 0 2.164-2.1V8.3A5.37 5.37 0 0 0 2 8.25c0 2.8.656 3.054 1 4.55a5.77 5.77 0 0 1 .029 2.758L2 20"/>
+                <path d="M19.8 17.8a7.5 7.5 0 0 0 .003-10.603"/>
+                <path d="M17 15a3.5 3.5 0 0 0-.025-4.975"/>
+              </svg>
+              Garson Çağır
+            </button>
+            <button
+              onClick={() => {
+                localStorage.setItem('gbzqr_serviceAlert', JSON.stringify({ type: 'bill', timestamp: Date.now() }));
+                window.dispatchEvent(new Event('storage'));
+                setShowServiceMenu(false);
+              }}
+              style={{
+                flex: 1,
+                padding: '15px',
+                backgroundColor: '#f3f4f6',
+                color: '#000',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <CreditCard size={20} color="black" />
+              Hesap İste
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }
