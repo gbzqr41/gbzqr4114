@@ -1540,7 +1540,7 @@ export default function QrViewContent() {
               width: '60px',
               height: '60px',
               borderRadius: '50%',
-              background: 'linear-gradient(180deg, #3b82f6 0%, #3b82f6 80%, #ec4899 80%, #ec4899 100%)',
+              background: 'linear-gradient(to right, #8e2de2, #4a00e0)',
               border: 'none',
               display: 'flex',
               alignItems: 'center',
@@ -1549,7 +1549,15 @@ export default function QrViewContent() {
               zIndex: 1001
             }}
           >
-            <MousePointer2 size={32} color="white" />
+            <img 
+              src="https://i.ibb.co/wrBf7Qdy/finger-6308698.png" 
+              alt="finger" 
+              style={{
+                width: '32px',
+                height: '32px',
+                filter: 'brightness(0) invert(1)'
+              }}
+            />
           </button>
           {showServiceMenu && (
             <>
